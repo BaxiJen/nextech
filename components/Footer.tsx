@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Linkedin } from 'lucide-react';
 import { Container } from './Container';
 
 export function Footer() {
@@ -42,6 +43,15 @@ export function Footer() {
         </div>
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} BaXiJen. Todos os direitos reservados.</p>
+          <a
+            href="https://www.linkedin.com/company/baxijen/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-primary transition-colors"
+            aria-label="LinkedIn da BaXiJen"
+          >
+            <Linkedin className="h-5 w-5" />
+          </a>
         </div>
       </Container>
     </footer>
