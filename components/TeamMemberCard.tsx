@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Linkedin } from 'lucide-react';
 import { TeamMember } from '@/lib/types';
@@ -8,28 +10,25 @@ interface TeamMemberCardProps {
 }
 
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
-      className="rounded-2xl p-8 space-y-6 transition-all duration-300 hover:shadow-lg group cursor-default"
+      className="flex flex-col space-y-6 rounded-2xl p-8 transition-all duration-500"
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255,255,255,0.06)',
+        background: isHovered ? 'rgba(0,229,255,0.05)' : 'rgba(255,255,255,0.03)',
+        backdropFilter: 'blur(16px)',
+        border: `1px solid ${isHovered ? 'rgba(0,229,255,0.2)' : 'rgba(255,255,255,0.06)'}`,
+        boxShadow: isHovered ? '0 0 30px rgba(0,229,255,0.08)' : 'none',
       }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'rgba(0,229,255,0.2)';
-        e.currentTarget.style.boxShadow = '0 0 25px rgba(0,229,255,0.06)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
-        e.currentTarget.style.boxShadow = 'none';
-      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
-        <Image 
+        <Image
           src={member.photo}
           alt={member.name}
-          fill 
+          fill
           className="object-cover object-top"
         />
       </div>
@@ -45,18 +44,22 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
         </p>
         <div className="flex flex-wrap gap-2">
           {member.skills.map((skill, index) => (
-            <span 
+            <span
               key={index}
-              className="text-xs bg-muted px-2.5 py-1 rounded-full"
+              className="text-xs px-2.5 py-1 rounded-full"
+              style={{
+                background: isHovered ? 'rgba(0,229,255,0.08)' : 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}
             >
               {skill}
             </span>
           ))}
         </div>
       </div>
-      <a 
+      <a
         href={member.linkedinUrl}
-        target="_blank" 
+        target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#0077B5] transition-colors font-medium text-sm"
       >
