@@ -9,7 +9,22 @@ interface TeamMemberCardProps {
 
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
   return (
-    <div className="bg-background border rounded-2xl p-8 space-y-6 shadow-sm hover:shadow-lg transition-shadow">
+    <div
+      className="rounded-2xl p-8 space-y-6 transition-all duration-300 hover:shadow-lg group cursor-default"
+      style={{
+        background: 'rgba(255,255,255,0.03)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255,255,255,0.06)',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(0,229,255,0.2)';
+        e.currentTarget.style.boxShadow = '0 0 25px rgba(0,229,255,0.06)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
+    >
       <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
         <Image 
           src={member.photo}
