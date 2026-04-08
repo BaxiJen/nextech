@@ -49,7 +49,7 @@ export function AgentesIAContent() {
             {/* Floating label */}
             <div className="absolute top-6 left-6 flex items-center gap-3 text-foreground/80">
               <Brain className="h-6 w-6 animate-pulse text-cyan-400" />
-              <span className="font-semibold tracking-wide text-sm">BaXiJen-AI Gen</span>
+              <span className="font-semibold tracking-wide text-sm">BaXi - AI</span>
             </div>
             {/* Decorative dots */}
             <div className="absolute bottom-8 right-8 w-2 h-2 rounded-full bg-cyan-400/40 animate-pulse" />
