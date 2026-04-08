@@ -4,10 +4,10 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL e chave anônima são obrigatórias')
+  console.warn('Supabase URL ou chave anônima não configuradas. Usando placeholder.')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseAnonKey || 'placeholder')
 
 // Cliente de servidor para operações com privilégios (apenas server-side)
 export const createServerSupabaseClient = () => {
@@ -16,8 +16,8 @@ export const createServerSupabaseClient = () => {
   // Se não tiver service key, use a client padrão
   if (!supabaseServiceKey) {
     console.warn('SUPABASE_SERVICE_KEY não configurada. Usando client padrão.')
-    return createClient(supabaseUrl, supabaseAnonKey)
+    return createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseAnonKey || 'placeholder')
   }
   
-  return createClient(supabaseUrl!, supabaseServiceKey)
+  return createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseServiceKey || supabaseAnonKey || 'placeholder')
 }

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { saveChatMessage, upsertLead, calculateLeadScore, logInteraction } from '@/lib/supabaseService'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || 'placeholder',
 })
 
 interface CaptureLeadInput {
@@ -71,10 +71,10 @@ export async function POST(req: Request) {
       messages: [
         {
           role: 'system',
-          content: `Você é o Agente de Vendas da BaxiJen, uma consultoria de tecnologia premium.
+          content: `Você é o Agente de Vendas da Nextech, uma consultoria de tecnologia premium.
           Seu objetivo é converter visitantes em leads de forma ética e profissional.
           
-          Informações da BaxiJen:
+          Informações da Nextech:
           - Serviços: Sites Estáticos Express (72h), Agentes de WhatsApp com IA, Sistemas Web Corporativos, Chatbots Oficiais.
           - Contato WhatsApp: +55 21 93300-9048.
           
