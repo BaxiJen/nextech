@@ -98,7 +98,7 @@ export function BXatContent() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Sparkles className="h-4 w-4 mr-2" /> Powered by OpenClaw — A IA do Brasil
+              <Sparkles className="h-4 w-4 mr-2" /> Powered by BaXi — A IA do Brasil
             </motion.div>
 
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl leading-tight">

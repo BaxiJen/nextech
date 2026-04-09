@@ -20,7 +20,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const services = [
-  { title: 'BXat — Agente Completo', description: 'O cérebro da sua empresa. IA que centraliza informações, aprende e atende 24/7.', href: '/bxat', icon: Bot },
+  { title: 'BXat — Agente Completo', description: 'O cérebro da sua empresa. IA que centraliza informações, aprende e atende 24/7. Powered by BaXi.', href: '/bxat', icon: Bot },
   { title: 'Agentes de WhatsApp', description: 'Agentes inteligentes com linguagem natural para vendas e suporte avançado.', href: '/bxat', icon: MessageSquare },
   { title: 'Sites Express', description: 'Site profissional ultra-rápido com chatbot integrado. Entrega em tempo recorde.', href: '/sites-express', icon: Zap },
   { title: 'Sistemas sob Medida', description: 'Criamos sistemas que se adaptam ao seu negócio. Soluções escaláveis e seguras.', href: '/sistemas-web', icon: Layout },

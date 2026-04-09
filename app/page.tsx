@@ -151,7 +151,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <IceBlockCard
                 title="BXat — Agente Completo"
-                description="O cérebro da sua empresa. IA que centraliza tudo, aprende e atende 24/7. Powered by OpenClaw."
+                description="O cérebro da sua empresa. IA que centraliza tudo, aprende e atende 24/7. Powered by BaXi."
                 href="/bxat"
                 icon={Cpu}
               />
