@@ -87,8 +87,8 @@ export function ContatoContent() {
               >
                 <IceBlockCard
                   title="E-mail"
-                  description="nextmetal@gmail.com"
-                  href="mailto:nextmetal@gmail.com"
+                  description="contato@baxi.ia.br"
+                  href="mailto:contato@baxi.ia.br"
                   icon={Mail}
                 />
               </motion.div>
