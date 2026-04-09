@@ -14,19 +14,20 @@ import {
   Database,
   Zap,
   Bot,
+  Cpu,
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const services = [
+  { title: 'BXat — Agente Completo', description: 'O cérebro da sua empresa. IA que centraliza informações, aprende e atende 24/7.', href: '/bxat', icon: Bot },
+  { title: 'Agentes de WhatsApp', description: 'Agentes inteligentes com linguagem natural para vendas e suporte avançado.', href: '/bxat', icon: MessageSquare },
   { title: 'Sites Express', description: 'Site profissional ultra-rápido com chatbot integrado. Entrega em tempo recorde.', href: '/sites-express', icon: Zap },
-  { title: 'Agentes de WhatsApp', description: 'Agentes inteligentes com linguagem natural para vendas e suporte avançado.', href: '/agentes-ia', icon: Bot },
   { title: 'Sistemas sob Medida', description: 'Criamos sistemas que se adaptam ao seu negócio. Soluções escaláveis e seguras.', href: '/sistemas-web', icon: Layout },
   { title: 'Chatbots Oficiais', description: 'Integração oficial com API do WhatsApp para automação de fluxos padrão.', href: '/chatbots-whatsapp', icon: MessageSquare },
   { title: 'Sites de Alta Performance', description: 'Landing pages e sites institucionais otimizados para máxima conversão.', href: '/', icon: Globe },
   { title: 'Sistemas de Gestão (ERP)', description: 'Dashboards e painéis administrativos para controle total da sua operação.', href: '/sistemas-web', icon: Database },
   { title: 'SEO e Visibilidade', description: 'Otimização técnica para garantir que sua empresa seja encontrada no Google.', href: '/', icon: Search },
-  { title: 'Aplicações Mobile Web', description: 'Experiências fluidas em smartphones com tecnologias web modernas (PWA).', href: '/', icon: Smartphone },
 ];
 
 export function ServicesContent() {
@@ -48,7 +49,7 @@ export function ServicesContent() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span className="text-primary mr-2 font-bold">8</span> Soluções para sua empresa
+              <span className="text-primary mr-2 font-bold">9</span> Soluções para sua empresa
             </motion.div>
             <h1 className="text-4xl font-bold tracking-tight mb-4">Nossos Serviços</h1>
             <p className="text-xl text-muted-foreground">
