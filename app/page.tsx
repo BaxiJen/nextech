@@ -142,7 +142,7 @@ export default function Home() {
 
       {/* ====== SERVICES (ICE BLOCKS) ====== */}
       <FrostTransition>
-        <section className="py-20 bg-muted/30">
+        <section className="py-20 bg-background/80 backdrop-blur-xl">
           <Container>
             <motion.div
               className="text-center mb-16"
@@ -152,7 +152,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">Serviços Principais</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-foreground/70 max-w-2xl mx-auto">
                 Soluções tecnológicas focadas em resultados reais e eficiência operacional.
               </p>
             </motion.div>
@@ -194,7 +194,7 @@ export default function Home() {
 
       {/* ====== PROCESS TIMELINE (CRYSTAL GROWTH) ====== */}
       <FrostTransition>
-        <section className="py-20">
+        <section className="py-20 bg-background/80 backdrop-blur-xl">
           <Container>
             <div className="text-center mb-16">
               <motion.h2
@@ -207,7 +207,7 @@ export default function Home() {
                 Como Funciona
               </motion.h2>
               <motion.p
-                className="text-muted-foreground max-w-2xl mx-auto"
+                className="text-foreground/70 max-w-2xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -223,7 +223,7 @@ export default function Home() {
 
       {/* ====== DIFFERENTIALS (MORPH PARTICLES) ====== */}
       <FrostTransition>
-        <section className="py-20 bg-muted/50">
+        <section className="py-20 bg-background/80 backdrop-blur-xl">
           <Container>
             <motion.div
               className="text-center mb-16"
@@ -241,7 +241,7 @@ export default function Home() {
 
       {/* ====== FAQ (FROST GLASS) ====== */}
       <FrostTransition>
-        <section className="py-20">
+        <section className="py-20 bg-background/80 backdrop-blur-xl">
           <Container>
             <div className="max-w-3xl mx-auto">
               <motion.h2
@@ -275,7 +275,7 @@ export default function Home() {
                     <h3 className="text-lg font-bold mb-2 flex gap-3 text-foreground">
                       <span className="text-primary font-mono">?</span> {faq.q}
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{faq.a}</p>
+                    <p className="text-foreground/70 text-sm leading-relaxed">{faq.a}</p>
                   </motion.div>
                 ))}
               </div>
