@@ -227,6 +227,9 @@ export default function Home() {
         </section>
       </FrostTransition>
 
+      {/* ====== BREATHING ROOM — reveal the 3D background ====== */}
+      <div className="h-24 md:h-36" aria-hidden="true" />
+
       {/* ====== DIFFERENTIALS (MORPH PARTICLES) ====== */}
       <FrostTransition>
         <section className="py-20 bg-background/80 backdrop-blur-xl">
@@ -244,6 +247,9 @@ export default function Home() {
           </Container>
         </section>
       </FrostTransition>
+
+      {/* ====== BREATHING ROOM — reveal the 3D background ====== */}
+      <div className="h-24 md:h-36" aria-hidden="true" />
 
       {/* ====== FAQ (FROST GLASS) ====== */}
       <FrostTransition>
