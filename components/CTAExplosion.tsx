@@ -54,7 +54,7 @@ export function CTAExplosion() {
                 Sua empresa está pronta para o próximo nível?
               </motion.h2>
               <motion.p
-                className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
+                className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

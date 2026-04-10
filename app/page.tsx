@@ -140,6 +140,9 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* ====== BREATHING ROOM — reveal the 3D background ====== */}
+      <div className="h-40 md:h-64" aria-hidden="true" />
+
       {/* ====== SERVICES (ICE BLOCKS) ====== */}
       <FrostTransition>
         <section className="py-20 bg-background/80 backdrop-blur-xl">
@@ -191,6 +194,9 @@ export default function Home() {
           </Container>
         </section>
       </FrostTransition>
+
+      {/* ====== BREATHING ROOM — smaller gap between Services and Process ====== */}
+      <div className="h-24 md:h-36" aria-hidden="true" />
 
       {/* ====== PROCESS TIMELINE (CRYSTAL GROWTH) ====== */}
       <FrostTransition>
