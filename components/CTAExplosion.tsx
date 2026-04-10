@@ -17,7 +17,7 @@ export function CTAExplosion() {
   }));
 
   return (
-    <section className="py-20 border-t relative overflow-hidden">
+    <section className="py-20 border-t relative overflow-hidden bg-background/80 backdrop-blur-xl">
       <div className="relative z-10">
         <div
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
