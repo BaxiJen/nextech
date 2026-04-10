@@ -76,11 +76,19 @@ export default function Home() {
 
   return (
     <>
-      {/* ====== HERO SECTION ====== */}
-      <section className="relative py-24 md:py-40 overflow-hidden bg-background min-h-[80vh] flex items-center">
-        {/* 3D Scene or Static Fallback */}
-        {mounted && use3D ? <HeroScene /> : <StaticHero />}
+      {/* Fixed 3D Background — stays behind all sections on scroll */}
+      {mounted && use3D ? (
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <HeroScene />
+        </div>
+      ) : (
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <StaticHero />
+        </div>
+      )}
 
+      {/* ====== HERO SECTION ====== */}
+      <section className="relative py-24 md:py-40 min-h-[80vh] flex items-center">
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/70 to-background z-10" />
 
