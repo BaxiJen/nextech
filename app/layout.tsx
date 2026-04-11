@@ -69,7 +69,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
-        {/* Google Analytics */}
+        {/* Google Analytics - BaXiJen (Leo) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5XN8P33CF" />
         <script
           dangerouslySetInnerHTML={{
@@ -78,6 +78,7 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-W5XN8P33CF');
+              gtag('config', 'G-BJX1B5R6ZD');
             `,
           }}
         />
