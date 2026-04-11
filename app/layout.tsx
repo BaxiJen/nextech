@@ -70,14 +70,14 @@ export default function RootLayout({
     <html lang="pt-BR" className="scroll-smooth">
       <head>
         {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BJX1B5R6ZD" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5XN8P33CF" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-BJX1B5R6ZD');
+              gtag('config', 'G-W5XN8P33CF');
             `,
           }}
         />
