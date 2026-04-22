@@ -61,10 +61,10 @@ export function SobreContent() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <p>
-                Nascemos em fevereiro de 2026, da necessidade de empresas que buscam mais do que apenas um site bonito. Na BaXiJen®, acreditamos que a tecnologia deve ser uma alavanca de crescimento e eficiência, não uma fonte de frustração.
+                Fundada em 06 de fevereiro de 2026, nascemos da necessidade de empresas que buscam mais do que apenas um site bonito. Na BaXiJen®, acreditamos que a tecnologia deve ser uma alavanca de crescimento e eficiência, não uma fonte de frustração.
               </p>
               <p>
-                A BaXiJen® foi formalmente constituída em 06 de abril de 2026, a partir de uma inquietação compartilhada por três jovens pesquisadores do COPPEAD apaixonados por tecnologia e inovação. Durante o doutorado em Inteligência Artificial e Administração, percebemos que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa. Essa inquietação nos motivou a transformar conhecimento acadêmico em soluções concretas, práticas e impactantes.
+                A BaXiJen® nasceu em um Google Meet, quando três jovens pesquisadores do COPPEAD apaixonados por tecnologia e inovação definiram o nome da empresa e decidiram transformar inquietação em ação. Formalmente constituída em 06 de abril de 2026, a empresa surgiu da percepção de que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa — e de que era hora de transformar conhecimento acadêmico em soluções concretas, práticas e impactantes. Durante o doutorado em Inteligência Artificial e Administração, percebemos que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa. Essa inquietação nos motivou a transformar conhecimento acadêmico em soluções concretas, práticas e impactantes.
               </p>
               <p>
                 Unimos a velocidade e interatividade das interfaces modernas com a robustez e segurança de sistemas empresariais. Nossa abordagem é sempre técnica, pragmática e focada em resultados.
