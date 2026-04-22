@@ -24,7 +24,7 @@ export function SobreContent() {
             >
               <h1 className="text-4xl font-bold tracking-tight mb-4 text-foreground">A BaXiJen®</h1>
               <p className="text-xl text-muted-foreground">
-                Tecnologia de ponta com foco em resolver problemas do mundo real.
+                De um Google Meet ao CNPJ em 60 dias. Pesquisa de ponta, código que funciona.
               </p>
             </motion.div>
 
@@ -61,13 +61,13 @@ export function SobreContent() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <p>
-                Fundada em 06 de fevereiro de 2026, nascemos da necessidade de empresas que buscam mais do que apenas um site bonito. Na BaXiJen®, acreditamos que a tecnologia deve ser uma alavanca de crescimento e eficiência, não uma fonte de frustração.
+                Era 6 de fevereiro de 2026. Um Google Meet. Três pesquisadores do COPPEAD que estudavam Inteligência Artificial e Administração olharam um para o outro e disseram: <em>"A academia produz pesquisa de ponta, mas o mercado não consegue acessar isso."</em> Naquela noite, o nome <strong>BaXiJen</strong> — 巴西人, "povo brasileiro" — foi definido. Duas meses depois, em 6 de abril, o CNPJ foi aberto. Zero a empresa em 60 dias.
               </p>
               <p>
-                A BaXiJen® nasceu em um Google Meet, quando três jovens pesquisadores do COPPEAD apaixonados por tecnologia e inovação definiram o nome da empresa e decidiram transformar inquietação em ação. Formalmente constituída em 06 de abril de 2026, a empresa surgiu da percepção de que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa — e de que era hora de transformar conhecimento acadêmico em soluções concretas, práticas e impactantes. Durante o doutorado em Inteligência Artificial e Administração, percebemos que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa. Essa inquietação nos motivou a transformar conhecimento acadêmico em soluções concretas, práticas e impactantes.
+                Nascemos dessa inquietação: a tecnologia não deveria ser privilégio de quem tem orçamento de multinacional. Empresas brasileiras merecem a mesma inteligência artificial, a mesma automação, o mesmo nível de engenharia — sem o juro de ser pequeno. Na BaXiJen®, tecnologia é alavanca. Nunca frustração.
               </p>
               <p>
-                Unimos a velocidade e interatividade das interfaces modernas com a robustez e segurança de sistemas empresariais. Nossa abordagem é sempre técnica, pragmática e focada em resultados.
+                Unimos a velocidade e interatividade das interfaces modernas com a robustez e segurança de sistemas empresariais. Cada projeto é resolvido como engenheiro resolve: técnica, pragmática e focada em resultado. Sem firula. Sem promessa vazia. Código que funciona.
               </p>
             </motion.div>
 
@@ -82,7 +82,7 @@ export function SobreContent() {
                 >
                   <IceBlockCard
                     title="Missão"
-                    description="Democratizar o acesso a sistemas de alta complexidade para empresas que buscam eficiência operacional."
+                    description="Quebrar a barreira entre pesquisa de ponta e o mercado brasileiro. IA, automação e sistemas de alto nível — acessíveis para quem precisa."
                     href="#"
                     icon={Target}
                   />
@@ -95,7 +95,7 @@ export function SobreContent() {
                 >
                   <IceBlockCard
                     title="Visão"
-                    description="Ser a principal parceira tecnológica de empresas que priorizam a inteligência e automação em seus processos."
+                    description="Ser a referência brasileira em inteligência artificial aplicada. Quando alguém pensar em IA no Brasil, vai pensar na BaXiJen."
                     href="#"
                     icon={Eye}
                   />
@@ -108,7 +108,7 @@ export function SobreContent() {
                 >
                   <IceBlockCard
                     title="Valores"
-                    description="Transparência técnica, código limpo, compromisso com prazos e foco total no valor gerado ao cliente."
+                    description="Código limpo, prazo cumprido, transparência técnica. Não vendemos ilusão — entregamos resultado."
                     href="#"
                     icon={ShieldCheck}
                   />
