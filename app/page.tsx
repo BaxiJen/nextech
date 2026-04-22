@@ -241,7 +241,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">Por que escolher a BaXiJen?</h2>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">Por que escolher a BaXiJen®?</h2>
             </motion.div>
             <MorphParticles />
           </Container>

@@ -22,7 +22,7 @@ export function SobreContent() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-4xl font-bold tracking-tight mb-4 text-foreground">A BaXiJen</h1>
+              <h1 className="text-4xl font-bold tracking-tight mb-4 text-foreground">A BaXiJen®</h1>
               <p className="text-xl text-muted-foreground">
                 Tecnologia de ponta com foco em resolver problemas do mundo real.
               </p>
@@ -61,10 +61,10 @@ export function SobreContent() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <p>
-                Nascemos da necessidade de empresas que buscam mais do que apenas um site bonito. Na BaXiJen, acreditamos que a tecnologia deve ser uma alavanca de crescimento e eficiência, não uma fonte de frustração.
+                Nascemos em fevereiro de 2026, da necessidade de empresas que buscam mais do que apenas um site bonito. Na BaXiJen®, acreditamos que a tecnologia deve ser uma alavanca de crescimento e eficiência, não uma fonte de frustração.
               </p>
               <p>
-                A BaXiJen foi fundada a partir de uma inquietação compartilhada por três jovens pesquisadores do COPPEAD apaixonados por tecnologia e inovação. Durante o doutorado em Inteligência Artificial e Administração, percebemos que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa. Essa inquietação nos motivou a transformar conhecimento acadêmico em soluções concretas, práticas e impactantes.
+                A BaXiJen® foi formalmente constituída em 06 de abril de 2026, a partir de uma inquietação compartilhada por três jovens pesquisadores do COPPEAD apaixonados por tecnologia e inovação. Durante o doutorado em Inteligência Artificial e Administração, percebemos que a lacuna entre a pesquisa avançada e as necessidades reais do mercado era significativa. Essa inquietação nos motivou a transformar conhecimento acadêmico em soluções concretas, práticas e impactantes.
               </p>
               <p>
                 Unimos a velocidade e interatividade das interfaces modernas com a robustez e segurança de sistemas empresariais. Nossa abordagem é sempre técnica, pragmática e focada em resultados.

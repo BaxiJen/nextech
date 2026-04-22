@@ -20,7 +20,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-muted-foreground max-w-xs">
-              Tecnologia brasileira com visão global. Combinamos inovação e conectividade para resolver seus desafios.
+              BaXiJen® — Tecnologia brasileira com visão global. Combinamos inovação e conectividade para resolver seus desafios.
             </p>
           </div>
           <div>
@@ -43,7 +43,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} BaXiJen. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} BaXiJen®. Todos os direitos reservados.</p>
           <a
             href="https://www.linkedin.com/company/baxijen/"
             target="_blank"
