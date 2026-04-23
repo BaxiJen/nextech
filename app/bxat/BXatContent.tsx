@@ -340,6 +340,22 @@ export function BXatContent() {
             </div>
           </motion.div>
         </FrostTransition>
+
+        {/* ====== FOOTER LEGAL ====== */}
+        <div className="mt-16 pt-8 border-t border-white/10 text-center">
+          <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+            <Link href="/bxat/privacy" className="hover:text-foreground transition-colors">
+              Política de Privacidade
+            </Link>
+            <span className="text-white/20">|</span>
+            <Link href="/bxat/terms" className="hover:text-foreground transition-colors">
+              Termos de Uso
+            </Link>
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground/60">
+            &copy; {new Date().getFullYear()} BaXiJen. Todos os direitos reservados.
+          </p>
+        </div>
       </Container>
     </div>
   );
