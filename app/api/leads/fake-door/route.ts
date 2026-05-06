@@ -52,27 +52,24 @@ export async function POST(request: Request) {
       // Continue — don't block on DB error
     }
 
-    // 2. Forward to Google Sheets (via webhook/form)
+    // 2. Forward to Google Sheets (via GET query string — Apps Script compatible)
     if (GOOGLE_SHEETS_WEBHOOK_URL) {
       try {
-        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            timestamp: new Date().toISOString(),
-            test_id,
-            source,
-            nome,
-            email,
-            cargo: extra.cargo || '',
-            orgao: extra.orgao || '',
-            telefone: extra.telefone || extra.whatsapp || '',
-            empresa: extra.empresa || '',
-            segmento: extra.segmento || '',
-            porte: extra.porte || '',
-            dor: extra.dor || '',
-          }),
+        const params = new URLSearchParams({
+          timestamp: new Date().toISOString(),
+          test_id,
+          source,
+          nome,
+          email,
+          cargo: extra.cargo || '',
+          orgao: extra.orgao || '',
+          telefone: extra.telefone || extra.whatsapp || '',
+          empresa: extra.empresa || '',
+          segmento: extra.segmento || '',
+          porte: extra.porte || '',
+          dor: extra.dor || '',
         });
+        await fetch(`${GOOGLE_SHEETS_WEBHOOK_URL}?${params.toString()}`);
       } catch (sheetsError) {
         console.error('Google Sheets webhook error:', sheetsError);
         // Don't block — lead is saved in Supabase
