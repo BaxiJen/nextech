@@ -1,29 +1,12 @@
 /**
  * Google Apps Script — Fake Door Leads Collector
- * 
- * INSTRUÇÕES DE DEPLOY:
- * 1. Abra https://script.google.com
- * 2. Crie um novo projeto
- * 3. Cole este código
- * 4. Em "Implantar" → "Nova implantação" → Tipo: "App da Web"
- * 5. Executar como: "Eu" (sua conta Google)
- * 6. Quem pode acessar: "Qualquer pessoa"
- * 7. Copie a URL gerada e coloque no .env do Next.js como GOOGLE_SHEETS_WEBHOOK_URL
- * 
- * PRÉ-REQUISITO: Crie 3 Google Sheets manualmente com o nome:
- * - "Fake Door A — Gestor Público"
- * - "Fake Door B — Chatbot WhatsApp" 
- * - "Fake Door C — PME Burocracia"
- * 
- * Cada sheet deve ter uma aba "Leads" com headers em A1:L1:
- * Timestamp | Test ID | Source | Nome | Email | Cargo | Orgao | Telefone | Empresa | Segmento | Porte | Dor
+ * Deploy: script.google.com → New Project → Paste → Deploy → Web App → Anyone
  */
 
-// Substitua pelos IDs das suas 3 sheets (encontra na URL da sheet)
 const SHEET_IDS = {
-  'A': 'COLE_AQUI_O_ID_DA_SHEET_A',
-  'B': 'COLE_AQUI_O_ID_DA_SHEET_B',
-  'C': 'COLE_AQUI_O_ID_DA_SHEET_C',
+  'A': '1sWJAZG63yDkXAt6NGLAjnIEep_giyXGPz6Qzyz8_dLo',
+  'B': '1Y1u2f3iBuxxkdq_RwGGlOfzZpHtbqTJ4eZJdjd9bNdA',
+  'C': '1oggKdGbG4eC5vuIsqpjHBmt81DJDKYRjviSJ0MVKKBI',
 };
 
 function doPost(e) {
@@ -38,7 +21,7 @@ function doPost(e) {
     }
     
     const ss = SpreadsheetApp.openById(sheetId);
-    const sheet = ss.getSheetByName('Leads') || ss.getSheets()[0];
+    const sheet = ss.getSheets()[0];
     
     const row = [
       data.timestamp || new Date().toISOString(),
@@ -66,6 +49,6 @@ function doPost(e) {
 }
 
 function doGet(e) {
-  return ContentService.createTextOutput(JSON.stringify({ status: 'ok', message: 'BXat Fake Door webhook is running' }))
+  return ContentService.createTextOutput(JSON.stringify({ status: 'ok', message: 'BXat Fake Door webhook running' }))
     .setMimeType(ContentService.MimeType.JSON);
 }
