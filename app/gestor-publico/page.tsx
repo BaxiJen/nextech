@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: 'IA para Gestão Pública — BXat',
     description: 'Seu assistente inteligente para licitações, transparência e gestão municipal.',
-    url: 'https://baxi.ia.br/gestor-publico',
+    url: 'https://baxijen.com.br/gestor-publico',
     type: 'website',
   },
 };

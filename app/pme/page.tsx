@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: 'IA para PMEs — Resolva burocracia sozinho',
     description: 'Converse com a IA que entende burocracia brasileira. FGTS, CNPJ, impostos e mais.',
-    url: 'https://baxi.ia.br/pme',
+    url: 'https://baxijen.com.br/pme',
     type: 'website',
   },
 };

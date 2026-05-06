@@ -64,7 +64,7 @@ export function PMEContent() {
                     <CheckCircle2 className="h-8 w-8 text-amber-400" />
                   </div>
                   <h3 className="text-2xl font-bold">Cadastro realizado!</h3>
-                  <p className="text-muted-foreground">Você será um dos primeiros a testar o assistente de burocracia para PMEs. Enquanto isso, já pode usar o BXat gratuito em baxi.ia.br.</p>
+                  <p className="text-muted-foreground">Você será um dos primeiros a testar o assistente de burocracia para PMEs. Enquanto isso, já pode usar o BXat gratuito em baxijen.com.br/bxat.</p>
                 </div>
               ) : (
                 <>

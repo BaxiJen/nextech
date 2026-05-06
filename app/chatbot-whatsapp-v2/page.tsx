@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: 'Chatbot WhatsApp com IA em 5 minutos',
     description: 'Atendimento automatizado com IA. Sem código. Sem complicação.',
-    url: 'https://baxi.ia.br/chatbot-whatsapp',
+    url: 'https://baxijen.com.br/chatbot-whatsapp-v2',
     type: 'website',
   },
 };
