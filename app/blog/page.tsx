@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { NewsletterForm } from "@/components/blog/NewsletterForm";
 
 export const metadata: Metadata = {
   title: "Blog | BaXiJen",
@@ -51,6 +52,10 @@ export default function BlogPage() {
             ))}
           </div>
         )}
+        {/* Newsletter */}
+        <div className="mt-16 md:mt-20">
+          <NewsletterForm />
+        </div>
       </div>
     </div>
   );

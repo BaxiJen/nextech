@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
 import { BlogMarkdown } from "@/components/blog/BlogMarkdown";
 import { ShareButtons } from "@/components/blog/ShareButtons";
+import { NewsletterForm } from "@/components/blog/NewsletterForm";
 
 export async function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
@@ -159,6 +160,11 @@ export default async function BlogPostPage({
           >
             Fale conosco
           </Link>
+        </div>
+
+        {/* Newsletter */}
+        <div className="mt-12">
+          <NewsletterForm />
         </div>
       </div>
     </article>
