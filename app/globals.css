@@ -140,6 +140,8 @@ canvas {
   line-height: 1.8;
   color: var(--foreground);
   letter-spacing: -0.003em;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .blog-content h2 {
@@ -150,6 +152,7 @@ canvas {
   margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border);
+  text-align: left;
 }
 
 .blog-content h3 {
@@ -158,6 +161,7 @@ canvas {
   letter-spacing: -0.01em;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .blog-content p {
