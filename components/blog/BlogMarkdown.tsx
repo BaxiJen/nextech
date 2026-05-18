@@ -2,11 +2,12 @@
 
 import { BlogPost } from "@/lib/blog";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export function BlogMarkdown({ post }: { post: BlogPost }) {
   return (
     <div className="blog-content">
-      <ReactMarkdown>{post.content}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
     </div>
   );
 }
