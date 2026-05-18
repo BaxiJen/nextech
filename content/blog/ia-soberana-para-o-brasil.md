@@ -6,6 +6,8 @@ author: "Leonardo Camilo"
 authorRole: "Co-fundador & Tech Lead, BaXiJen"
 tags: ["IA soberana", "Brasil", "LLM", "gestão pública", "BXat"]
 featured: true
+image: "/blog/ia-soberana-cover.svg"
+imageAlt: "IA Soberana para o Brasil"
 ---
 
 Quando a gente fala "IA soberana para o brasileiro", não é buzzword. É reconhecer que depender de modelos estrangeiros para atender cidadãos brasileiros é um risco estratégico real.

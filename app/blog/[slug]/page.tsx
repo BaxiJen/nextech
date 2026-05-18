@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
@@ -30,6 +31,7 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: [post.author],
       tags: post.tags,
+      images: post.image ? [{ url: post.image, width: 1200, height: 630, alt: post.imageAlt || post.title }] : undefined,
     },
   };
 }
@@ -64,6 +66,17 @@ export default async function BlogPostPage({
 
         {/* Header */}
         <header className="mb-10">
+          {post.image && (
+            <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-8">
+              <Image
+                src={post.image}
+                alt={post.imageAlt || post.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             {post.title}
           </h1>

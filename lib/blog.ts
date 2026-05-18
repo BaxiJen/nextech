@@ -12,6 +12,8 @@ export interface BlogPost {
   author: string;
   authorRole: string;
   tags: string[];
+  image?: string;
+  imageAlt?: string;
   featured?: boolean;
   readTime?: string;
   content: string;
@@ -43,6 +45,8 @@ export function getPostBySlug(slug: string): BlogPost | null {
     author: data.author ?? "BaXiJen",
     authorRole: data.authorRole ?? "",
     tags: data.tags ?? [],
+    image: data.image ?? undefined,
+    imageAlt: data.imageAlt ?? "",
     featured: data.featured ?? false,
     readTime: data.readTime ?? estimateReadTime(content),
     content,

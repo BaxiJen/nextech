@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BlogPost } from "@/lib/blog";
 
 export function BlogCard({ post }: { post: BlogPost }) {
@@ -9,46 +10,66 @@ export function BlogCard({ post }: { post: BlogPost }) {
   });
 
   return (
-    <article className="group flex flex-col rounded-2xl border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-lg">
-      {post.featured && (
-        <span className="mb-2 inline-block w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          Destaque
-        </span>
-      )}
-      <h2 className="mb-2 text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
-        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-      </h2>
-      <p className="mb-4 text-sm text-muted-foreground line-clamp-3">
-        {post.description}
-      </p>
-      <div className="mt-auto flex items-center justify-between text-xs text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-foreground">{post.author}</span>
-          {post.authorRole && (
-            <>
-              <span>·</span>
-              <span>{post.authorRole}</span>
-            </>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <time dateTime={post.date}>{formattedDate}</time>
-          <span>·</span>
-          <span>{post.readTime}</span>
-        </div>
-      </div>
-      {post.tags.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground"
-            >
-              {tag}
+    <article className="group flex flex-col rounded-2xl border bg-card overflow-hidden transition-all hover:border-primary/50 hover:shadow-lg">
+      {/* Cover image */}
+      {post.image && (
+        <Link href={`/blog/${post.slug}`} className="relative aspect-[16/9] overflow-hidden">
+          <Image
+            src={post.image}
+            alt={post.imageAlt || post.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          {post.featured && (
+            <span className="absolute top-3 left-3 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+              Destaque
             </span>
-          ))}
+          )}
+        </Link>
+      )}
+      {!post.image && post.featured && (
+        <div className="px-6 pt-6">
+          <span className="inline-block w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            Destaque
+          </span>
         </div>
       )}
+      <div className="flex flex-col flex-grow p-6">
+        <h2 className="mb-2 text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+        </h2>
+        <p className="mb-4 text-sm text-muted-foreground line-clamp-3">
+          {post.description}
+        </p>
+        <div className="mt-auto flex items-center justify-between text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-foreground">{post.author}</span>
+            {post.authorRole && (
+              <>
+                <span>·</span>
+                <span>{post.authorRole}</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <time dateTime={post.date}>{formattedDate}</time>
+            <span>·</span>
+            <span>{post.readTime}</span>
+          </div>
+        </div>
+        {post.tags.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </article>
   );
 }

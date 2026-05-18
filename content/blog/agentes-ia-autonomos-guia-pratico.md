@@ -6,6 +6,8 @@ author: "Leonardo Camilo"
 authorRole: "Co-fundador & Tech Lead, BaXiJen"
 tags: ["agentes IA", "automação", "LLM", "produtividade"]
 featured: true
+image: "/blog/agentes-ia-cover.svg"
+imageAlt: "Agentes de IA Autônomos"
 ---
 
 Chatbot não é agente. Workflow não é agente. E essa distinção não é semântica: muda completamente o que você pode esperar da tecnologia.
