@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
 import { BlogMarkdown } from "@/components/blog/BlogMarkdown";
+import { ShareButtons } from "@/components/blog/ShareButtons";
 
 export async function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
@@ -133,6 +134,12 @@ export default async function BlogPostPage({
 
         {/* Content */}
         <BlogMarkdown post={post} />
+
+        {/* Share buttons */}
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t pt-6">
+          <span className="text-sm text-muted-foreground">Compartilhar:</span>
+          <ShareButtons title={post.title} slug={slug} description={post.description} />
+        </div>
 
         {/* Separator */}
         <hr className="my-12 border-border" />
