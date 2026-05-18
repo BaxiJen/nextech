@@ -1,0 +1,57 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cavebg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a"/>
+      <stop offset="100%" style="stop-color:#1a0a2a"/>
+    </linearGradient>
+    <linearGradient id="caveaccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#4CAF50"/>
+    </linearGradient>
+    <radialGradient id="lightGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#cavebg)"/>
+  <!-- Cave arch -->
+  <path d="M0 630 L0 250 Q300 80 600 100 Q900 80 1200 250 L1200 630 Z" fill="#111122" opacity="0.6"/>
+  <!-- Light source glow -->
+  <circle cx="600" cy="140" r="180" fill="url(#lightGlow)"/>
+  <!-- Fire/light at top -->
+  <ellipse cx="600" cy="130" rx="40" ry="25" fill="#FF6B35" opacity="0.6"/>
+  <ellipse cx="600" cy="130" rx="25" ry="15" fill="#FFD700" opacity="0.5"/>
+  <!-- Shadow lines (chains) -->
+  <g opacity="0.15" stroke="#888" stroke-width="2">
+    <line x1="200" y1="350" x2="200" y2="500"/>
+    <line x1="400" y1="330" x2="400" y2="500"/>
+    <line x1="800" y1="330" x2="800" y2="500"/>
+    <line x1="1000" y1="350" x2="1000" y2="500"/>
+  </g>
+  <!-- Walking figure (escaping) -->
+  <g transform="translate(950, 280)" opacity="0.7">
+    <circle cx="0" cy="-20" r="8" fill="#4CAF50"/>
+    <line x1="0" y1="-12" x2="0" y2="10" stroke="#4CAF50" stroke-width="3"/>
+    <line x1="0" y1="0" x2="-12" y2="8" stroke="#4CAF50" stroke-width="2.5"/>
+    <line x1="0" y1="0" x2="12" y2="-5" stroke="#4CAF50" stroke-width="2.5"/>
+    <line x1="0" y1="10" x2="-8" y2="25" stroke="#4CAF50" stroke-width="2.5"/>
+    <line x1="0" y1="10" x2="8" y2="25" stroke="#4CAF50" stroke-width="2.5"/>
+  </g>
+  <!-- Arrow pointing out -->
+  <path d="M970 260 L1020 230" stroke="#4CAF50" stroke-width="2" opacity="0.5"/>
+  <polygon points="1020,230 1010,238 1015,228" fill="#4CAF50" opacity="0.5"/>
+  <!-- BaXiJen badge -->
+  <rect x="60" y="55" width="100" height="30" rx="15" fill="#4CAF50" opacity="0.15"/>
+  <text x="110" y="75" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#4CAF50" text-anchor="middle">BaXiJen</text>
+  <!-- Title -->
+  <text x="600" y="370" font-family="system-ui, sans-serif" font-size="44" font-weight="700" fill="#ffffff" text-anchor="middle">Da Caverna Digital</text>
+  <text x="600" y="425" font-family="system-ui, sans-serif" font-size="44" font-weight="700" fill="#ffffff" text-anchor="middle">à Soberania</text>
+  <!-- Subtitle -->
+  <text x="600" y="490" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8" text-anchor="middle">Por que construímos a BaXiJen</text>
+  <!-- Accent line -->
+  <rect x="520" y="515" width="160" height="3" rx="1.5" fill="url(#caveaccent)"/>
+  <!-- Authors -->
+  <text x="600" y="560" font-family="system-ui, sans-serif" font-size="14" fill="#FF6B35" text-anchor="middle" opacity="0.7">Marcus Ramalho e Milena Carvalho</text>
+  <!-- Bottom bar -->
+  <rect x="0" y="610" width="1200" height="20" fill="url(#caveaccent)" opacity="0.4"/>
+</svg>
