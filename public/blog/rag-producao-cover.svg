@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="50%" style="stop-color:#111827"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#06d6a0"/>
+    </linearGradient>
+    <linearGradient id="pipe" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#06d6a0;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#10b981" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.04" stroke="#10b981" stroke-width="0.5">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Pipeline flow visualization -->
+  <!-- Stage 1: Documents/Chunking -->
+  <g transform="translate(80, 200)">
+    <!-- Document stack -->
+    <rect x="0" y="0" width="48" height="60" rx="4" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.7"/>
+    <rect x="6" y="6" width="48" height="60" rx="4" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.5"/>
+    <rect x="12" y="12" width="48" height="60" rx="4" fill="#111827" stroke="#10b981" stroke-width="2"/>
+    <line x1="22" y1="28" x2="50" y2="28" stroke="#06d6a0" stroke-width="1.5" opacity="0.6"/>
+    <line x1="22" y1="38" x2="45" y2="38" stroke="#06d6a0" stroke-width="1.5" opacity="0.6"/>
+    <line x1="22" y1="48" x2="48" y2="48" stroke="#06d6a0" stroke-width="1.5" opacity="0.6"/>
+    <line x1="22" y1="58" x2="40" y2="58" stroke="#06d6a0" stroke-width="1.5" opacity="0.4"/>
+    <!-- Chunk cuts -->
+    <line x1="12" y1="32" x2="60" y2="32" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+    <line x1="12" y1="48" x2="60" y2="48" stroke="#10b981" stroke-width="1.5" opacity="0.8"/>
+    <text x="36" y="92" text-anchor="middle" fill="#10b981" font-size="11" font-weight="600">CHUNKING</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g transform="translate(170, 225)">
+    <line x1="0" y1="0" x2="50" y2="0" stroke="url(#accent)" stroke-width="2"/>
+    <polygon points="50,-5 60,0 50,5" fill="#10b981"/>
+  </g>
+
+  <!-- Stage 2: Hybrid Search (BM25 + Vector) -->
+  <g transform="translate(240, 195)">
+    <rect x="0" y="0" width="100" height="70" rx="8" fill="#111827" stroke="#10b981" stroke-width="1.5"/>
+    <!-- BM25 icon -->
+    <rect x="10" y="12" width="35" height="22" rx="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="27" y="28" text-anchor="middle" fill="#f59e0b" font-size="8" font-weight="700">BM25</text>
+    <!-- Vector icon -->
+    <circle cx="70" cy="23" r="10" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <circle cx="70" cy="23" r="3" fill="#06d6a0"/>
+    <line x1="70" y1="23" x2="78" y2="18" stroke="#06d6a0" stroke-width="1"/>
+    <!-- Fusion -->
+    <rect x="25" y="42" width="50" height="18" rx="4" fill="#10b981" opacity="0.2" stroke="#10b981" stroke-width="1"/>
+    <text x="50" y="55" text-anchor="middle" fill="#10b981" font-size="8" font-weight="600">RRF</text>
+    <text x="50" y="92" text-anchor="middle" fill="#10b981" font-size="11" font-weight="600">HÍBRIDA</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g transform="translate(350, 225)">
+    <line x1="0" y1="0" x2="50" y2="0" stroke="url(#accent)" stroke-width="2"/>
+    <polygon points="50,-5 60,0 50,5" fill="#10b981"/>
+  </g>
+
+  <!-- Stage 3: Reranking -->
+  <g transform="translate(420, 195)">
+    <rect x="0" y="0" width="100" height="70" rx="8" fill="#111827" stroke="#10b981" stroke-width="1.5"/>
+    <!-- Ranking bars -->
+    <rect x="12" y="10" width="76" height="8" rx="2" fill="#10b981" opacity="0.8"/>
+    <rect x="12" y="22" width="56" height="8" rx="2" fill="#10b981" opacity="0.5"/>
+    <rect x="12" y="34" width="40" height="8" rx="2" fill="#10b981" opacity="0.3"/>
+    <rect x="12" y="46" width="20" height="8" rx="2" fill="#10b981" opacity="0.15"/>
+    <!-- Check mark on top -->
+    <polyline points="85,14 88,18 93,10" fill="none" stroke="#06d6a0" stroke-width="2"/>
+    <text x="50" y="92" text-anchor="middle" fill="#10b981" font-size="11" font-weight="600">RERANK</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <g transform="translate(530, 225)">
+    <line x1="0" y1="0" x2="50" y2="0" stroke="url(#accent)" stroke-width="2"/>
+    <polygon points="50,-5 60,0 50,5" fill="#10b981"/>
+  </g>
+
+  <!-- Stage 4: LLM Generation -->
+  <g transform="translate(600, 195)">
+    <rect x="0" y="0" width="100" height="70" rx="8" fill="#111827" stroke="#06d6a0" stroke-width="2" filter="url(#shadow)"/>
+    <!-- Brain/NN icon -->
+    <circle cx="30" cy="25" r="8" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <circle cx="50" cy="18" r="8" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <circle cx="70" cy="25" r="8" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <circle cx="30" cy="45" r="8" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <circle cx="50" cy="52" r="8" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <circle cx="70" cy="45" r="8" fill="none" stroke="#06d6a0" stroke-width="1.5"/>
+    <!-- Connections -->
+    <line x1="36" y1="28" x2="44" y2="20" stroke="#06d6a0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="56" y1="20" x2="64" y2="28" stroke="#06d6a0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="36" y1="42" x2="44" y2="50" stroke="#06d6a0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="56" y1="50" x2="64" y2="42" stroke="#06d6a0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="30" y1="33" x2="30" y2="37" stroke="#06d6a0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="70" y1="33" x2="70" y2="37" stroke="#06d6a0" stroke-width="0.8" opacity="0.5"/>
+    <text x="50" y="92" text-anchor="middle" fill="#06d6a0" font-size="11" font-weight="600">LLM</text>
+  </g>
+
+  <!-- Arrow 4 (to evaluation) -->
+  <g transform="translate(710, 225)">
+    <line x1="0" y1="0" x2="50" y2="0" stroke="url(#accent)" stroke-width="2"/>
+    <polygon points="50,-5 60,0 50,5" fill="#06d6a0"/>
+  </g>
+
+  <!-- Stage 5: Evaluation (RAGAS) -->
+  <g transform="translate(780, 195)">
+    <rect x="0" y="0" width="100" height="70" rx="8" fill="#111827" stroke="#10b981" stroke-width="1.5"/>
+    <!-- Chart/metrics icon -->
+    <rect x="15" y="45" width="10" height="15" rx="1" fill="#10b981" opacity="0.6"/>
+    <rect x="30" y="30" width="10" height="30" rx="1" fill="#10b981" opacity="0.7"/>
+    <rect x="45" y="20" width="10" height="40" rx="1" fill="#10b981" opacity="0.8"/>
+    <rect x="60" y="12" width="10" height="48" rx="1" fill="#06d6a0" opacity="0.9"/>
+    <!-- Labels -->
+    <text x="20" y="68" text-anchor="middle" fill="#6b7280" font-size="6">F</text>
+    <text x="35" y="68" text-anchor="middle" fill="#6b7280" font-size="6">AR</text>
+    <text x="50" y="68" text-anchor="middle" fill="#6b7280" font-size="6">CP</text>
+    <text x="65" y="68" text-anchor="middle" fill="#6b7280" font-size="6">CR</text>
+    <text x="50" y="92" text-anchor="middle" fill="#10b981" font-size="11" font-weight="600">RAGAS</text>
+  </g>
+
+  <!-- "73%" failure callout -->
+  <g transform="translate(920, 140)">
+    <rect x="0" y="0" width="180" height="80" rx="12" fill="#111827" stroke="#ef4444" stroke-width="1.5" opacity="0.9"/>
+    <text x="90" y="30" text-anchor="middle" fill="#ef4444" font-size="28" font-weight="800">73%</text>
+    <text x="90" y="50" text-anchor="middle" fill="#9ca3af" font-size="10">das falhas em RAG</text>
+    <text x="90" y="64" text-anchor="middle" fill="#9ca3af" font-size="10">começam no retrieval</text>
+  </g>
+
+  <!-- Title area -->
+  <text x="80" y="100" fill="#10b981" font-size="14" font-weight="700" letter-spacing="3">BAXIJEN · BLOG</text>
+
+  <text x="80" y="430" fill="white" font-size="42" font-weight="800" letter-spacing="-0.5">RAG em Produção:</text>
+  <text x="80" y="480" fill="white" font-size="42" font-weight="800" letter-spacing="-0.5">Pipeline de Retrieval</text>
+  <text x="80" y="530" fill="#10b981" font-size="42" font-weight="800" letter-spacing="-0.5">que Funciona de Verdade</text>
+
+  <!-- Author/date -->
+  <text x="80" y="585" fill="#9ca3af" font-size="14" font-weight="500">Marcus Ramalho · CTO &amp; Co-fundador, BaXiJen · 19 de maio de 2026</text>
+
+  <!-- Tags -->
+  <g transform="translate(80, 600)">
+    <rect x="0" y="0" width="45" height="20" rx="10" fill="#10b981" opacity="0.15" stroke="#10b981" stroke-width="1"/>
+    <text x="22" y="14" text-anchor="middle" fill="#10b981" font-size="9" font-weight="600">RAG</text>
+
+    <rect x="55" y="0" width="70" height="20" rx="10" fill="#10b981" opacity="0.15" stroke="#10b981" stroke-width="1"/>
+    <text x="90" y="14" text-anchor="middle" fill="#10b981" font-size="9" font-weight="600">RETRIEVAL</text>
+
+    <rect x="135" y="0" width="75" height="20" rx="10" fill="#10b981" opacity="0.15" stroke="#10b981" stroke-width="1"/>
+    <text x="172" y="14" text-anchor="middle" fill="#10b981" font-size="9" font-weight="600">RERANKING</text>
+
+    <rect x="220" y="0" width="55" height="20" rx="10" fill="#10b981" opacity="0.15" stroke="#10b981" stroke-width="1"/>
+    <text x="247" y="14" text-anchor="middle" fill="#10b981" font-size="9" font-weight="600">BXat</text>
+  </g>
+
+  <!-- Decorative corner accent -->
+  <path d="M 1100 0 L 1200 0 L 1200 100" fill="none" stroke="#10b981" stroke-width="2" opacity="0.3"/>
+  <path d="M 0 630 L 0 530 L 0 530" fill="none" stroke="#10b981" stroke-width="2" opacity="0.3"/>
+</svg>
