@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a2744"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00c896"/>
+      <stop offset="100%" stop-color="#00e5a0"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#00c896"/>
+      <stop offset="100%" stop-color="#00e5a0"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00c896" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#00c896" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.06" stroke="#00e5a0" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="630"/>
+    <line x1="0" y1="630" x2="1200" y2="0"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="472" x2="1200" y2="472"/>
+  </g>
+
+  <!-- Glow effect -->
+  <ellipse cx="350" cy="315" rx="400" ry="250" fill="url(#glow)"/>
+
+  <!-- Brazil map silhouette (simplified) -->
+  <g transform="translate(100, 120) scale(0.55)" opacity="0.12" fill="#00e5a0">
+    <path d="M180,40 C200,20 280,10 320,30 C360,50 400,30 420,50 C440,70 480,90 500,130 C520,170 540,200 530,240 C520,280 540,320 500,360 C460,400 420,440 380,460 C340,480 300,500 260,480 C220,460 180,440 160,400 C140,360 120,320 100,280 C80,240 60,200 80,160 C100,120 140,80 180,40Z"/>
+  </g>
+
+  <!-- Connection nodes (B2B network) -->
+  <g opacity="0.3">
+    <circle cx="220" cy="180" r="6" fill="#00e5a0"/>
+    <circle cx="310" cy="220" r="8" fill="#3b82f6"/>
+    <circle cx="260" cy="300" r="5" fill="#f59e0b"/>
+    <circle cx="340" cy="350" r="7" fill="#00e5a0"/>
+    <circle cx="200" cy="380" r="5" fill="#3b82f6"/>
+    <circle cx="380" cy="280" r="6" fill="#f59e0b"/>
+    <line x1="220" y1="180" x2="310" y2="220" stroke="#00e5a0" stroke-width="1" opacity="0.5"/>
+    <line x1="310" y1="220" x2="260" y2="300" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+    <line x1="260" y1="300" x2="340" y2="350" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+    <line x1="340" y1="350" x2="200" y2="380" stroke="#00e5a0" stroke-width="1" opacity="0.5"/>
+    <line x1="310" y1="220" x2="380" y2="280" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+    <line x1="380" y1="280" x2="340" y2="350" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- Data bars (market growth visualization) -->
+  <g transform="translate(480, 320)">
+    <!-- Labels -->
+    <text x="0" y="-8" fill="#94a3b8" font-size="10" font-weight="500">Mercado de IA no Brasil (US$ bilhões)</text>
+
+    <!-- 2023 bar -->
+    <rect x="0" y="100" width="50" height="30" rx="3" fill="url(#bar1)" opacity="0.5"/>
+    <text x="25" y="145" fill="#94a3b8" font-size="9" text-anchor="middle">2023</text>
+    <text x="25" y="93" fill="#00e5a0" font-size="11" font-weight="600" text-anchor="middle">1,2</text>
+
+    <!-- 2024 bar -->
+    <rect x="70" y="75" width="50" height="55" rx="3" fill="url(#bar1)" opacity="0.7"/>
+    <text x="95" y="145" fill="#94a3b8" font-size="9" text-anchor="middle">2024</text>
+    <text x="95" y="68" fill="#00e5a0" font-size="11" font-weight="600" text-anchor="middle">1,8</text>
+
+    <!-- 2025 bar -->
+    <rect x="140" y="40" width="50" height="90" rx="3" fill="url(#bar1)" opacity="0.9"/>
+    <text x="165" y="145" fill="#94a3b8" font-size="9" text-anchor="middle">2025</text>
+    <text x="165" y="33" fill="#00e5a0" font-size="11" font-weight="600" text-anchor="middle">2,4</text>
+
+    <!-- 2028 (projected) bar -->
+    <rect x="210" y="5" width="50" height="125" rx="3" fill="url(#bar1)"/>
+    <text x="235" y="145" fill="#94a3b8" font-size="9" text-anchor="middle">2028*</text>
+    <text x="235" y="-2" fill="#00e5a0" font-size="11" font-weight="600" text-anchor="middle">~5,2</text>
+  </g>
+
+  <!-- Key stat cards -->
+  <g transform="translate(720, 100)">
+    <!-- Card 1: Adoption -->
+    <rect x="0" y="0" width="170" height="70" rx="10" fill="#1e3a5f" opacity="0.8" filter="url(#shadow)"/>
+    <text x="85" y="30" fill="#00e5a0" font-size="22" font-weight="700" text-anchor="middle">90%</text>
+    <text x="85" y="50" fill="#94a3b8" font-size="9" text-anchor="middle">das grandes empresas</text>
+    <text x="85" y="62" fill="#94a3b8" font-size="9" text-anchor="middle">com caso de uso ativo</text>
+
+    <!-- Card 2: ROI -->
+    <rect x="190" y="0" width="170" height="70" rx="10" fill="#1e3a5f" opacity="0.8" filter="url(#shadow)"/>
+    <text x="275" y="30" fill="#fbbf24" font-size="22" font-weight="700" text-anchor="middle">92%</text>
+    <text x="275" y="50" fill="#94a3b8" font-size="9" text-anchor="middle">dos projetos de IA</text>
+    <text x="275" y="62" fill="#94a3b8" font-size="9" text-anchor="middle">com ROI positivo</text>
+  </g>
+
+  <!-- Readiness scores (horizontal) -->
+  <g transform="translate(720, 210)">
+    <text x="0" y="0" fill="#94a3b8" font-size="10" font-weight="500">Prontidão para IA: Brasil vs. Média Global (Salesforce)</text>
+
+    <!-- Regulation -->
+    <text x="0" y="30" fill="#cbd5e1" font-size="9">Regulação</text>
+    <rect x="100" y="20" width="150" height="14" rx="7" fill="#1e3a5f"/>
+    <rect x="100" y="20" width="127" height="14" rx="7" fill="url(#bar1)" opacity="0.8"/>
+    <text x="265" y="32" fill="#94a3b8" font-size="8">8.5 / 8.6</text>
+
+    <!-- Adoption -->
+    <text x="0" y="55" fill="#cbd5e1" font-size="9">Adoção</text>
+    <rect x="100" y="45" width="150" height="14" rx="7" fill="#1e3a5f"/>
+    <rect x="100" y="45" width="75" height="14" rx="7" fill="url(#bar2)" opacity="0.8"/>
+    <text x="265" y="57" fill="#94a3b8" font-size="8">5.0 / 5.8</text>
+
+    <!-- Innovation -->
+    <text x="0" y="80" fill="#cbd5e1" font-size="9">Inovação</text>
+    <rect x="100" y="70" width="150" height="14" rx="7" fill="#1e3a5f"/>
+    <rect x="100" y="70" width="33" height="14" rx="7" fill="url(#bar3)" opacity="0.8"/>
+    <text x="265" y="82" fill="#94a3b8" font-size="8">0.5 / 1.7</text>
+  </g>
+
+  <!-- Gartner prediction highlight -->
+  <g transform="translate(720, 340)">
+    <rect x="0" y="0" width="360" height="70" rx="10" fill="#1e3a5f" opacity="0.6" stroke="#00c896" stroke-width="1"/>
+    <text x="15" y="25" fill="#00e5a0" font-size="11" font-weight="700">Gartner 2028:</text>
+    <text x="15" y="42" fill="#e2e8f0" font-size="10">Agentes de IA vão superar vendedores</text>
+    <text x="15" y="56" fill="#e2e8f0" font-size="10">humanos em número de <tspan fill="#00e5a0" font-weight="700">10:1</tspan></text>
+    <text x="260" y="42" fill="#94a3b8" font-size="10" font-weight="600">90%</text>
+    <text x="260" y="56" fill="#94a3b8" font-size="9">das compras B2B</text>
+    <text x="260" y="66" fill="#94a3b8" font-size="9">mediadas por IA</text>
+  </g>
+
+  <!-- BaXiJen branding -->
+  <g transform="translate(720, 460)">
+    <rect x="0" y="0" width="360" height="50" rx="10" fill="#0a1628" stroke="#00c896" stroke-width="1.5"/>
+    <text x="180" y="22" fill="#00e5a0" font-size="16" font-weight="700" text-anchor="middle">BaXiJen</text>
+    <text x="180" y="40" fill="#94a3b8" font-size="9" text-anchor="middle">Antes de tudo, Brasileiro.</text>
+  </g>
+
+  <!-- Title section (left) -->
+  <g transform="translate(50, 440)">
+    <text x="0" y="0" fill="#00e5a0" font-size="11" font-weight="600" letter-spacing="2">BLOG BaXiJen</text>
+    <text x="0" y="30" fill="#ffffff" font-size="26" font-weight="700">Vendas de IA B2B</text>
+    <text x="0" y="58" fill="#ffffff" font-size="26" font-weight="700">no Mercado Brasileiro</text>
+    <text x="0" y="85" fill="#94a3b8" font-size="13">Os números, os desafios e as estratégias</text>
+    <text x="0" y="102" fill="#94a3b8" font-size="13">que ninguém conta no pitch.</text>
+    <text x="0" y="130" fill="#60a5fa" font-size="11" font-weight="500">Por Luiz Felipe Barbedo · Maio 2026</text>
+  </g>
+
+  <!-- Decorative accent line -->
+  <rect x="50" y="460" width="80" height="3" rx="1.5" fill="url(#accent)"/>
+</svg>
