@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0d2847;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00c896;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#00a3cc;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00c896;stop-opacity:0.15"/>
+      <stop offset="50%" style="stop-color:#00a3cc;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#0d2847;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.06" stroke="#00c896" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="630"/>
+    <line x1="0" y1="63" x2="1200" y2="630"/>
+    <line x1="0" y1="126" x2="1200" y2="630"/>
+    <line x1="0" y1="189" x2="1200" y2="630"/>
+    <line x1="0" y1="252" x2="1200" y2="630"/>
+    <line x1="1200" y1="0" x2="0" y2="630"/>
+    <line x1="1200" y1="63" x2="0" y2="630"/>
+    <line x1="1200" y1="126" x2="0" y2="630"/>
+    <line x1="1200" y1="189" x2="0" y2="630"/>
+    <line x1="1200" y1="252" x2="0" y2="630"/>
+  </g>
+
+  <!-- Brazil map silhouette (simplified) -->
+  <g transform="translate(680, 100) scale(0.55)" opacity="0.12" fill="#00c896">
+    <path d="M180,80 L200,60 L240,50 L280,60 L310,80 L320,100 L330,130 L340,160 L330,190 L320,220 L300,250 L280,270 L260,290 L240,310 L220,330 L200,340 L180,330 L160,310 L150,280 L140,250 L130,220 L120,190 L130,160 L140,130 L160,100 Z"/>
+  </g>
+
+  <!-- Network nodes on Brazil map -->
+  <g transform="translate(680, 100) scale(0.55)" opacity="0.3">
+    <!-- Sabiá node (Unicamp/SP) -->
+    <circle cx="210" cy="240" r="12" fill="#00c896" opacity="0.8"/>
+    <circle cx="210" cy="240" r="20" fill="none" stroke="#00c896" stroke-width="1.5" opacity="0.5"/>
+    <line x1="210" y1="220" x2="210" y2="180" stroke="#00c896" stroke-width="1" opacity="0.4"/>
+
+    <!-- Tucano node (Bonn, but represented in BR context) -->
+    <circle cx="260" cy="200" r="10" fill="#00a3cc" opacity="0.8"/>
+    <circle cx="260" cy="200" r="17" fill="none" stroke="#00a3cc" stroke-width="1.5" opacity="0.5"/>
+
+    <!-- Drummond node (BR) -->
+    <circle cx="190" cy="270" r="8" fill="#f0c040" opacity="0.7"/>
+    <circle cx="190" cy="270" r="14" fill="none" stroke="#f0c040" stroke-width="1.2" opacity="0.5"/>
+
+    <!-- Carolina node (USP) -->
+    <circle cx="220" cy="260" r="9" fill="#e06060" opacity="0.7"/>
+    <circle cx="220" cy="260" r="15" fill="none" stroke="#e06060" stroke-width="1.2" opacity="0.5"/>
+
+    <!-- Connection lines -->
+    <line x1="210" y1="240" x2="260" y2="200" stroke="#00c896" stroke-width="1" opacity="0.3"/>
+    <line x1="210" y1="240" x2="190" y2="270" stroke="#00c896" stroke-width="1" opacity="0.3"/>
+    <line x1="210" y1="240" x2="220" y2="260" stroke="#00c896" stroke-width="1" opacity="0.3"/>
+  </g>
+
+  <!-- Floating data particles -->
+  <g opacity="0.15">
+    <circle cx="900" cy="150" r="3" fill="#00c896"/>
+    <circle cx="950" cy="200" r="2" fill="#00a3cc"/>
+    <circle cx="880" cy="420" r="2.5" fill="#00c896"/>
+    <circle cx="1000" cy="350" r="2" fill="#00a3cc"/>
+    <circle cx="920" cy="500" r="3" fill="#00c896"/>
+    <circle cx="1050" cy="280" r="1.5" fill="#00c896"/>
+    <circle cx="850" cy="300" r="2" fill="#00a3cc"/>
+  </g>
+
+  <!-- Left content area -->
+  <g transform="translate(60, 80)">
+    <!-- BaXiJen logo text -->
+    <text x="0" y="0" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="16" font-weight="600" fill="#00c896" letter-spacing="3" opacity="0.8">BAXIJEN BLOG</text>
+    
+    <!-- Accent line -->
+    <rect x="0" y="12" width="50" height="3" rx="1.5" fill="url(#accent)"/>
+    
+    <!-- Main title -->
+    <text x="0" y="70" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="42" font-weight="800" fill="#ffffff" letter-spacing="-0.5">
+      <tspan x="0" dy="0">Modelos Open-Source</tspan>
+      <tspan x="0" dy="55">Brasileiros</tspan>
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="210" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="18" fill="#94a3b8" font-weight="400">
+      <tspan x="0" dy="0">O ecossistema de LLMs em PT-BR</tspan>
+      <tspan x="0" dy="28">que saiu do laboratório para produção</tspan>
+    </text>
+
+    <!-- Key stats boxes -->
+    <g transform="translate(0, 300)">
+      <!-- Stat 1 -->
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#0d2847" stroke="#1e3a5f" stroke-width="1"/>
+      <text x="15" y="28" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="28" font-weight="800" fill="#00c896">94%</text>
+      <text x="15" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#94a3b8" font-weight="400">do GPT-4o em PT-BR</text>
+
+      <!-- Stat 2 -->
+      <rect x="175" y="0" width="160" height="70" rx="8" fill="#0d2847" stroke="#1e3a5f" stroke-width="1"/>
+      <text x="190" y="28" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="28" font-weight="800" fill="#00c896">R$23bi</text>
+      <text x="190" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#94a3b8" font-weight="400">PBIA até 2028</text>
+
+      <!-- Stat 3 -->
+      <rect x="350" y="0" width="160" height="70" rx="8" fill="#0d2847" stroke="#1e3a5f" stroke-width="1"/>
+      <text x="365" y="28" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="28" font-weight="800" fill="#00c896">128K</text>
+      <text x="365" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#94a3b8" font-weight="400">contexto Sabiá-4</text>
+    </g>
+
+    <!-- Model tags -->
+    <g transform="translate(0, 400)">
+      <rect x="0" y="0" width="70" height="26" rx="13" fill="#00c896" fill-opacity="0.15" stroke="#00c896" stroke-width="1"/>
+      <text x="35" y="17" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#00c896" text-anchor="middle" font-weight="600">Sabiá-4</text>
+
+      <rect x="80" y="0" width="78" height="26" rx="13" fill="#00a3cc" fill-opacity="0.15" stroke="#00a3cc" stroke-width="1"/>
+      <text x="119" y="17" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#00a3cc" text-anchor="middle" font-weight="600">Tucano 2</text>
+
+      <rect x="168" y="0" width="88" height="26" rx="13" fill="#f0c040" fill-opacity="0.15" stroke="#f0c040" stroke-width="1"/>
+      <text x="212" y="17" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#f0c040" text-anchor="middle" font-weight="600">Drummond</text>
+
+      <rect x="266" y="0" width="70" height="26" rx="13" fill="#e06060" fill-opacity="0.15" stroke="#e06060" stroke-width="1"/>
+      <text x="301" y="17" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#e06060" text-anchor="middle" font-weight="600">AMALIA</text>
+    </g>
+  </g>
+
+  <!-- Open source icon (code brackets) right side -->
+  <g transform="translate(850, 200)" opacity="0.08" fill="none" stroke="#00c896" stroke-width="3">
+    <path d="M0,40 L-30,70 L-30,170 L0,200" stroke-linecap="round"/>
+    <path d="M140,40 L170,70 L170,170 L140,200" stroke-linecap="round"/>
+    <line x1="50" y1="40" x2="90" y2="200" stroke-width="2.5"/>
+  </g>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="610" width="1200" height="20" fill="url(#accent)" opacity="0.6"/>
+  <text x="1170" y="624" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="10" fill="#0a1628" text-anchor="end" font-weight="600" opacity="0.8">MAIO 2026</text>
+  <text x="30" y="624" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="10" fill="#0a1628" font-weight="600" opacity="0.8">ANTES DE TUDO, BRASILEIRO.</text>
+</svg>
