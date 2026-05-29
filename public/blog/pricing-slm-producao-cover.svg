@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#122044;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a3066;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff9100;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a3066;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#0a1628;stop-opacity:0.9" />
+    </linearGradient>
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a78;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#122044;stop-opacity:0.9" />
+    </linearGradient>
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#224488;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#162850;stop-opacity:0.9" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" rx="12" />
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.05" stroke="#ffffff" stroke-width="0.5">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="472" x2="1200" y2="472"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- Title section -->
+  <text x="60" y="100" font-size="18" fill="#ffb74d" font-weight="600" letter-spacing="4" opacity="0.9">PRICING DE IA</text>
+
+  <text x="60" y="155" font-size="38" fill="#ffffff" font-weight="700">
+    Como Cobrar por
+  </text>
+  <text x="60" y="205" font-size="38" fill="url(#accentGrad)" font-weight="700">
+    SLM em Produção
+  </text>
+  <text x="60" y="255" font-size="20" fill="#8899bb" font-weight="400">
+    sem perder cliente nem margem
+  </text>
+
+  <!-- Divider line -->
+  <rect x="60" y="280" width="120" height="3" fill="url(#accentGrad)" rx="2" opacity="0.6"/>
+
+  <!-- Three pricing model cards -->
+  <!-- Card 1: Licença Perpétua -->
+  <g transform="translate(60, 330)">
+    <rect width="330" height="200" fill="url(#cardGrad1)" rx="10" stroke="#ff9100" stroke-width="1" stroke-opacity="0.3"/>
+    <circle cx="30" cy="30" r="16" fill="#ff9100" opacity="0.15"/>
+    <text x="30" y="36" font-size="16" fill="#ffb74d" text-anchor="middle" font-weight="700">1</text>
+    <text x="60" y="36" font-size="16" fill="#ffffff" font-weight="600">Licença Perpétua</text>
+    <text x="20" y="65" font-size="13" fill="#99aacc">Ideal para B2G e grandes contas</text>
+    <text x="20" y="90" font-size="24" fill="#ff9100" font-weight="700">R$ 120K-350K</text>
+    <text x="20" y="115" font-size="12" fill="#7788aa">• Deploy on-premise incluso</text>
+    <text x="20" y="135" font-size="12" fill="#7788aa">• 22% manutenção anual</text>
+    <text x="20" y="155" font-size="12" fill="#7788aa">• 65-75% margem bruta</text>
+    <text x="20" y="180" font-size="11" fill="#556688">Encaixa em processo de licitação</text>
+  </g>
+
+  <!-- Card 2: Assinatura Híbrida -->
+  <g transform="translate(435, 330)">
+    <rect width="330" height="200" fill="url(#cardGrad2)" rx="10" stroke="#00c853" stroke-width="1" stroke-opacity="0.3"/>
+    <circle cx="30" cy="30" r="16" fill="#00c853" opacity="0.15"/>
+    <text x="30" y="36" font-size="16" fill="#00e676" text-anchor="middle" font-weight="700">2</text>
+    <text x="60" y="36" font-size="16" fill="#ffffff" font-weight="600">Assinatura Híbrida</text>
+    <text x="20" y="65" font-size="13" fill="#99aacc">Média empresa e escritórios</text>
+    <text x="20" y="90" font-size="24" fill="#00e676" font-weight="700">R$ 2.900/mês</text>
+    <text x="20" y="115" font-size="12" fill="#7788aa">• Base: 50 usuários + 50K queries</text>
+    <text x="20" y="135" font-size="12" fill="#7788aa">• R$ 0,03/query adicional</text>
+    <text x="20" y="155" font-size="12" fill="#7788aa">• 55-65% margem bruta</text>
+    <text x="20" y="180" font-size="11" fill="#556688">Previsível para o cliente, escalável para você</text>
+  </g>
+
+  <!-- Card 3: Autosserviço -->
+  <g transform="translate(810, 330)">
+    <rect width="330" height="200" fill="url(#cardGrad3)" rx="10" stroke="#448aff" stroke-width="1" stroke-opacity="0.3"/>
+    <circle cx="30" cy="30" r="16" fill="#448aff" opacity="0.15"/>
+    <text x="30" y="36" font-size="16" fill="#82b1ff" text-anchor="middle" font-weight="700">3</text>
+    <text x="60" y="36" font-size="16" fill="#ffffff" font-weight="600">Autosserviço</text>
+    <text x="20" y="65" font-size="13" fill="#99aacc">Startups e desenvolvedores</text>
+    <text x="20" y="90" font-size="24" fill="#82b1ff" font-weight="700">Free → R$ 290/mês</text>
+    <text x="20" y="115" font-size="12" fill="#7788aa">• Free: 5K queries + 1 usuário</text>
+    <text x="20" y="135" font-size="12" fill="#7788aa">• Pro: 50K queries + 5 usuários</text>
+    <text x="20" y="155" font-size="12" fill="#7788aa">• 45-55% margem bruta</text>
+    <text x="20" y="180" font-size="11" fill="#556688">Aquisição via free tier</text>
+  </g>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="585" width="1200" height="45" fill="#0d1a33" opacity="0.8"/>
+  <text x="60" y="614" font-size="13" fill="#99aacc" font-weight="500">BaXiJen</text>
+  <text x="140" y="614" font-size="13" fill="#556688">•</text>
+  <text x="160" y="614" font-size="13" fill="#556688">baxijen.com.br</text>
+  <text x="1140" y="614" font-size="13" fill="#ff9100" text-anchor="end" font-weight="600">Antes de tudo, Brasileiro.</text>
+</svg>
