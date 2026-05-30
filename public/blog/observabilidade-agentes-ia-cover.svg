@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e27"/>
+      <stop offset="100%" stop-color="#1a1040"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6c5ce7"/>
+      <stop offset="100%" stop-color="#00cec9"/>
+    </linearGradient>
+    <linearGradient id="trace1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6c5ce7" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#6c5ce7" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="trace2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00cec9" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00cec9" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="trace3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fd79a8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#fd79a8" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="150" x2="1200" y2="150" stroke="#6c5ce7" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#6c5ce7" stroke-width="1"/>
+    <line x1="0" y1="450" x2="1200" y2="450" stroke="#6c5ce7" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#6c5ce7" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#6c5ce7" stroke-width="1"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#6c5ce7" stroke-width="1"/>
+  </g>
+
+  <!-- Trace lines (distributed tracing visualization) -->
+  <!-- Main trace line -->
+  <rect x="80" y="340" width="1040" height="2" rx="1" fill="url(#accent)" opacity="0.5"/>
+
+  <!-- Span nodes -->
+  <!-- LLM Decision span -->
+  <circle cx="120" cy="340" r="10" fill="#6c5ce7" filter="url(#glow)"/>
+  <rect x="100" y="280" width="40" height="4" rx="2" fill="#6c5ce7" opacity="0.6"/>
+  <line x1="120" y1="330" x2="120" y2="284" stroke="#6c5ce7" stroke-width="2" opacity="0.4"/>
+
+  <!-- Tool call span -->
+  <rect x="220" y="290" width="100" height="4" rx="2" fill="#00cec9" opacity="0.6"/>
+  <line x1="220" y1="294" x2="220" y2="338" stroke="#00cec9" stroke-width="2" opacity="0.4"/>
+  <line x1="320" y1="294" x2="320" y2="338" stroke="#00cec9" stroke-width="2" opacity="0.4"/>
+  <circle cx="270" cy="340" r="8" fill="#00cec9" opacity="0.8"/>
+
+  <!-- LLM Decision 2 -->
+  <circle cx="440" cy="340" r="10" fill="#6c5ce7" filter="url(#glow)"/>
+  <rect x="420" y="390" width="40" height="4" rx="2" fill="#6c5ce7" opacity="0.6"/>
+  <line x1="440" y1="350" x2="440" y2="394" stroke="#6c5ce7" stroke-width="2" opacity="0.4"/>
+
+  <!-- Database tool -->
+  <rect x="550" y="390" width="90" height="4" rx="2" fill="#fd79a8" opacity="0.6"/>
+  <line x1="550" y1="394" x2="550" y2="338" stroke="#fd79a8" stroke-width="2" opacity="0.4"/>
+  <line x1="640" y1="394" x2="640" y2="338" stroke="#fd79a8" stroke-width="2" opacity="0.4"/>
+  <circle cx="600" cy="340" r="8" fill="#fd79a8" opacity="0.8"/>
+
+  <!-- Response span -->
+  <circle cx="800" cy="340" r="10" fill="#6c5ce7" filter="url(#glow)"/>
+  <rect x="780" y="280" width="40" height="4" rx="2" fill="#6c5ce7" opacity="0.6"/>
+  <line x1="800" y1="330" x2="800" y2="284" stroke="#6c5ce7" stroke-width="2" opacity="0.4"/>
+
+  <!-- More trace connections -->
+  <circle cx="1000" cy="340" r="10" fill="#6c5ce7" filter="url(#glow)"/>
+  <rect x="980" y="390" width="40" height="4" rx="2" fill="#6c5ce7" opacity="0.6"/>
+  <line x1="1000" y1="350" x2="1000" y2="394" stroke="#6c5ce7" stroke-width="2" opacity="0.4"/>
+
+  <!-- Dashboard panels -->
+  <g transform="translate(700, 100)">
+    <!-- Panel 1: Metrics -->
+    <rect x="0" y="0" width="150" height="60" rx="6" fill="#1a1040" stroke="#6c5ce7" stroke-width="1" opacity="0.8"/>
+    <text x="10" y="18" font-family="monospace" font-size="9" fill="#6c5ce7" opacity="0.7">LATÊNCIA P95</text>
+    <text x="10" y="42" font-family="monospace" font-size="18" fill="#00cec9" font-weight="bold">1.27s</text>
+    <rect x="10" y="48" width="100" height="3" rx="1.5" fill="#00cec9" opacity="0.6"/>
+  </g>
+
+  <g transform="translate(700, 170)">
+    <!-- Panel 2: Tokens -->
+    <rect x="0" y="0" width="150" height="60" rx="6" fill="#1a1040" stroke="#6c5ce7" stroke-width="1" opacity="0.8"/>
+    <text x="10" y="18" font-family="monospace" font-size="9" fill="#6c5ce7" opacity="0.7">TOKENS</text>
+    <text x="10" y="42" font-family="monospace" font-size="18" fill="#00cec9" font-weight="bold">1.9K</text>
+    <rect x="10" y="48" width="60" height="3" rx="1.5" fill="#00cec9" opacity="0.6"/>
+  </g>
+
+  <g transform="translate(700, 240)">
+    <!-- Panel 3: Cost -->
+    <rect x="0" y="0" width="150" height="60" rx="6" fill="#1a1040" stroke="#6c5ce7" stroke-width="1" opacity="0.8"/>
+    <text x="10" y="18" font-family="monospace" font-size="9" fill="#6c5ce7" opacity="0.7">CUSTO</text>
+    <text x="10" y="42" font-family="monospace" font-size="18" fill="#00cec9" font-weight="bold">$0.008</text>
+    <rect x="10" y="48" width="30" height="3" rx="1.5" fill="#fd79a8" opacity="0.6"/>
+  </g>
+
+  <!-- Title text -->
+  <text x="60" y="140" font-family="'Segoe UI', system-ui, sans-serif" font-size="48" font-weight="700" fill="white" letter-spacing="-1">
+    Observabilidade
+  </text>
+  <text x="60" y="195" font-family="'Segoe UI', system-ui, sans-serif" font-size="36" font-weight="300" fill="#a29bfe" letter-spacing="-0.5">
+    de Agentes IA
+  </text>
+
+  <!-- Subtitle -->
+  <text x="60" y="245" font-family="'Segoe UI', system-ui, sans-serif" font-size="16" fill="#b2bec3">
+    Logging, tracing e métricas que funcionam em produção
+  </text>
+
+  <!-- BaXiJen branding -->
+  <rect x="60" y="540" width="140" height="28" rx="14" fill="none" stroke="#6c5ce7" stroke-width="1.5" opacity="0.6"/>
+  <text x="130" y="559" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" fill="#a29bfe" text-anchor="middle" font-weight="600">BaXiJen</text>
+
+  <!-- OTel logo representation -->
+  <g transform="translate(930, 530)" opacity="0.5">
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#6c5ce7" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#6c5ce7"/>
+    <line x1="-10" y1="-10" x2="10" y2="10" stroke="#6c5ce7" stroke-width="1.5"/>
+    <line x1="10" y1="-10" x2="-10" y2="10" stroke="#6c5ce7" stroke-width="1.5"/>
+  </g>
+</svg>
