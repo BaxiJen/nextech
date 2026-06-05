@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27"/>
+      <stop offset="50%" style="stop-color:#121840"/>
+      <stop offset="100%" style="stop-color:#0d1530"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4aa"/>
+      <stop offset="100%" style="stop-color:#00b894"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4aa"/>
+      <stop offset="100%" style="stop-color:#00f5c4"/>
+    </linearGradient>
+    <linearGradient id="danger" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff4757"/>
+      <stop offset="100%" style="stop-color:#ff6b81"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.06" stroke="#00d4aa" stroke-width="0.5">
+    <line x1="0" y1="0" x2="0" y2="630"/><line x1="40" y1="0" x2="40" y2="630"/>
+    <line x1="80" y1="0" x2="80" y2="630"/><line x1="120" y1="0" x2="120" y2="630"/>
+    <line x1="160" y1="0" x2="160" y2="630"/><line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="240" y1="0" x2="240" y2="630"/><line x1="280" y1="0" x2="280" y2="630"/>
+    <line x1="320" y1="0" x2="320" y2="630"/><line x1="360" y1="0" x2="360" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/><line x1="440" y1="0" x2="440" y2="630"/>
+    <line x1="480" y1="0" x2="480" y2="630"/><line x1="520" y1="0" x2="520" y2="630"/>
+    <line x1="560" y1="0" x2="560" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="640" y1="0" x2="640" y2="630"/><line x1="680" y1="0" x2="680" y2="630"/>
+    <line x1="720" y1="0" x2="720" y2="630"/><line x1="760" y1="0" x2="760" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/><line x1="840" y1="0" x2="840" y2="630"/>
+    <line x1="880" y1="0" x2="880" y2="630"/><line x1="920" y1="0" x2="920" y2="630"/>
+    <line x1="960" y1="0" x2="960" y2="630"/><line x1="1000" y1="0" x2="1000" y2="630"/>
+    <line x1="1040" y1="0" x2="1040" y2="630"/><line x1="1080" y1="0" x2="1080" y2="630"/>
+    <line x1="1120" y1="0" x2="1120" y2="630"/><line x1="1160" y1="0" x2="1160" y2="630"/>
+    <line x1="1200" y1="0" x2="1200" y2="630"/>
+    <line x1="0" y1="40" x2="1200" y2="40"/><line x1="0" y1="80" x2="1200" y2="80"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="160" x2="1200" y2="160"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/><line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="280" x2="1200" y2="280"/><line x1="0" y1="320" x2="1200" y2="320"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/><line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="440" x2="1200" y2="440"/><line x1="0" y1="480" x2="1200" y2="480"/>
+    <line x1="0" y1="520" x2="1200" y2="520"/><line x1="0" y1="560" x2="1200" y2="560"/>
+    <line x1="0" y1="600" x2="1200" y2="600"/>
+  </g>
+
+  <!-- Shield icon (center-right) -->
+  <g transform="translate(880, 180)" filter="url(#softGlow)">
+    <path d="M0,-60 L50,-35 L50,20 C50,55 0,80 0,80 C0,80 -50,55 -50,20 L-50,-35 Z"
+          fill="none" stroke="url(#shield)" stroke-width="3" opacity="0.9"/>
+    <path d="M0,-60 L50,-35 L50,20 C50,55 0,80 0,80 C0,80 -50,55 -50,20 L-50,-35 Z"
+          fill="url(#shield)" opacity="0.1"/>
+    <!-- Lock icon inside shield -->
+    <rect x="-14" y="-8" width="28" height="22" rx="3" fill="none" stroke="#00d4aa" stroke-width="2"/>
+    <path d="M-8,-8 L-8,-18 C-8,-28 8,-28 8,-18 L8,-8" fill="none" stroke="#00d4aa" stroke-width="2"/>
+    <circle cx="0" cy="5" r="3" fill="#00d4aa"/>
+  </g>
+
+  <!-- OWASP Top 10 risk items (left side) -->
+  <g transform="translate(60, 120)" font-size="11" font-weight="500">
+    <!-- Risk items with red/orange dots -->
+    <circle cx="8" cy="8" r="4" fill="#ff4757" opacity="0.8"/>
+    <text x="20" y="12" fill="#e8e8f0" opacity="0.9">ASI01  Goal Hijacking</text>
+
+    <circle cx="8" cy="33" r="4" fill="#ff6b81" opacity="0.7"/>
+    <text x="20" y="37" fill="#e8e8f0" opacity="0.85">ASI02  Excessive Agency</text>
+
+    <circle cx="8" cy="58" r="4" fill="#ffa502" opacity="0.8"/>
+    <text x="20" y="62" fill="#e8e8f0" opacity="0.85">ASI03  Knowledge Poisoning</text>
+
+    <circle cx="8" cy="83" r="4" fill="#ff4757" opacity="0.7"/>
+    <text x="20" y="87" fill="#e8e8f0" opacity="0.85">ASI04  Tool Misuse</text>
+
+    <circle cx="8" cy="108" r="4" fill="#ff6b81" opacity="0.8"/>
+    <text x="20" y="112" fill="#e8e8f0" opacity="0.9">ASI05  Privilege Escalation</text>
+
+    <circle cx="8" cy="133" r="4" fill="#ff4757" opacity="0.9"/>
+    <text x="20" y="137" fill="#e8e8f0" opacity="0.85">ASI06  Supply Chain</text>
+
+    <circle cx="8" cy="158" r="4" fill="#ffa502" opacity="0.7"/>
+    <text x="20" y="162" fill="#e8e8f0" opacity="0.85">ASI07  Unsafe Code Execution</text>
+
+    <circle cx="8" cy="183" r="4" fill="#ff6b81" opacity="0.8"/>
+    <text x="20" y="187" fill="#e8e8f0" opacity="0.9">ASI08  Memory Poisoning</text>
+
+    <circle cx="8" cy="208" r="4" fill="#ff4757" opacity="0.8"/>
+    <text x="20" y="212" fill="#e8e8f0" opacity="0.85">ASI09  Rogue Agents</text>
+
+    <circle cx="8" cy="233" r="4" fill="#ffa502" opacity="0.8"/>
+    <text x="20" y="237" fill="#e8e8f0" opacity="0.9">ASI10  Insecure Comm</text>
+  </g>
+
+  <!-- Stat callouts -->
+  <g transform="translate(60, 400)">
+    <!-- 88% stat -->
+    <rect x="0" y="0" width="165" height="70" rx="8" fill="#ff4757" opacity="0.15" stroke="#ff4757" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="82" y="32" text-anchor="middle" fill="#ff6b81" font-size="28" font-weight="700" filter="url(#glow)">88%</text>
+    <text x="82" y="52" text-anchor="middle" fill="#c8c8d8" font-size="10" font-weight="400">sofreram incidentes</text>
+  </g>
+
+  <g transform="translate(245, 400)">
+    <!-- 14.4% stat -->
+    <rect x="0" y="0" width="165" height="70" rx="8" fill="#00d4aa" opacity="0.15" stroke="#00d4aa" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="82" y="32" text-anchor="middle" fill="#00f5c4" font-size="28" font-weight="700" filter="url(#glow)">14,4%</text>
+    <text x="82" y="52" text-anchor="middle" fill="#c8c8d8" font-size="10" font-weight="400">com aprovação security</text>
+  </g>
+
+  <g transform="translate(430, 400)">
+    <!-- $4.63M stat -->
+    <rect x="0" y="0" width="165" height="70" rx="8" fill="#ffa502" opacity="0.15" stroke="#ffa502" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="82" y="32" text-anchor="middle" fill="#ffc048" font-size="28" font-weight="700" filter="url(#glow)">US$4.6M</text>
+    <text x="82" y="52" text-anchor="middle" fill="#c8c8d8" font-size="10" font-weight="400">custo médio de breach</text>
+  </g>
+
+  <!-- Title -->
+  <g transform="translate(60, 68)">
+    <text x="0" y="0" fill="#00d4aa" font-size="13" font-weight="600" letter-spacing="3" text-transform="uppercase">BLOG BAXIJEN</text>
+  </g>
+
+  <g transform="translate(60, 30)">
+    <text x="0" y="55" fill="white" font-size="38" font-weight="700" letter-spacing="-0.5">Segurança de Agentes IA</text>
+    <text x="0" y="95" fill="white" font-size="38" font-weight="700" letter-spacing="-0.5">em Produção</text>
+    <text x="0" y="125" fill="#8b8fa3" font-size="16" font-weight="400">O que ninguém te conta sobre OWASP, EchoLeak e LGPD</text>
+  </g>
+
+  <!-- Defense shields on the right -->
+  <g transform="translate(710, 300)" font-size="11">
+    <rect x="0" y="0" width="180" height="30" rx="4" fill="#00d4aa" opacity="0.12" stroke="#00d4aa" stroke-width="0.5" stroke-opacity="0.4"/>
+    <text x="90" y="19" text-anchor="middle" fill="#00f5c4" font-weight="600">🛡 LlamaFirewall</text>
+
+    <rect x="0" y="38" width="180" height="30" rx="4" fill="#00d4aa" opacity="0.12" stroke="#00d4aa" stroke-width="0.5" stroke-opacity="0.4"/>
+    <text x="90" y="57" text-anchor="middle" fill="#00f5c4" font-weight="600">🛡 NeMo Guardrails</text>
+
+    <rect x="0" y="76" width="180" height="30" rx="4" fill="#00d4aa" opacity="0.12" stroke="#00d4aa" stroke-width="0.5" stroke-opacity="0.4"/>
+    <text x="90" y="95" text-anchor="middle" fill="#00f5c4" font-weight="600">🛡 Red Teaming</text>
+
+    <rect x="0" y="114" width="180" height="30" rx="4" fill="#00d4aa" opacity="0.12" stroke="#00d4aa" stroke-width="0.5" stroke-opacity="0.4"/>
+    <text x="90" y="133" text-anchor="middle" fill="#00f5c4" font-weight="600">🛡 Audit Trail</text>
+  </g>
+
+  <!-- Author and date bar -->
+  <g transform="translate(60, 575)">
+    <rect x="0" y="0" width="1080" height="1" fill="#1e2345"/>
+    <text x="0" y="30" fill="#8b8fa3" font-size="13" font-weight="400">Marcus Ramalho</text>
+    <text x="140" y="30" fill="#5a5e78" font-size="13">·</text>
+    <text x="155" y="30" fill="#5a5e78" font-size="13">CTO na BaXiJen</text>
+    <text x="280" y="30" fill="#5a5e78" font-size="13">·</text>
+    <text x="295" y="30" fill="#5a5e78" font-size="13">5 de junho de 2026</text>
+  </g>
+
+  <!-- BaXiJen logo text (bottom-right) -->
+  <g transform="translate(1040, 580)">
+    <text x="0" y="20" fill="#00d4aa" font-size="16" font-weight="700" letter-spacing="1">BaXiJen</text>
+  </g>
+
+  <!-- EchoLeak warning badge -->
+  <g transform="translate(920, 360)">
+    <rect x="0" y="0" width="200" height="55" rx="6" fill="#ff4757" opacity="0.15" stroke="#ff4757" stroke-width="1" stroke-opacity="0.5"/>
+    <text x="100" y="22" text-anchor="middle" fill="#ff6b81" font-size="11" font-weight="700">CVE-2025-32711</text>
+    <text x="100" y="40" text-anchor="middle" fill="#c8c8d8" font-size="10">EchoLeak · Zero-Click · CVSS 9.3</text>
+  </g>
+
+  <!-- Decorative circuit lines -->
+  <g opacity="0.15" stroke="#00d4aa" stroke-width="1">
+    <path d="M600,520 L650,520 L650,500 L700,500" fill="none"/>
+    <path d="M650,520 L650,540 L700,540" fill="none"/>
+    <circle cx="700" cy="500" r="3" fill="#00d4aa"/>
+    <circle cx="700" cy="540" r="3" fill="#00d4aa"/>
+  </g>
+</svg>
