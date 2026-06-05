@@ -68,7 +68,7 @@ export default function Home() {
 
   const faqs = [
     { q: "Quanto tempo demora para meu site ficar pronto?", a: "No serviço 'Sites Express', entregamos em até 72 horas. Projetos de sistemas complexos podem levar de 2 a 8 semanas, dependendo da necessidade." },
-    { q: "O agente de IA funciona 24 horas?", a: "Sim! Nossos agentes baseados em OpenAI funcionam ininterruptamente, atendendo e qualificando seus contatos mesmo enquanto você dorme." },
+    { q: "O agente de IA funciona 24 horas?", a: "Sim! Nossos agentes de IA funcionam ininterruptamente, atendendo e qualificando seus contatos mesmo enquanto você dorme." },
     { q: "Vocês cuidam da hospedagem?", a: "Sim. Nossas soluções de sites estáticos já incluem 1 ano de hospedagem gratuita com certificado SSL." },
     { q: "Como funciona a manutenção dos sistemas?", a: "Oferecemos pacotes mensais de suporte e evolução para garantir que seu sistema Django ou Next.js esteja sempre atualizado e seguro." },
     { q: "Posso integrar o chatbot com meu sistema atual?", a: "Com certeza. Nossas automações podem ser conectadas via API com CRMs, Planilhas Google ou qualquer software que você já utilize." }
@@ -111,6 +111,7 @@ export default function Home() {
 
             {/* Main heading with TypeWriter */}
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground max-w-5xl font-sans leading-[1.1]">
+              <span className="sr-only">Inovação e tecnologia para transformar seu negócio</span>
               <TypeWriter
                 text="Inovação e tecnologia para transformar seu negócio"
                 className="text-foreground"

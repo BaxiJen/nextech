@@ -83,14 +83,16 @@ export function IceBlockCard({
         </div>
         <h3 className="text-xl font-bold mb-3 text-foreground">{title}</h3>
         <p className="text-muted-foreground mb-6 leading-relaxed">{description}</p>
-        <Link
-          href={href}
-          className="inline-flex items-center text-sm font-semibold transition-all duration-300 group/link"
-          style={{ color: isHovered ? colors.border : undefined }}
-        >
-          Saiba mais
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/link:translate-x-1" />
-        </Link>
+        {href && (
+          <Link
+            href={href}
+            className="inline-flex items-center text-sm font-semibold transition-all duration-300 group/link"
+            style={{ color: isHovered ? colors.border : undefined }}
+          >
+            Saiba mais
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+          </Link>
+        )}
       </div>
     </div>
   );

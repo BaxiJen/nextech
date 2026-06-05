@@ -20,7 +20,7 @@ const capabilities = [
 
 const useCases = [
   { title: 'Vendas & Qualificação', description: 'Recebe leads, qualifica automaticamente e encaminha para o time certo. Converte mesmo enquanto você dorme.', icon: BarChart },
-  { title: 'Suporte ao Cliente', description: 'Resolve dúvidas, acompanha pedidos e escalona problemas complexos. Reduz tickets em até 70%.', icon: Headphones },
+  { title: 'Suporte ao Cliente', description: 'Resolve dúvidas, acompanha pedidos e escalona problemas complexos, reduzindo o volume de tickets de suporte.', icon: Headphones },
   { title: 'Onboarding & Treinamento', description: 'Orienta novos clientes e funcionários de forma personalizada. Ninguém fica perdido.', icon: Users },
   { title: 'Gestão & Relatórios', description: 'Centraliza informações de múltiplos sistemas e gera insights acionáveis para decisões rápidas.', icon: Globe },
 ];
@@ -111,14 +111,14 @@ export function BXatContent() {
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
-              <Link href="https://baxi.ia.br" target="_blank">
+              <Link href="https://wa.me/5521933009048" target="_blank">
                 <Button size="lg" className="flex gap-2 h-14 px-8 text-lg shadow-xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow">
-                  Conhecer o BXat <ArrowRight className="h-5 w-5" />
+                  <MessageSquare className="h-5 w-5" /> Falar com especialista
                 </Button>
               </Link>
-              <Link href="https://wa.me/5521933009048" target="_blank">
+              <Link href="https://baxi.ia.br" target="_blank" title="Ambiente de acesso ao BXat — cadastro necessário">
                 <Button variant="outline" size="lg" className="flex gap-2 h-14 px-8 text-lg backdrop-blur-sm">
-                  <MessageSquare className="h-5 w-5" /> Falar com especialista
+                  Conhecer o BXat <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>
             </div>
@@ -176,7 +176,7 @@ export function BXatContent() {
                 <IceBlockCard
                   title={cap.title}
                   description={cap.description}
-                  href="#"
+                  href=""
                   icon={cap.icon}
                 />
               </motion.div>
@@ -327,14 +327,14 @@ export function BXatContent() {
               O BXat está pronto para ser o cérebro da sua empresa. Comece hoje mesmo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="https://baxi.ia.br" target="_blank">
+              <Link href="https://wa.me/5521933009048" target="_blank">
                 <Button size="lg" className="flex gap-2 h-14 px-8 text-lg shadow-xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow">
-                  Conhecer o BXat <ArrowRight className="h-5 w-5" />
+                  <MessageSquare className="h-5 w-5" /> Falar com especialista
                 </Button>
               </Link>
-              <Link href="https://wa.me/5521933009048" target="_blank">
+              <Link href="https://baxi.ia.br" target="_blank" title="Ambiente de acesso ao BXat — cadastro necessário">
                 <Button variant="outline" size="lg" className="flex gap-2 h-14 px-8 text-lg backdrop-blur-sm">
-                  <MessageSquare className="h-5 w-5" /> Falar com especialista
+                  Conhecer o BXat <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>
             </div>
