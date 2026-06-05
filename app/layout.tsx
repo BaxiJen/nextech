@@ -18,11 +18,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const baseURL = "https://baxijen.tech";
+const baseURL = "https://baxijen.com.br";
 
 export const metadata: Metadata = {
   title: "BaXiJen | Tecnologia Brasileira com Visão Global",
-  description: "BaXiJen (巴西人) desenvolve soluções tecnológicas inteligentes: sites, agentes de IA, chatbots e sistemas sob medida. Tecnologia brasileira com padrão global.",
+  description: "BaXiJen — Agentes de IA soberanos para negócios brasileiros. Seus dados ficam no Brasil. BXat: pensa, lembra e resolve.",
   keywords: ["BaXiJen", "tecnologia", "IA", "inteligência artificial", "desenvolvimento web", "chatbot", "automação", "Brasil"],
   authors: [{ name: "BaXiJen" }],
   metadataBase: new URL(baseURL),
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     url: baseURL,
     siteName: "BaXiJen",
     title: "BaXiJen | Tecnologia Brasileira com Visão Global",
-    description: "Tecnologia inteligente feita no Brasil, com identidade própria e visão global.",
+    description: "Agentes de IA soberanos para negócios brasileiros. Seus dados ficam no Brasil.",
     images: [
       {
         url: `${baseURL}/og-image.jpg`,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "BaXiJen | Tecnologia Brasileira com Visão Global",
-    description: "Combinamos inovação e conectividade com um toque de calor humano.",
+    description: "Agentes de IA soberanos para negócios brasileiros. Seus dados ficam no Brasil.",
     images: [`${baseURL}/og-image.jpg`],
   },
   icons: {

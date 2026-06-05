@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Container } from '@/components/Container';
@@ -12,11 +12,8 @@ import { MorphParticles } from '@/components/MorphParticles';
 import { FrostTransition } from '@/components/FrostTransition';
 import { CTAExplosion } from '@/components/CTAExplosion';
 import {
-  Globe,
   MessageSquare,
   Layout,
-  Settings,
-  ShieldCheck,
   Zap,
   BarChart,
   Bot,
@@ -67,11 +64,11 @@ export default function Home() {
   }, []);
 
   const faqs = [
-    { q: "Quanto tempo demora para meu site ficar pronto?", a: "No serviço 'Sites Express', entregamos em até 72 horas. Projetos de sistemas complexos podem levar de 2 a 8 semanas, dependendo da necessidade." },
+    { q: "Meus dados ficam no Brasil?", a: "Sim. Nossos modelos rodam em infraestrutura brasileira. Nenhum dado sensível sai do país. Soberania de dados não é promessa, é arquitetura." },
     { q: "O agente de IA funciona 24 horas?", a: "Sim! Nossos agentes de IA funcionam ininterruptamente, atendendo e qualificando seus contatos mesmo enquanto você dorme." },
-    { q: "Vocês cuidam da hospedagem?", a: "Sim. Nossas soluções de sites estáticos já incluem 1 ano de hospedagem gratuita com certificado SSL." },
-    { q: "Como funciona a manutenção dos sistemas?", a: "Oferecemos pacotes mensais de suporte e evolução para garantir que seu sistema Django ou Next.js esteja sempre atualizado e seguro." },
-    { q: "Posso integrar o chatbot com meu sistema atual?", a: "Com certeza. Nossas automações podem ser conectadas via API com CRMs, Planilhas Google ou qualquer software que você já utilize." }
+    { q: "Qual a diferença entre o BXat e um chatbot comum?", a: "Chatbots seguem scripts rígidos. O BXat raciocina, lembra conversas anteriores e toma decisões. É um agente, não um robô de perguntas e respostas." },
+    { q: "Posso integrar com meus sistemas?", a: "Com certeza. O BXat conecta via API com CRMs, planilhas, bancos de dados e qualquer sistema que sua empresa já utiliza." },
+    { q: "Como começar?", a: "Fale com a gente pelo WhatsApp ou pelo formulário de contato. Entendemos sua dor e configuramos um agente personalizado para seu negócio." }
   ];
 
   return (
@@ -106,14 +103,14 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span className="text-primary mr-2 font-bold">巴西人</span> Tecnologia inteligente feita no Brasil
+              <Cpu className="h-4 w-4 mr-2 text-primary" /> IA brasileira com soberania de dados
             </motion.div>
 
             {/* Main heading with TypeWriter */}
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground max-w-5xl font-sans leading-[1.1]">
-              <span className="sr-only">Inovação e tecnologia para transformar seu negócio</span>
+              <span className="sr-only">Seus dados no Brasil. IA que pensa, lembra e resolve.</span>
               <TypeWriter
-                text="Inovação e tecnologia para transformar seu negócio"
+                text="Seus dados no Brasil. IA que pensa, lembra e resolve."
                 className="text-foreground"
                 speed={50}
               />
@@ -128,12 +125,12 @@ export default function Home() {
             >
               <Link href="https://wa.me/5521933009048" target="_blank">
                 <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-shadow">
-                  Falar no WhatsApp
+                  Falar com a BaXiJen
                 </Button>
               </Link>
-              <Link href="/servicos">
+              <Link href="/bxat">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto h-14 px-8 text-lg backdrop-blur-sm">
-                  Ver Serviços
+                  Conhecer o BXat
                 </Button>
               </Link>
             </motion.div>
@@ -155,39 +152,41 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">Serviços Principais</h2>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">IA soberana para negócios brasileiros</h2>
               <p className="text-foreground/70 max-w-2xl mx-auto">
-                Soluções tecnológicas focadas em resultados reais e eficiência operacional.
+                Agentes que pensam, lembram e evoluem. Seus dados ficam no Brasil.
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <IceBlockCard
-                title="BXat — Agente Completo"
-                description="O cérebro da sua empresa. IA que centraliza tudo, aprende e atende 24/7. Powered by BaXi."
+                title="BXat — Agente de IA Completo"
+                description="O cérebro da sua empresa. IA que centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida."
                 href="/bxat"
                 icon={Cpu}
               />
               <IceBlockCard
+                title="Agentes de WhatsApp"
+                description="IA generativa para atendimento humano e conversacional 24/7. Direto no WhatsApp do seu cliente."
+                href="/agentes-ia"
+                icon={Bot}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <IceBlockCard
                 title="Sites Express"
-                description="Site profissional ultra-rápido com chatbot integrado. Entrega em tempo recorde para seu negócio."
+                description="Site profissional com IA integrada. Entrega rápida."
                 href="/sites-express"
                 icon={Zap}
               />
               <IceBlockCard
-                title="Agentes de WhatsApp"
-                description="IA generativa para atendimento humano e conversacional 24/7 sem scripts engessados."
-                href="/agentes-ia"
-                icon={Bot}
-              />
-              <IceBlockCard
                 title="Chatbots Oficiais"
-                description="Integração com API do WhatsApp para automação de vendas e suporte inteligente."
+                description="Integração com API WhatsApp para vendas e suporte."
                 href="/chatbots-whatsapp"
                 icon={MessageSquare}
               />
               <IceBlockCard
                 title="Sistemas sob Medida"
-                description="Backend robusto e interfaces modernas para gerenciar seu negócio com total controle."
+                description="Backend robusto e interfaces modernas para seu negócio."
                 href="/sistemas-web"
                 icon={Layout}
               />
