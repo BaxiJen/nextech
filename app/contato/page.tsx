@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { ContatoContent } from "./ContatoContent";
 
 export const metadata: Metadata = {
-  title: "BaXiJen | Contato",
-  description: "Entre em contato conosco. Estamos prontos para conversar sobre suas necessidades e apresentar nossas soluções.",
+  title: "Contato | BaXiJen — IA soberana para negócios brasileiros",
+  description: "Fale com a BaXiJen. Agentes de IA com soberania de dados. Conte seu desafio e receba uma proposta personalizada em até 24 horas.",
   openGraph: {
-    title: "BaXiJen | Contato",
-    description: "Entre em contato com a BaXiJen para conhecer nossas soluções.",
-    url: "https://baxijen.tech/contato",
+    title: "Contato | BaXiJen",
+    description: "Agentes de IA com soberania de dados. Conte seu desafio e receba uma proposta personalizada.",
+    url: "https://baxijen.com.br/contato",
     type: "website",
   },
 };

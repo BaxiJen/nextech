@@ -111,9 +111,9 @@ export function BXatContent() {
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
-              <Link href="https://wa.me/5521933009048" target="_blank">
+              <Link href="/contato">
                 <Button size="lg" className="flex gap-2 h-14 px-8 text-lg shadow-xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow">
-                  <MessageSquare className="h-5 w-5" /> Falar com especialista
+                  <MessageSquare className="h-5 w-5" /> Falar com a BaXiJen
                 </Button>
               </Link>
               <Link href="https://baxi.ia.br" target="_blank" title="Ambiente de acesso ao BXat — cadastro necessário">
@@ -327,9 +327,9 @@ export function BXatContent() {
               O BXat está pronto para ser o cérebro da sua empresa. Comece hoje mesmo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="https://wa.me/5521933009048" target="_blank">
+              <Link href="/contato">
                 <Button size="lg" className="flex gap-2 h-14 px-8 text-lg shadow-xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow">
-                  <MessageSquare className="h-5 w-5" /> Falar com especialista
+                  <MessageSquare className="h-5 w-5" /> Falar com a BaXiJen
                 </Button>
               </Link>
               <Link href="https://baxi.ia.br" target="_blank" title="Ambiente de acesso ao BXat — cadastro necessário">

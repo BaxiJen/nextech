@@ -54,8 +54,8 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
-            <Link href="https://wa.me/5521933009048" target="_blank">
-              <Button size="sm">WhatsApp</Button>
+            <Link href="/contato">
+              <Button size="sm">Contato</Button>
             </Link>
           </nav>
 
@@ -97,8 +97,8 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-4 px-3">
-              <Link href="https://wa.me/5521933009048" target="_blank" className="w-full">
-                <Button className="w-full">WhatsApp</Button>
+              <Link href="/contato" className="w-full">
+                <Button className="w-full">Contato</Button>
               </Link>
             </div>
           </div>
