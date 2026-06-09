@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1230;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="red1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="red2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#991b1b;stop-opacity:0.95" />
+    </linearGradient>
+    <linearGradient id="blueAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern (subtle) -->
+  <g opacity="0.04" stroke="#4f46e5" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="630"/>
+    <line x1="100" y1="0" x2="1200" y2="530"/>
+    <line x1="200" y1="0" x2="1200" y2="430"/>
+    <line x1="0" y1="100" x2="1100" y2="630"/>
+    <line x1="0" y1="200" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Decorative circuit lines -->
+  <g opacity="0.08" stroke="#ef4444" stroke-width="1" fill="none">
+    <path d="M0,150 H200 L230,180 H400 L430,150 H600"/>
+    <path d="M600,350 H800 L830,380 H1000 L1030,350 H1200"/>
+    <path d="M0,450 H150 L180,480 H350"/>
+    <circle cx="200" cy="150" r="4" fill="#ef4444"/>
+    <circle cx="400" cy="150" r="4" fill="#ef4444"/>
+    <circle cx="800" cy="350" r="4" fill="#ef4444"/>
+    <circle cx="1000" cy="350" r="4" fill="#ef4444"/>
+  </g>
+
+  <!-- Central shield icon -->
+  <g transform="translate(520, 120)" filter="url(#softGlow)">
+    <path d="M80,0 L160,30 L160,100 C160,160 80,200 80,200 C80,200 0,160 0,100 L0,30 Z"
+          fill="url(#shieldGrad)" stroke="#f97316" stroke-width="2" opacity="0.9"/>
+    <!-- Crossed swords / attack arrows -->
+    <line x1="40" y1="60" x2="120" y2="140" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="120" y1="60" x2="40" y2="140" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <!-- Exclamation mark -->
+    <rect x="72" y="55" width="16" height="45" rx="3" fill="#fef3c7"/>
+    <circle cx="80" cy="118" r="8" fill="#fef3c7"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="380" text-anchor="middle" fill="#f8fafc" font-size="42" font-weight="800" letter-spacing="-0.5">
+    Red Teaming na Prática
+  </text>
+  <text x="600" y="425" text-anchor="middle" fill="#f97316" font-size="22" font-weight="600" letter-spacing="0.5">
+    Como Testar Adversarialmente Seu Agente Antes do Deploy
+  </text>
+
+  <!-- Layer pills (5 attack layers) -->
+  <g transform="translate(130, 470)">
+    <rect x="0" y="0" width="170" height="36" rx="18" fill="#ef4444" opacity="0.85"/>
+    <text x="85" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Input/Output</text>
+
+    <rect x="185" y="0" width="140" height="36" rx="18" fill="#f97316" opacity="0.85"/>
+    <text x="255" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">RAG</text>
+
+    <rect x="340" y="0" width="170" height="36" rx="18" fill="#7c3aed" opacity="0.85"/>
+    <text x="425" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Agência</text>
+
+    <rect x="525" y="0" width="160" height="36" rx="18" fill="#06b6d4" opacity="0.85"/>
+    <text x="605" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Modelo</text>
+
+    <rect x="700" y="0" width="190" height="36" rx="18" fill="#475569" opacity="0.85"/>
+    <text x="795" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Infraestrutura</text>
+  </g>
+
+  <!-- Tool badges -->
+  <g transform="translate(130, 530)">
+    <rect x="0" y="0" width="120" height="30" rx="6" fill="none" stroke="#4f46e5" stroke-width="1.5"/>
+    <text x="60" y="20" text-anchor="middle" fill="#a5b4fc" font-size="12" font-weight="500">Promptfoo</text>
+
+    <rect x="140" y="0" width="100" height="30" rx="6" fill="none" stroke="#4f46e5" stroke-width="1.5"/>
+    <text x="190" y="20" text-anchor="middle" fill="#a5b4fc" font-size="12" font-weight="500">PyRIT</text>
+
+    <rect x="260" y="0" width="100" height="30" rx="6" fill="none" stroke="#4f46e5" stroke-width="1.5"/>
+    <text x="310" y="20" text-anchor="middle" fill="#a5b4fc" font-size="12" font-weight="500">Garak</text>
+
+    <rect x="380" y="0" width="120" height="30" rx="6" fill="none" stroke="#4f46e5" stroke-width="1.5"/>
+    <text x="440" y="20" text-anchor="middle" fill="#a5b4fc" font-size="12" font-weight="500">DeepTeam</text>
+
+    <rect x="520" y="0" width="140" height="30" rx="6" fill="none" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="590" y="20" text-anchor="middle" fill="#67e8f9" font-size="12" font-weight="500">OWASP Top 10</text>
+  </g>
+
+  <!-- BaXiJen tag -->
+  <text x="600" y="598" text-anchor="middle" fill="#64748b" font-size="13" font-weight="400" letter-spacing="2">
+    BaXiJen — Antes de tudo, Brasileiro.
+  </text>
+
+  <!-- Corner accents -->
+  <rect x="0" y="0" width="4" height="630" fill="url(#red1)" opacity="0.7"/>
+  <rect x="0" y="626" width="1200" height="4" fill="url(#red1)" opacity="0.3"/>
+</svg>
