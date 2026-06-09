@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO at BaXiJen"
 tags: ["claude", "anthropic", "fable-5", "mythos-5", "AI", "security", "agents", "data-sovereignty"]
 featured: false
-image: "/blog/fable-5-mythos-5-brazil.svg"
+image: "/blog/fable-5-mythos-5-brazil.png"
 imageAlt: "Analysis of Claude Fable 5 and Mythos 5 launch: capabilities, safeguards, and impact on the global AI market"
 ---
 
