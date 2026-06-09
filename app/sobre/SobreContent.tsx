@@ -136,18 +136,39 @@ export function SobreContent() {
                   Profissionais especializados em suas áreas, unindo expertise técnica e visão estratégica para entregar soluções de excelência.
                 </p>
               </motion.div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {teamMembers.map((member, i) => (
-                  <motion.div
-                    key={member.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                  >
-                    <TeamMemberCard member={member} />
-                  </motion.div>
-                ))}
+              {/* Fundadores */}
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold text-muted-foreground mb-6 text-center">Fundadores</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {teamMembers.filter(m => m.role === 'founder').map((member, i) => (
+                    <motion.div
+                      key={member.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                    >
+                      <TeamMemberCard member={member} />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+              {/* Consultores */}
+              <div className="mt-16">
+                <h3 className="text-xl font-semibold text-muted-foreground mb-6 text-center">Consultores</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  {teamMembers.filter(m => m.role === 'advisor').map((member, i) => (
+                    <motion.div
+                      key={member.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                    >
+                      <TeamMemberCard member={member} />
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </Container>

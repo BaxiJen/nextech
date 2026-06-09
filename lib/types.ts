@@ -30,6 +30,8 @@ export interface Interaction {
   created_at: string
 }
 
+export type TeamRole = 'founder' | 'advisor'
+
 export interface TeamMember {
   id: string
   name: string
@@ -37,4 +39,6 @@ export interface TeamMember {
   skills: string[]
   linkedinUrl: string
   photo: string
+  role: TeamRole
+  roleLabel?: string  // e.g. 'Consultor Estratégico', 'CTO', etc.
 }

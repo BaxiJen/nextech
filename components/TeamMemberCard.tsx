@@ -11,15 +11,16 @@ interface TeamMemberCardProps {
 
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const isAdvisor = member.role === 'advisor';
 
   return (
     <div
       className="flex flex-col space-y-6 rounded-2xl p-8 transition-all duration-500"
       style={{
-        background: isHovered ? 'rgba(0,229,255,0.05)' : 'rgba(255,255,255,0.03)',
+        background: isHovered ? (isAdvisor ? 'rgba(61,153,66,0.05)' : 'rgba(0,229,255,0.05)') : 'rgba(255,255,255,0.03)',
         backdropFilter: 'blur(16px)',
-        border: `1px solid ${isHovered ? 'rgba(0,229,255,0.2)' : 'rgba(255,255,255,0.06)'}`,
-        boxShadow: isHovered ? '0 0 30px rgba(0,229,255,0.08)' : 'none',
+        border: `1px solid ${isHovered ? (isAdvisor ? 'rgba(61,153,66,0.2)' : 'rgba(0,229,255,0.2)') : 'rgba(255,255,255,0.06)'}`,
+        boxShadow: isHovered ? (isAdvisor ? '0 0 30px rgba(61,153,66,0.08)' : '0 0 30px rgba(0,229,255,0.08)') : 'none',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -31,6 +32,16 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           fill
           className="object-cover object-top"
         />
+        {/* Role badge overlay */}
+        <div
+          className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold"
+          style={{
+            background: isAdvisor ? 'rgba(61,153,66,0.9)' : 'rgba(0,229,255,0.9)',
+            color: isAdvisor ? '#fff' : '#0D1117',
+          }}
+        >
+          {member.roleLabel}
+        </div>
       </div>
       <div className="space-y-3">
         <h3 className="text-2xl font-bold">{member.name}</h3>
@@ -48,7 +59,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
               key={index}
               className="text-xs px-2.5 py-1 rounded-full"
               style={{
-                background: isHovered ? 'rgba(0,229,255,0.08)' : 'rgba(255,255,255,0.05)',
+                background: isHovered ? (isAdvisor ? 'rgba(61,153,66,0.08)' : 'rgba(0,229,255,0.08)') : 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.08)',
               }}
             >
@@ -57,15 +68,17 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           ))}
         </div>
       </div>
-      <a
-        href={member.linkedinUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#0077B5] transition-colors font-medium text-sm"
-      >
-        <Linkedin className="h-4 w-4" />
-        <span>Perfil LinkedIn</span>
-      </a>
+      {member.linkedinUrl !== '#' && (
+        <a
+          href={member.linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#0077B5] transition-colors font-medium text-sm"
+        >
+          <Linkedin className="h-4 w-4" />
+          <span>Perfil LinkedIn</span>
+        </a>
+      )}
     </div>
   );
 }
