@@ -16,6 +16,8 @@ Anthropic announced today **Claude Fable 5**, the first Mythos-class model avail
 
 Fable 5 surpasses every model Anthropic has previously made generally available across virtually all capability benchmarks: software engineering, knowledge work, vision, and scientific research. The longer and more complex the task, the larger Fable 5's lead.
 
+![Benchmark comparison showing Claude Fable 5 and Mythos 5 performance across multiple categories](/blog/mythos5-protein-design.png)
+
 ## The numbers that matter
 
 **Pricing**: $10/million input tokens, $50/million output tokens. Less than half the price of the previous Mythos Preview.
@@ -25,8 +27,16 @@ Fable 5 surpasses every model Anthropic has previously made generally available 
 - **Software engineering**: Stripe reported that Fable 5 compressed months of engineering into days. It migrated a 50-million-line Ruby codebase in one day, work that would have taken a full team over two months by hand.
 - **Analytical knowledge**: Highest score on Hebbia's Finance Benchmark for senior-level reasoning. IMC confirmed superior performance across trading analysis, conceptual reasoning, root-cause analysis, and expected-value analysis.
 - **Vision**: New state-of-the-art. Reconstructs web app source code from screenshots alone. Completed Pokémon FireRed using only raw game screenshots with no navigation aids.
+
+![Claude playing Pokémon FireRed using only vision — no maps, no navigation aids, no game-state information](/blog/fable5-pokemon.png)
+
 - **Memory and long context**: In Slay the Spire, persistent file-based memory tripled performance gains compared to Opus 4.8. Fable 5 reached the final act three times more often.
+
+![FrontierCode benchmark showing Fable 5 accuracy vs cost compared to other models](/blog/fable5-memory-slay-spire.png)
+
 - **Scientific research**: Mythos 5 designed drug candidates without human assistance, matching or beating skilled human operators. Generated novel molecular biology hypotheses preferred by scientists ~80% of the time in blinded evaluations. Conducted autonomous genomics research that outperformed a recent Science-published model despite being 100 times smaller.
+
+![Protein complexes designed by Mythos 5 across multiple therapeutic targets](/blog/fable5-alignment.png)
 
 ## Safeguards: the innovation few are discussing
 
@@ -38,6 +48,10 @@ What this means in practice:
 - For the 95%+ of remaining sessions, Fable 5's performance is **effectively identical to Mythos 5**
 - Users are informed when a fallback occurs
 - Classifiers are tuned conservatively: some benign requests will be caught, and Anthropic acknowledges this openly
+
+![Cyber adversarial robustness evaluation showing Fable 5's resistance to automated red-teaming](/blog/fable5-pokemon.png)
+
+![Offensive cyber evaluations showing success rates with and without safeguards](/blog/fable5-safeguards-chart.png)
 
 This **dynamic safety layer** approach is relevant for anyone operating AI in regulated markets. Instead of hard refusals, the system redirects to a still highly capable model. It mitigates risk without destroying user experience.
 
