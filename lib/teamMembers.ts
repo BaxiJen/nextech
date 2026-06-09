@@ -51,7 +51,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     id: 'aurelio',
-    name: 'Aurélio C. P. D. R.',
+    name: 'Aurélio Lamare Soares Murta',
     headline: 'Consultor Estratégico | Setor Público e Projetos Especiais',
     role: 'advisor',
     roleLabel: 'Consultor Estratégico',
