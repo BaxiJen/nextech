@@ -52,33 +52,33 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'aurelio',
     name: 'Aurélio Lamare Soares Murta',
-    headline: 'Consultor Estratégico | Setor Público e Projetos Especiais',
+    headline: 'Professor Adjunto UFF | Doutor em Engenharia de Transportes COPPE/UFRJ | Logística e Projetos Especiais',
     role: 'advisor',
     roleLabel: 'Consultor Estratégico',
     skills: [
-      'Relações Institucionais',
-      'Gestão de Projetos Públicos',
-      'Estratégia e Business Development',
-      'Rede de Contatos Setor Público',
-      'Editais e Fomento'
+      'Engenharia de Transportes e Logística',
+      'Gerenciamento de Projetos',
+      'Licenciamento Ambiental',
+      'Biocombustíveis e Energia',
+      'Relações Institucionais e Setor Público'
     ],
-    linkedinUrl: '#',
+    linkedinUrl: 'https://www.linkedin.com/in/aureliomurta/',
     photo: '/aurelio.jpg'
   },
   {
     id: 'camilo',
-    name: 'Eduardo Camilo',
-    headline: 'Professor PPGAd/UFF | Coordenador CID/UFF | Consultor Acadêmico',
+    name: 'Eduardo Camilo da Silva, DSc',
+    headline: 'Professor Adjunto UFF | Doutor em Administração COPPEAD/UFRJ | Finanças Comportamentais e Data Science',
     role: 'advisor',
     roleLabel: 'Consultor Acadêmico',
     skills: [
-      'Pesquisa em Administração Pública',
-      'Coordenação de Projetos de P&D',
-      'Lei do Bem e Inovação',
-      'Gestão de Núcleos de Inovação',
-      'Método Científico Aplicado'
+      'Finanças Comportamentais',
+      'Microestrutura de Mercado',
+      'Big Data Analytics',
+      'Pesquisa em Administração',
+      'Coordenação de Projetos de P&D'
     ],
-    linkedinUrl: '#',
+    linkedinUrl: 'https://www.linkedin.com/in/eduardo-camilo-da-silva-dsc-cap%C2%AE-a9801416/',
     photo: '/camilo.jpg'
   }
 ]
