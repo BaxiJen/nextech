@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0d1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="green1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.95" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern (subtle) -->
+  <g opacity="0.04" stroke="#3b82f6" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="630"/>
+    <line x1="100" y1="0" x2="1200" y2="530"/>
+    <line x1="200" y1="0" x2="1200" y2="430"/>
+    <line x1="0" y1="100" x2="1100" y2="630"/>
+    <line x1="0" y1="200" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Decorative circuit lines -->
+  <g opacity="0.08" stroke="#06b6d4" stroke-width="1" fill="none">
+    <path d="M0,120 H180 L210,90 H380 L410,120 H580"/>
+    <path d="M620,200 H800 L830,230 H1000 L1030,200 H1200"/>
+    <path d="M0,380 H150 L180,410 H400 L430,380 H600"/>
+    <circle cx="180" cy="120" r="4" fill="#06b6d4"/>
+    <circle cx="380" cy="120" r="4" fill="#06b6d4"/>
+    <circle cx="800" cy="200" r="4" fill="#06b6d4"/>
+    <circle cx="1000" cy="200" r="4" fill="#06b6d4"/>
+  </g>
+
+  <!-- Central orchestration diagram -->
+  <g transform="translate(600, 200)" filter="url(#softGlow)">
+    <!-- Supervisor node (center) -->
+    <circle cx="0" cy="0" r="38" fill="url(#nodeGrad)" stroke="#60a5fa" stroke-width="2"/>
+    <text x="0" y="5" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">ORCH</text>
+
+    <!-- Agent A (top-left) -->
+    <circle cx="-130" cy="-70" r="28" fill="#7c3aed" stroke="#a855f7" stroke-width="1.5" opacity="0.9"/>
+    <text x="-130" y="-66" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">A</text>
+
+    <!-- Agent B (top-right) -->
+    <circle cx="130" cy="-70" r="28" fill="#7c3aed" stroke="#a855f7" stroke-width="1.5" opacity="0.9"/>
+    <text x="130" y="-66" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">B</text>
+
+    <!-- Agent C (bottom-left) -->
+    <circle cx="-110" cy="90" r="28" fill="#10b981" stroke="#34d399" stroke-width="1.5" opacity="0.9"/>
+    <text x="-110" y="94" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">C</text>
+
+    <!-- Agent D (bottom-right) -->
+    <circle cx="110" cy="90" r="28" fill="#10b981" stroke="#34d399" stroke-width="1.5" opacity="0.9"/>
+    <text x="110" y="94" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">D</text>
+
+    <!-- Connection lines from supervisor to agents -->
+    <line x1="-32" y1="-20" x2="-108" y2="-55" stroke="#60a5fa" stroke-width="1.5" opacity="0.6" stroke-dasharray="6,3"/>
+    <line x1="32" y1="-20" x2="108" y2="-55" stroke="#60a5fa" stroke-width="1.5" opacity="0.6" stroke-dasharray="6,3"/>
+    <line x1="-28" y1="28" x2="-90" y2="72" stroke="#34d399" stroke-width="1.5" opacity="0.6" stroke-dasharray="6,3"/>
+    <line x1="28" y1="28" x2="90" y2="72" stroke="#34d399" stroke-width="1.5" opacity="0.6" stroke-dasharray="6,3"/>
+
+    <!-- Peer-to-peer connections (subtle) -->
+    <line x1="-108" y1="-55" x2="108" y2="-55" stroke="#a855f7" stroke-width="0.8" opacity="0.25" stroke-dasharray="3,4"/>
+    <line x1="-88" y1="85" x2="88" y2="85" stroke="#34d399" stroke-width="0.8" opacity="0.25" stroke-dasharray="3,4"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="390" text-anchor="middle" fill="#f8fafc" font-size="38" font-weight="800" letter-spacing="-0.5">
+    Agentes Multilaterais
+  </text>
+  <text x="600" y="430" text-anchor="middle" fill="#06b6d4" font-size="20" font-weight="600" letter-spacing="0.5">
+    Quando um Agente Precisa Coordenar Outros Agentes
+  </text>
+
+  <!-- Pattern pills -->
+  <g transform="translate(130, 470)">
+    <rect x="0" y="0" width="180" height="36" rx="18" fill="#3b82f6" opacity="0.85"/>
+    <text x="90" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Supervisor</text>
+
+    <rect x="200" y="0" width="200" height="36" rx="18" fill="#7c3aed" opacity="0.85"/>
+    <text x="300" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Hierárquico</text>
+
+    <rect x="420" y="0" width="180" height="36" rx="18" fill="#10b981" opacity="0.85"/>
+    <text x="510" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Peer-to-Peer</text>
+
+    <rect x="620" y="0" width="160" height="36" rx="18" fill="#06b6d4" opacity="0.85"/>
+    <text x="700" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">AdaptOrch</text>
+
+    <rect x="800" y="0" width="180" height="36" rx="18" fill="#475569" opacity="0.85"/>
+    <text x="890" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">ORCH Determinístico</text>
+  </g>
+
+  <!-- Framework badges -->
+  <g transform="translate(130, 530)">
+    <rect x="0" y="0" width="120" height="30" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="60" y="20" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="500">LangGraph</text>
+
+    <rect x="140" y="0" width="100" height="30" rx="6" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="190" y="20" text-anchor="middle" fill="#c4b5fd" font-size="12" font-weight="500">CrewAI</text>
+
+    <rect x="260" y="0" width="110" height="30" rx="6" fill="none" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="315" y="20" text-anchor="middle" fill="#67e8f9" font-size="12" font-weight="500">AutoGen</text>
+
+    <rect x="390" y="0" width="120" height="30" rx="6" fill="none" stroke="#10b981" stroke-width="1.5"/>
+    <text x="450" y="20" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="500">AgentNet</text>
+
+    <rect x="530" y="0" width="130" height="30" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="595" y="20" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="500">A2A + MCP</text>
+  </g>
+
+  <!-- BaXiJen tag -->
+  <text x="600" y="598" text-anchor="middle" fill="#64748b" font-size="13" font-weight="400" letter-spacing="2">
+    BaXiJen: Antes de tudo, Brasileiro.
+  </text>
+
+  <!-- Corner accents -->
+  <rect x="0" y="0" width="4" height="630" fill="url(#blue1)" opacity="0.7"/>
+  <rect x="0" y="626" width="1200" height="4" fill="url(#blue1)" opacity="0.3"/>
+</svg>
