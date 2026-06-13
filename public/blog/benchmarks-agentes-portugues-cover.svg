@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00C853"/>
+      <stop offset="100%" stop-color="#00E676"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5252"/>
+      <stop offset="100%" stop-color="#FF1744"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFD740"/>
+      <stop offset="100%" stop-color="#FFC400"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.04" stroke="#00C853" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="627"/>
+    <line x1="200" y1="0" x2="1200" y2="500"/>
+    <line x1="400" y1="0" x2="1200" y2="400"/>
+    <line x1="0" y1="200" x2="800" y2="627"/>
+    <line x1="0" y1="400" x2="400" y2="627"/>
+    <line x1="600" y1="0" x2="1200" y2="300"/>
+    <line x1="1200" y1="0" x2="0" y2="627"/>
+    <line x1="1000" y1="0" x2="0" y2="500"/>
+    <line x1="800" y1="0" x2="0" y2="400"/>
+  </g>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Title -->
+  <text x="600" y="62" text-anchor="middle" fill="#E6EDF3" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="28" font-weight="700" letter-spacing="1">
+    BENCHMARKS DE AGENTES EM PORTUGUÊS
+  </text>
+  <text x="600" y="92" text-anchor="middle" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="2">
+    POR QUE MMLU NÃO SERVE PRO BRASIL
+  </text>
+
+  <!-- Divider -->
+  <line x1="100" y1="110" x2="1100" y2="110" stroke="#21262D" stroke-width="1"/>
+
+  <!-- LEFT COLUMN: MMLU (what it measures) -->
+  <rect x="60" y="130" width="340" height="440" rx="12" fill="#161B22" stroke="#FF5252" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- MMLU Header -->
+  <rect x="60" y="130" width="340" height="44" rx="12" fill="#FF5252" opacity="0.15"/>
+  <rect x="60" y="162" width="340" height="12" fill="#161B22"/>
+  <text x="230" y="158" text-anchor="middle" fill="#FF5252" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="16" font-weight="700">
+    MMLU
+  </text>
+
+  <!-- MMLU items with X marks -->
+  <text x="85" y="205" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> 57 disciplinas em inglês americano
+  </text>
+  <text x="85" y="232" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Currículo acadêmico dos EUA
+  </text>
+  <text x="85" y="259" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Tradução perde 18-23 pts em pt-BR
+  </text>
+  <text x="85" y="286" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Contaminação nos dados de treino
+  </text>
+  <text x="85" y="313" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Não mede function calling
+  </text>
+  <text x="85" y="340" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Não mede raciocínio agentivo
+  </text>
+  <text x="85" y="367" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Zero contexto cultural brasileiro
+  </text>
+  <text x="85" y="394" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="500">
+    <tspan fill="#FF5252" font-size="16">✕</tspan> Não avalia pragmática em pt-BR
+  </text>
+
+  <!-- MMLU Score Bar -->
+  <rect x="85" y="420" width="290" height="8" rx="4" fill="#21262D"/>
+  <rect x="85" y="420" width="260" height="8" rx="4" fill="#FF5252" opacity="0.7"/>
+  <text x="85" y="450" fill="#FF5252" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="11" font-weight="600">
+    MMLU: mede conhecimento estático em inglês
+  </text>
+
+  <!-- MMLU verdict -->
+  <rect x="85" y="470" width="290" height="80" rx="8" fill="#FF5252" opacity="0.08"/>
+  <text x="230" y="500" text-anchor="middle" fill="#FF5252" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="20" font-weight="700">
+    ❌ NÃO SERVE
+  </text>
+  <text x="230" y="525" text-anchor="middle" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="11">
+    para agentes em português
+  </text>
+
+  <!-- CENTER: Arrow -->
+  <g filter="url(#glow)">
+    <polygon points="435,340 475,310 475,325 530,325 530,355 475,355 475,370" fill="#00C853" opacity="0.8"/>
+  </g>
+
+  <!-- RIGHT COLUMN: What matters (benchmarks that work) -->
+  <rect x="560" y="130" width="580" height="440" rx="12" fill="#161B22" stroke="#00C853" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- Right Header -->
+  <rect x="560" y="130" width="580" height="44" rx="12" fill="#00C853" opacity="0.12"/>
+  <rect x="560" y="162" width="580" height="12" fill="#161B22"/>
+  <text x="850" y="158" text-anchor="middle" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="16" font-weight="700">
+    BENCHMARKS QUE IMPORTAM PARA O BRASIL
+  </text>
+
+  <!-- Benchmark cards -->
+  <!-- PoETa v2 -->
+  <rect x="580" y="185" width="270" height="65" rx="8" fill="#0D1117" stroke="#00C853" stroke-width="0.5" opacity="0.8"/>
+  <text x="595" y="207" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700">PoETa v2</text>
+  <text x="595" y="224" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">40+ tarefas em pt-BR nativo</text>
+  <text x="595" y="240" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Conversação, legislação, exames, function calling</text>
+
+  <!-- ENEM/OAB/CNU -->
+  <rect x="870" y="185" width="250" height="65" rx="8" fill="#0D1117" stroke="#FFD740" stroke-width="0.5" opacity="0.8"/>
+  <text x="885" y="207" fill="#FFD740" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700">ENEM · OAB · CNU</text>
+  <text x="885" y="224" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Exames profissionais brasileiros</text>
+  <text x="885" y="240" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Conhecimento real aplicado em contexto nacional</text>
+
+  <!-- Sabiá-4 -->
+  <rect x="580" y="262" width="270" height="65" rx="8" fill="#0D1117" stroke="#00C853" stroke-width="0.5" opacity="0.8"/>
+  <text x="595" y="284" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700">Sabiá-4 Benchmarks</text>
+  <text x="595" y="301" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">87% OAB 1ª fase · 88% ENEM · 91% CNU</text>
+  <text x="595" y="317" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Modelo brasileiro avaliado em contexto real</text>
+
+  <!-- Capitu + BRoverbs -->
+  <rect x="870" y="262" width="250" height="65" rx="8" fill="#0D1117" stroke="#FFD740" stroke-width="0.5" opacity="0.8"/>
+  <text x="885" y="284" fill="#FFD740" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700">Capitu · BRoverbs</text>
+  <text x="885" y="301" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Pragmática, ironia, provérbios</text>
+  <text x="885" y="317" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Compreensão cultural profunda em pt-BR</text>
+
+  <!-- Agent benchmarks needed -->
+  <rect x="580" y="340" width="540" height="65" rx="8" fill="#0D1117" stroke="#FF5252" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.8"/>
+  <text x="595" y="362" fill="#FF5252" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700">⚠ LACUNA: Benchmarks Agentivos em Português</text>
+  <text x="595" y="380" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">BFCL · Tau-Bench · SWE-bench · AppWorld</text>
+  <text x="595" y="395" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Todos em inglês. Nenhum localizado para pt-BR.</text>
+
+  <!-- Three layers framework -->
+  <rect x="580" y="418" width="170" height="68" rx="8" fill="#00C853" opacity="0.12"/>
+  <text x="665" y="440" text-anchor="middle" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="12" font-weight="700">CAMADA 1</text>
+  <text x="665" y="458" text-anchor="middle" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Conhecimento</text>
+  <text x="665" y="473" text-anchor="middle" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="9">PoETa v2 · ENEM</text>
+
+  <rect x="760" y="418" width="170" height="68" rx="8" fill="#FFD740" opacity="0.12"/>
+  <text x="845" y="440" text-anchor="middle" fill="#FFD740" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="12" font-weight="700">CAMADA 2</text>
+  <text x="845" y="458" text-anchor="middle" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Function Calling</text>
+  <text x="845" y="473" text-anchor="middle" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="9">BFCL localizado pt-BR</text>
+
+  <rect x="940" y="418" width="170" height="68" rx="8" fill="#58A6FF" opacity="0.12"/>
+  <text x="1025" y="440" text-anchor="middle" fill="#58A6FF" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="12" font-weight="700">CAMADA 3</text>
+  <text x="1025" y="458" text-anchor="middle" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">Evals Customizados</text>
+  <text x="1025" y="473" text-anchor="middle" fill="#8B949E" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="9">Domínio · Regulatório</text>
+
+  <!-- Bottom verdict -->
+  <rect x="580" y="498" width="540" height="52" rx="8" fill="#00C853" opacity="0.08"/>
+  <text x="850" y="522" text-anchor="middle" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="18" font-weight="700" filter="url(#glow)">
+    ✅ AVALIE NO QUE IMPORTA
+  </text>
+  <text x="850" y="542" text-anchor="middle" fill="#C9D1D9" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="11">
+    Se não existe o benchmark, construa. Se puder, compartilhe.
+  </text>
+
+  <!-- Sources -->
+  <text x="600" y="575" fill="#484F58" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="9">
+    Fontes: Gema et al. 2025 · Singh et al. 2025 · Almeida et al. 2025 · Laitz et al. 2026 · Patil et al. 2025
+  </text>
+
+  <!-- BaXiJen logo area -->
+  <rect x="60" y="585" width="100" height="26" rx="6" fill="#00C853" opacity="0.15"/>
+  <text x="110" y="603" text-anchor="middle" fill="#00C853" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="2">
+    BaXiJen
+  </text>
+
+  <!-- Date -->
+  <text x="1140" y="605" text-anchor="end" fill="#484F58" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="10">
+    Jun 2026
+  </text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="623" width="1200" height="4" fill="url(#accent)"/>
+</svg>
