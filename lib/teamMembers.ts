@@ -54,7 +54,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Aurélio Lamare Soares Murta',
     headline: 'Professor Adjunto UFF | Doutor em Engenharia de Transportes COPPE/UFRJ | Logística e Projetos Especiais',
     role: 'advisor',
-    roleLabel: 'Consultor Estratégico',
+    roleLabel: 'Professor Consultor',
     skills: [
       'Engenharia de Transportes e Logística',
       'Gerenciamento de Projetos',
@@ -70,7 +70,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Eduardo Camilo da Silva, DSc',
     headline: 'Professor Adjunto UFF | Doutor em Administração COPPEAD/UFRJ | Finanças Comportamentais e Data Science',
     role: 'advisor',
-    roleLabel: 'Consultor Acadêmico',
+    roleLabel: 'Professor Consultor',
     skills: [
       'Finanças Comportamentais',
       'Microestrutura de Mercado',
@@ -80,5 +80,21 @@ export const teamMembers: TeamMember[] = [
     ],
     linkedinUrl: 'https://www.linkedin.com/in/eduardo-camilo-da-silva-dsc-cap%C2%AE-a9801416/',
     photo: '/camilo.jpg'
+  },
+  {
+    id: 'barbedo',
+    name: 'Cláudio Barbedo',
+    headline: '',
+    role: 'advisor',
+    roleLabel: 'Professor Consultor',
+    skills: [
+      '',
+      '',
+      '',
+      '',
+      ''
+    ],
+    linkedinUrl: 'https://www.linkedin.com/in/claudio-barbedo-20a2b5/',
+    photo: '/barbedo.jpg'
   }
 ]
