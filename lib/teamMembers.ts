@@ -84,15 +84,15 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'barbedo',
     name: 'Cláudio Barbedo',
-    headline: '',
+    headline: 'Doutor em Finanças COPPEAD/UFRJ | Professor IBMEC | Pesquisador UFF | Banco Central do Brasil',
     role: 'advisor',
     roleLabel: 'Professor Consultor',
     skills: [
-      '',
-      '',
-      '',
-      '',
-      ''
+      'Finanças e Mercado de Capitais',
+      'Microestrutura de Mercado',
+      'Regulação Financeira',
+      'Pesquisa Acadêmica em Administração',
+      'Relações Institucionais e Setor Público'
     ],
     linkedinUrl: 'https://www.linkedin.com/in/claudio-barbedo-20a2b5/',
     photo: '/barbedo.jpg'
