@@ -1,0 +1,26 @@
+Hoje o governo dos EUA cortou o acesso a Fable 5 e Mythos 5 para **todos os usuários**, incluindo estrangeiros. Diretiva de controle de exportação, sem aviso prévio, sem recurso.
+
+**Centenas de milhões de usuários ficaram sem ferramenta em horas.**
+
+A Anthropic disse: cumprimos a ordem, mas discordamos. O jailbreak apresentado é estreito, não-união, e GPT-5.5 faz o mesmo sem qualquer bypass.
+
+Mas transparência não substitui continuidade. Seus clientes ainda ficaram sem acesso.
+
+**Para o Brasil, isso é um alerta concreto:**
+
+- Hospitais que usam Fable para triagem: sem ferramenta
+- Startups que construíram sobre a API: refazendo arquitetura
+- Órgãos públicos em adoção de IA: perderam a confiança
+- Pesquisadores com projetos em andamento: experimentos interrompidos
+
+**Se seu modelo de IA pode ser desligado por um governo estrangeiro, você não tem soberania. Você tem dependência.**
+
+A LGPD exige que dados pessoais de brasileiros sejam tratados com responsabilidade. A IN 1/2023 do STF exige que dados de servidores públicos fiquem no Brasil. Mas se o modelo que processa esses dados mora nos EUA, a lei brasileira é decorativa.
+
+Modelos open-source como Qwen, Llama e Nemotron rodam em hardware que você controla. Nenhum governo estrangeiro pode desligá-los.
+
+On-premise não é luxo. É continuidade de negócio.
+
+Leia o artigo completo: baxijen.com.br/blog/soberania-fable-mythos-export-control
+
+#BaXiJen #IABrasileira #SoberaniaDigital #IA #Fable #Anthropic #ExportControl
