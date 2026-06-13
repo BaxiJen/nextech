@@ -156,7 +156,7 @@ export function SobreContent() {
               {/* Consultores */}
               <div className="mt-16">
                 <h3 className="text-xl font-semibold text-muted-foreground mb-6 text-center">Consultores</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                   {teamMembers.filter(m => m.role === 'advisor').map((member, i) => (
                     <motion.div
                       key={member.id}
