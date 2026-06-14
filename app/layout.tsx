@@ -69,16 +69,15 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
-        {/* Google Analytics - BaXiJen (Leo) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5XN8P33CF" />
+        {/* Google Analytics - BaXiJen (leonardomcamilo3@gmail.com / GA4 baxijen.com.br) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3Y99X0TP1K" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-W5XN8P33CF');
-              gtag('config', 'G-BJX1B5R6ZD');
+              gtag('config', 'G-3Y99X0TP1K');
             `,
           }}
         />
