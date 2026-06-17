@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9A7"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2332"/>
+      <stop offset="100%" stop-color="#0D1520"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00C9A7" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00B4D8" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.04">
+    <line x1="0" y1="0" x2="1200" y2="0" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="157" x2="1200" y2="157" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="314" x2="1200" y2="314" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="471" x2="1200" y2="471" stroke="#fff" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="627" stroke="#fff" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="627" stroke="#fff" stroke-width="0.5"/>
+    <line x1="900" y1="0" x2="900" y2="627" stroke="#fff" stroke-width="0.5"/>
+  </g>
+
+  <!-- Title -->
+  <text x="60" y="80" font-size="42" font-weight="800" fill="#FFFFFF" letter-spacing="-0.5">Edge AI e SLMs</text>
+  <text x="60" y="130" font-size="28" font-weight="500" fill="#8B949E" letter-spacing="-0.3">Rodando Modelos Localmente em Dispositivos Constraint</text>
+
+  <!-- Accent line -->
+  <rect x="60" y="155" width="120" height="3" rx="1.5" fill="url(#accent)"/>
+
+  <!-- Pyramid: 3 tiers of edge devices -->
+  <!-- Tier 1: Smartphones (top) -->
+  <g transform="translate(580, 200)">
+    <rect x="0" y="0" width="280" height="80" rx="8" fill="url(#chipGrad)" stroke="#00C9A7" stroke-width="1.5" stroke-opacity="0.6"/>
+    <text x="140" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#00C9A7">SMARTPHONES FLAGSHIP</text>
+    <text x="140" y="48" text-anchor="middle" font-size="12" fill="#8B949E">NPU 100 TOPS · 220 tok/s · 32K contexto</text>
+    <text x="140" y="66" text-anchor="middle" font-size="11" fill="#58A6FF">SLMs 3B–7B · 4-bit quant · GQA</text>
+  </g>
+
+  <!-- Tier 2: Laptops / Mini-PCs (middle) -->
+  <g transform="translate(520, 310)">
+    <rect x="0" y="0" width="340" height="80" rx="8" fill="url(#chipGrad)" stroke="#00B4D8" stroke-width="1.5" stroke-opacity="0.6"/>
+    <text x="170" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#00B4D8">LAPTOPS · MINI-PCs · EDGE SERVERS</text>
+    <text x="170" y="48" text-anchor="middle" font-size="12" fill="#8B949E">GPU consumer · CPU multi-core · 8–32 GB RAM</text>
+    <text x="170" y="66" text-anchor="middle" font-size="11" fill="#58A6FF">SLMs 7B–14B · Q4_K_M · LoRA fine-tuning</text>
+  </g>
+
+  <!-- Tier 3: IoT / SBCs (bottom) -->
+  <g transform="translate(460, 420)">
+    <rect x="0" y="0" width="400" height="80" rx="8" fill="url(#chipGrad)" stroke="#8B949E" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="200" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#8B949E">RASPBERRY PI · JETSON NANO · IoT</text>
+    <text x="200" y="48" text-anchor="middle" font-size="12" fill="#8B949E">CPU ARM · 2–8 GB RAM · NPU básica</text>
+    <text x="200" y="66" text-anchor="middle" font-size="11" fill="#58A6FF">SLMs 0.5B–1B · INT8 · tarefas específicas</text>
+  </g>
+
+  <!-- Arrows connecting tiers -->
+  <g opacity="0.5">
+    <line x1="720" y1="280" x2="720" y2="310" stroke="url(#arrowGrad)" stroke-width="2"/>
+    <polygon points="715,305 720,315 725,305" fill="#00B4D8"/>
+    <line x1="720" y1="390" x2="720" y2="420" stroke="url(#arrowGrad)" stroke-width="2"/>
+    <polygon points="715,415 720,425 725,415" fill="#8B949E"/>
+  </g>
+
+  <!-- Left side: Compression techniques -->
+  <g transform="translate(60, 220)">
+    <text x="0" y="0" font-size="16" font-weight="700" fill="#FFFFFF">Técnicas de Compressão</text>
+
+    <rect x="0" y="15" width="380" height="36" rx="6" fill="#1A2332" stroke="#00C9A7" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="15" y="38" font-size="13" font-weight="600" fill="#00C9A7">Quantização 4-bit (GGUF/AWQ)</text>
+    <text x="280" y="38" font-size="11" fill="#8B949E">7B → 4 GB</text>
+
+    <rect x="0" y="58" width="380" height="36" rx="6" fill="#1A2332" stroke="#00B4D8" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="15" y="81" font-size="13" font-weight="600" fill="#00B4D8">Poda Estruturada (Wanda)</text>
+    <text x="280" y="81" font-size="11" fill="#8B949E">50% sparsity</text>
+
+    <rect x="0" y="101" width="380" height="36" rx="6" fill="#1A2332" stroke="#58A6FF" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="15" y="124" font-size="13" font-weight="600" fill="#58A6FF">Grouped-Query Attention</text>
+    <text x="280" y="124" font-size="11" fill="#8B949E">KV-cache 4x menor</text>
+
+    <rect x="0" y="144" width="380" height="36" rx="6" fill="#1A2332" stroke="#8B949E" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="15" y="167" font-size="13" font-weight="600" fill="#8B949E">Decodificação Especulativa</text>
+    <text x="280" y="167" font-size="11" fill="#8B949E">até 9.3x speedup</text>
+  </g>
+
+  <!-- Right side: Key numbers -->
+  <g transform="translate(60, 440)">
+    <text x="0" y="0" font-size="16" font-weight="700" fill="#FFFFFF">Números que Importam</text>
+
+    <rect x="0" y="15" width="180" height="55" rx="6" fill="#1A2332" stroke="#00C9A7" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="90" y="38" text-anchor="middle" font-size="22" font-weight="800" fill="#00C9A7">79x</text>
+    <text x="90" y="58" text-anchor="middle" font-size="11" fill="#8B949E">mais barato que cloud</text>
+
+    <rect x="195" y="15" width="180" height="55" rx="6" fill="#1A2332" stroke="#00B4D8" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="285" y="38" text-anchor="middle" font-size="22" font-weight="800" fill="#00B4D8">&lt;150ms</text>
+    <text x="285" y="58" text-anchor="middle" font-size="11" fill="#8B949E">latência P95 (7B)</text>
+
+    <rect x="390" y="15" width="180" height="55" rx="6" fill="#1A2332" stroke="#58A6FF" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="480" y="38" text-anchor="middle" font-size="22" font-weight="800" fill="#58A6FF">650MB</text>
+    <text x="480" y="58" text-anchor="middle" font-size="11" fill="#8B949E">Llama 3.2 1B 4-bit</text>
+  </g>
+
+  <!-- Bottom: BaXiJen branding -->
+  <g transform="translate(60, 560)">
+    <text x="0" y="0" font-size="13" font-weight="600" fill="#8B949E">BaXiJen · Junho 2026</text>
+    <text x="0" y="20" font-size="11" fill="#484F58">Marcus Ramalho · CTO</text>
+  </g>
+
+  <!-- Decorative chip icon (top right) -->
+  <g transform="translate(1050, 50)" opacity="0.15">
+    <rect x="0" y="0" width="80" height="80" rx="4" fill="none" stroke="#00C9A7" stroke-width="2"/>
+    <rect x="10" y="10" width="60" height="60" rx="2" fill="none" stroke="#00C9A7" stroke-width="1"/>
+    <circle cx="40" cy="40" r="15" fill="none" stroke="#00C9A7" stroke-width="1"/>
+    <line x1="25" y1="40" x2="55" y2="40" stroke="#00C9A7" stroke-width="0.5"/>
+    <line x1="40" y1="25" x2="40" y2="55" stroke="#00C9A7" stroke-width="0.5"/>
+  </g>
+</svg>
