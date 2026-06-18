@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9A7"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="textIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00C9A7"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="visionIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00B4D8"/>
+      <stop offset="100%" stop-color="#0077B6"/>
+    </linearGradient>
+    <linearGradient id="audioIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00C9A7"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2332"/>
+      <stop offset="100%" stop-color="#0D1520"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9A7" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00C9A7" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.04">
+    <line x1="0" y1="0" x2="1200" y2="0" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="157" x2="1200" y2="157" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="314" x2="1200" y2="314" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="471" x2="1200" y2="471" stroke="#fff" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="627" stroke="#fff" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="627" stroke="#fff" stroke-width="0.5"/>
+    <line x1="900" y1="0" x2="900" y2="627" stroke="#fff" stroke-width="0.5"/>
+  </g>
+
+  <!-- Title -->
+  <text x="60" y="70" font-size="36" font-weight="800" fill="#FFFFFF" letter-spacing="-0.5">Multimodalidade em Produção</text>
+  <text x="60" y="105" font-size="20" font-weight="500" fill="#8B949E">Quando agentes precisam ver, ouvir e ler</text>
+
+  <!-- BaXiJen tag -->
+  <rect x="60" y="575" width="120" height="28" rx="6" fill="url(#accent)" opacity="0.15"/>
+  <text x="120" y="594" font-size="13" font-weight="600" fill="#00C9A7" text-anchor="middle">BaXiJen 🇧🇷</text>
+
+  <!-- Three input modalities (left side) -->
+
+  <!-- TEXT input -->
+  <g transform="translate(80, 180)">
+    <rect width="180" height="100" rx="12" fill="url(#coreGrad)" stroke="#00C9A7" stroke-width="1.5" opacity="0.95"/>
+    <!-- Text icon: lines -->
+    <g transform="translate(20, 25)">
+      <rect x="0" y="0" width="80" height="4" rx="2" fill="#00C9A7" opacity="0.9"/>
+      <rect x="0" y="12" width="65" height="4" rx="2" fill="#00C9A7" opacity="0.7"/>
+      <rect x="0" y="24" width="72" height="4" rx="2" fill="#00C9A7" opacity="0.5"/>
+    </g>
+    <text x="90" y="80" font-size="14" font-weight="600" fill="#00C9A7" text-anchor="middle">TEXTO</text>
+  </g>
+
+  <!-- IMAGE/VISION input -->
+  <g transform="translate(80, 300)">
+    <rect width="180" height="100" rx="12" fill="url(#coreGrad)" stroke="#00B4D8" stroke-width="1.5" opacity="0.95"/>
+    <!-- Vision icon: eye/camera -->
+    <g transform="translate(50, 25)">
+      <rect x="0" y="0" width="60" height="40" rx="6" fill="none" stroke="#00B4D8" stroke-width="2"/>
+      <circle cx="30" cy="20" r="12" fill="none" stroke="#00B4D8" stroke-width="2"/>
+      <circle cx="30" cy="20" r="5" fill="#00B4D8" opacity="0.8"/>
+      <rect x="0" y="0" width="60" height="10" rx="3" fill="#00B4D8" opacity="0.3"/>
+    </g>
+    <text x="90" y="80" font-size="14" font-weight="600" fill="#00B4D8" text-anchor="middle">VISÃO</text>
+  </g>
+
+  <!-- AUDIO input -->
+  <g transform="translate(80, 420)">
+    <rect width="180" height="100" rx="12" fill="url(#coreGrad)" stroke="#00C9A7" stroke-width="1.5" opacity="0.95"/>
+    <!-- Audio icon: waveform -->
+    <g transform="translate(20, 30)">
+      <rect x="0" y="15" width="4" height="10" rx="2" fill="#00C9A7"/>
+      <rect x="10" y="5" width="4" height="30" rx="2" fill="#00C9A7" opacity="0.9"/>
+      <rect x="20" y="0" width="4" height="40" rx="2" fill="#00C9A7" opacity="0.8"/>
+      <rect x="30" y="8" width="4" height="24" rx="2" fill="#00C9A7" opacity="0.7"/>
+      <rect x="40" y="2" width="4" height="36" rx="2" fill="#00C9A7" opacity="0.85"/>
+      <rect x="50" y="10" width="4" height="20" rx="2" fill="#00C9A7" opacity="0.6"/>
+      <rect x="60" y="6" width="4" height="28" rx="2" fill="#00C9A7" opacity="0.75"/>
+      <rect x="70" y="14" width="4" height="12" rx="2" fill="#00C9A7" opacity="0.5"/>
+      <rect x="80" y="8" width="4" height="24" rx="2" fill="#00C9A7" opacity="0.65"/>
+      <rect x="90" y="12" width="4" height="16" rx="2" fill="#00C9A7" opacity="0.4"/>
+      <rect x="100" y="16" width="4" height="8" rx="2" fill="#00C9A7" opacity="0.3"/>
+    </g>
+    <text x="90" y="80" font-size="14" font-weight="600" fill="#00C9A7" text-anchor="middle">ÁUDIO</text>
+  </g>
+
+  <!-- Connecting arrows from inputs to core -->
+  <g opacity="0.5">
+    <line x1="265" y1="230" x2="430" y2="313" stroke="url(#arrowGrad)" stroke-width="2" stroke-dasharray="6,4"/>
+    <line x1="265" y1="350" x2="430" y2="313" stroke="url(#arrowGrad)" stroke-width="2" stroke-dasharray="6,4"/>
+    <line x1="265" y1="470" x2="430" y2="313" stroke="url(#arrowGrad)" stroke-width="2" stroke-dasharray="6,4"/>
+  </g>
+
+  <!-- Central reasoning engine -->
+  <g transform="translate(430, 250)">
+    <rect width="340" height="130" rx="16" fill="url(#coreGrad)" stroke="url(#accent)" stroke-width="2" filter="url(#softGlow)"/>
+    
+    <!-- Core icon: brain/network -->
+    <g transform="translate(30, 30)">
+      <!-- Neural network nodes -->
+      <circle cx="20" cy="20" r="8" fill="none" stroke="#00C9A7" stroke-width="2"/>
+      <circle cx="20" cy="50" r="8" fill="none" stroke="#00C9A7" stroke-width="2"/>
+      <circle cx="60" cy="35" r="8" fill="none" stroke="#00B4D8" stroke-width="2"/>
+      <circle cx="100" cy="20" r="8" fill="none" stroke="#00B4D8" stroke-width="2"/>
+      <circle cx="100" cy="50" r="8" fill="none" stroke="#00B4D8" stroke-width="2"/>
+      <!-- Connections -->
+      <line x1="28" y1="20" x2="52" y2="35" stroke="#00C9A7" stroke-width="1" opacity="0.6"/>
+      <line x1="28" y1="50" x2="52" y2="35" stroke="#00C9A7" stroke-width="1" opacity="0.6"/>
+      <line x1="68" y1="35" x2="92" y2="20" stroke="#00B4D8" stroke-width="1" opacity="0.6"/>
+      <line x1="68" y1="35" x2="92" y2="50" stroke="#00B4D8" stroke-width="1" opacity="0.6"/>
+      <!-- Filled center node -->
+      <circle cx="60" cy="35" r="5" fill="#00C9A7" filter="url(#glow)"/>
+    </g>
+    
+    <text x="200" y="50" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Motor de Raciocínio</text>
+    <text x="200" y="75" font-size="13" font-weight="400" fill="#8B949E" text-anchor="middle">Fusão multimodal</text>
+    <text x="200" y="95" font-size="12" font-weight="400" fill="#8B949E" text-anchor="middle">Early / Late / Híbrido</text>
+    <text x="200" y="115" font-size="11" font-weight="500" fill="#00C9A7" text-anchor="middle">LLM + VLM + ASR</text>
+  </g>
+
+  <!-- Output arrows from core to outputs -->
+  <g opacity="0.5">
+    <line x1="775" y1="290" x2="920" y2="200" stroke="url(#arrowGrad)" stroke-width="2" stroke-dasharray="6,4"/>
+    <line x1="775" y1="315" x2="920" y2="315" stroke="url(#arrowGrad)" stroke-width="2" stroke-dasharray="6,4"/>
+    <line x1="775" y1="340" x2="920" y2="430" stroke="url(#arrowGrad)" stroke-width="2" stroke-dasharray="6,4"/>
+  </g>
+
+  <!-- Output modalities (right side) -->
+
+  <!-- Classification output -->
+  <g transform="translate(920, 160)">
+    <rect width="180" height="80" rx="12" fill="url(#coreGrad)" stroke="#00B4D8" stroke-width="1.5" opacity="0.9"/>
+    <!-- Classification icon: tags -->
+    <g transform="translate(20, 20)">
+      <rect x="0" y="0" width="40" height="16" rx="4" fill="#00B4D8" opacity="0.8"/>
+      <rect x="0" y="22" width="30" height="16" rx="4" fill="#00B4D8" opacity="0.6"/>
+    </g>
+    <text x="90" y="35" font-size="13" font-weight="600" fill="#00B4D8" text-anchor="middle">Classificação</text>
+    <text x="90" y="55" font-size="11" font-weight="400" fill="#8B949E" text-anchor="middle">Triagem, tags</text>
+  </g>
+
+  <!-- Search/Retrieval output -->
+  <g transform="translate(920, 275)">
+    <rect width="180" height="80" rx="12" fill="url(#coreGrad)" stroke="#00C9A7" stroke-width="1.5" opacity="0.9"/>
+    <!-- Search icon: magnifier -->
+    <g transform="translate(25, 18)">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="#00C9A7" stroke-width="2"/>
+      <line x1="20" y1="20" x2="28" y2="28" stroke="#00C9A7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="90" y="35" font-size="13" font-weight="600" fill="#00C9A7" text-anchor="middle">Busca & RAG</text>
+    <text x="90" y="55" font-size="11" font-weight="400" fill="#8B949E" text-anchor="middle">ColPali, CLIP</text>
+  </g>
+
+  <!-- Generation output -->
+  <g transform="translate(920, 390)">
+    <rect width="180" height="80" rx="12" fill="url(#coreGrad)" stroke="#00B4D8" stroke-width="1.5" opacity="0.9"/>
+    <!-- Generation icon: spark -->
+    <g transform="translate(25, 18)">
+      <path d="M14,0 L17,11 L28,14 L17,17 L14,28 L11,17 L0,14 L11,11 Z" fill="#00B4D8" opacity="0.8"/>
+    </g>
+    <text x="90" y="35" font-size="13" font-weight="600" fill="#00B4D8" text-anchor="middle">Geração</text>
+    <text x="90" y="55" font-size="11" font-weight="400" fill="#8B949E" text-anchor="middle">Resposta, resumo</text>
+  </g>
+
+  <!-- Bottom stats bar -->
+  <g transform="translate(60, 535)">
+    <text x="0" y="0" font-size="11" fill="#8B949E">GPT-4o: 320ms voz</text>
+    <text x="160" y="0" font-size="11" fill="#8B949E">ColPali: +22 nDCG</text>
+    <text x="320" y="0" font-size="11" fill="#8B949E">Visão: 3.5x custo texto</text>
+    <text x="500" y="0" font-size="11" fill="#8B949E">MMMU: 76.9% Gemini 2.5 Pro</text>
+    <text x="720" y="0" font-size="11" fill="#8B949E">Whisper: 1500 tokens / 30s</text>
+  </g>
+
+  <!-- Accent line at top -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+</svg>
