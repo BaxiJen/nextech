@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "Co-fundador & Tech Lead, BaXiJen"
 tags: ["agentes IA", "produção", "ReAct", "MemGPT", "observabilidade", "guardrails"]
 featured: true
-image: "/blog/agentes-ia-cover.svg"
+image: "/blog/agentes-ia-cover.png"
 imageAlt: "Agentes de IA Autônomos"
 ---
 

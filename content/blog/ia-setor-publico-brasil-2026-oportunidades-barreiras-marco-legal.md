@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "Head de Business Development na BaXiJen"
 tags: ["IA", "setor público", "Marco Legal", "PL 2688", "PBIA", "governança", "Portaria MGI", "regulação", "Brasil", "soberania de dados", "B2G"]
 featured: true
-image: "/blog/ia-setor-publico-marco-legal-cover.svg"
+image: "/blog/ia-setor-publico-marco-legal-cover.png"
 imageAlt: "Mapa de oportunidades e barreiras da IA no setor público brasileiro após o Marco Legal: regulamentação, governança e mercado"
 ---
 

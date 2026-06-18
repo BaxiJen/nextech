@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO e Tech Lead na BaXiJen"
 tags: ["benchmarks", "MMLU", "avaliação", "agentes IA", "português brasileiro", "PoETa", "Sabiá", "BFCL", "function calling", "IA brasileira", "BaXiJen"]
 featured: true
-image: "/blog/benchmarks-agentes-portugues-cover.svg"
+image: "/blog/benchmarks-agentes-portugues-cover.png"
 imageAlt: "Comparativo visual entre MMLU (conhecimento acadêmico em inglês) e benchmarks relevantes para agentes em português: PoETa v2, BFCL, ENEM, Capitu, mostrando as lacunas que MMLU não cobre"
 ---
 

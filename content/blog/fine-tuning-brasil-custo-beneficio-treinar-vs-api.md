@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO & Tech Lead, BaXiJen"
 tags: ["fine-tuning", "SLM", "custo", "API", "on-premise", "LGPD", "soberania de dados", "QLoRA", "LoRA", "BaXiJen"]
 featured: true
-image: "/blog/fine-tuning-brasil-cover.svg"
+image: "/blog/fine-tuning-brasil-cover.png"
 imageAlt: "Comparativo de custo: fine-tuning on-premise vs cloud vs API para IA no Brasil"
 ---
 

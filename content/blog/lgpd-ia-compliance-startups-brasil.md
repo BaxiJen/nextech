@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO, BaXiJen"
 tags: ["LGPD", "IA", "compliance", "startup", "privacidade de dados", "PL 2338", "ANPD", "on-premise", "BaXiJen"]
 featured: true
-image: "/blog/lgpd-ia-compliance-cover.svg"
+image: "/blog/lgpd-ia-compliance-cover.png"
 imageAlt: "Guia prático de compliance LGPD para startups de IA no Brasil"
 ---
 

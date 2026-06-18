@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "Co-fundador & Tech Lead, BaXiJen"
 tags: ["SLM", "agentes IA", "NVIDIA", "inferência local", "custo", "soberania"]
 featured: true
-image: "/blog/slm-agents-cover.svg"
+image: "/blog/slm-agents-cover.png"
 imageAlt: "Small Language Models para Agentes de IA"
 ---
 

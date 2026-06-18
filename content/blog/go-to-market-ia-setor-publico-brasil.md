@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "Head de Business Development na BaXiJen"
 tags: ["IA", "setor público", "go-to-market", "B2G", "PBIA", "licitação", "startup", "Brasil", "soberania de dados"]
 featured: true
-image: "/blog/gtm-ia-setor-publico-cover.svg"
+image: "/blog/gtm-ia-setor-publico-cover.png"
 imageAlt: "Diagrama go-to-market de IA para setor público brasileiro"
 ---
 

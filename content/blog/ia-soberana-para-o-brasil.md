@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "Co-fundador & Tech Lead, BaXiJen"
 tags: ["IA soberana", "PBIA", "LGPD", "ANPD", "BXat", "gestão pública"]
 featured: true
-image: "/blog/ia-soberana-cover.svg"
+image: "/blog/ia-soberana-cover.png"
 imageAlt: "IA Soberana para o Brasil"
 ---
 

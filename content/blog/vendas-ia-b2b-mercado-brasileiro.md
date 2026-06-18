@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "BD & Comercial, BaXiJen"
 tags: ["B2B", "IA", "vendas", "mercado brasileiro", "LGPD", "startup", "go-to-market", "Gartner", "IDC", "BaXiJen"]
 featured: true
-image: "/blog/vendas-ia-b2b-cover.svg"
+image: "/blog/vendas-ia-b2b-cover.png"
 imageAlt: "Mapa do mercado de IA B2B no Brasil: números, desafios e estratégias de venda"
 ---
 

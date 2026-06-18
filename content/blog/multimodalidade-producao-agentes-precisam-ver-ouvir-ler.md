@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO e Co-fundador na BaXiJen"
 tags: ["multimodalidade", "IA multimodal", "visão computacional", "RAG multimodal", "GPT-4o", "Gemini", "CLIP", "ColPali", "agentes IA", "produção", "BaXiJen", "IABrasileira"]
 featured: true
-image: "/blog/multimodalidade-producao-cover.svg"
+image: "/blog/multimodalidade-producao-cover.png"
 imageAlt: "Diagrama mostrando três fluxos de entrada (texto, imagem, áudio) convergindo para um motor de raciocínio central, com saídas para classificação, busca e geração. Cores da identidade BaXiJen em fundo escuro."
 ---
 

@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO e Tech Lead na BaXiJen"
 tags: ["agentes multiagente", "orquestração", "LLM", "produção", "LangGraph", "CrewAI", "AutoGen", "multi-agent", "IA brasileira", "BaXiJen"]
 featured: true
-image: "/blog/agentes-multilaterais-coordenacao-multiagente-cover.svg"
+image: "/blog/agentes-multilaterais-coordenacao-multiagente-cover.png"
 imageAlt: "Diagrama de orquestração multiagente: padrões supervisor, hierárquico e peer-to-peer com agentes especializados coordenados por um orchestrator central"
 ---
 

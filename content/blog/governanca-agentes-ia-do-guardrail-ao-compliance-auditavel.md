@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "Head de Business Development e Co-fundador na BaXiJen"
 tags: ["governança IA", "agentes IA", "compliance", "auditabilidade", "LGPD", "Marco Legal da IA", "EU AI Act", "ISO 42001", "NIST AI RMF", "guardrails", "BaXiJen"]
 featured: true
-image: "/blog/governanca-agentes-ia-cover.svg"
+image: "/blog/governanca-agentes-ia-cover.png"
 imageAlt: "Diagrama em camadas da governança de agentes IA: camada 1 (Guardrails) no nível de execução, camada 2 (Observabilidade) no nível de infraestrutura, camada 3 (Compliance Auditável) no nível organizacional. Setas conectando cada camada à de cima, indicando que governança é progressiva e cumulativa."
 ---
 

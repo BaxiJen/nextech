@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO e Co-fundador na BaXiJen"
 tags: ["data flywheel", "agentes IA", "feedback loop", "produção", "RLHF", "fine-tuning", "observabilidade", "IA brasileira", "BaXiJen", "self-improving systems"]
 featured: true
-image: "/blog/data-flywheel-agentes-cover.svg"
+image: "/blog/data-flywheel-agentes-cover.png"
 imageAlt: "Diagrama do ciclo do data flywheel: interação em produção gera sinais, sinais viram dados de treino, modelo melhora, ciclo composta. Comparado a um modelo estático que degrada ao longo do tempo."
 ---
 

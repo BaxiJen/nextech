@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO & Tech Lead, BaXiJen"
 tags: ["modelos open-source", "IA brasileira", "Sabiá", "Maritaca", "Tucano", "LLM português", "soberania de dados", "PBIA", "LGPD", "SLM"]
 featured: true
-image: "/blog/modelos-open-source-br-cover.svg"
+image: "/blog/modelos-open-source-br-cover.png"
 imageAlt: "Mapa do Brasil estilizado com nós de IA conectados entre estados, representando o ecossistema de modelos open-source em português brasileiro: Sabiá, Tucano, Drummond, AMALIA e corpus Carolina"
 ---
 

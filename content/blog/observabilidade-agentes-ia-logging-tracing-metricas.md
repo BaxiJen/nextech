@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO, BaXiJen"
 tags: ["observabilidade", "agentes IA", "logging", "tracing", "métricas", "OpenTelemetry", "LLM", "produção", "debugging", "Langfuse", "LangSmith", "monitoramento", "infraestrutura IA"]
 featured: false
-image: "/blog/observabilidade-agentes-ia-cover.svg"
+image: "/blog/observabilidade-agentes-ia-cover.png"
 imageAlt: "Diagrama de observabilidade para agentes IA mostrando os 3 pilares: tracing distribuído, logging estruturado e métricas, com OpenTelemetry como camada de padronização conectando a agentes, ferramentas e dashboards"
 ---
 

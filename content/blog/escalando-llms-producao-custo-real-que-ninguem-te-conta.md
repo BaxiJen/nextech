@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO na BaXiJen"
 tags: ["LLM", "inferência", "GPU", "infraestrutura", "escalabilidade", "custo", "on-prem", "cloud", "vLLM", "produção"]
 featured: true
-image: "/blog/escalando-llms-producao-custo-real.svg"
+image: "/blog/escalando-llms-producao-custo-real.png"
 imageAlt: "Diagrama comparativo de custos de infraestrutura para LLMs em produção: cloud vs on-prem vs híbrido"
 ---
 

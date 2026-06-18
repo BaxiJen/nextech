@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO na BaXiJen"
 tags: ["segurança", "agentes IA", "OWASP", "red teaming", "LGPD", "prompt injection", "produção", "guardrails"]
 featured: true
-image: "/blog/seguranca-agentes-ia-producao.svg"
+image: "/blog/seguranca-agentes-ia-producao.png"
 imageAlt: "Diagrama das 10 categorias de risco do OWASP Top 10 para Aplicações Agentivas com conexão para defesas e compliance LGPD"
 ---
 

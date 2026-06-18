@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO e Co-fundador na BaXiJen"
 tags: ["context engineering", "prompt engineering", "agentes IA", "produção", "context window", "RAG", "memória", "MCP", "IA brasileira", "BaXiJen"]
 featured: true
-image: "/blog/context-engineering-cover.svg"
+image: "/blog/context-engineering-cover.png"
 imageAlt: "Diagrama comparando prompt engineering (instrução única) e context engineering (gerenciamento dinâmico de contexto em loop de agente: instruções, ferramentas, memória, dados externos). Quatro modos de falha: context poisoning, distraction, confusion e clash."
 ---
 

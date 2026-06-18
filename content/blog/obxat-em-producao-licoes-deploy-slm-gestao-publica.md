@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO & Tech Lead, BaXiJen"
 tags: ["SLM", "gestão pública", "deploy em produção", "IA soberana", "on-premises", "BXat", "fine-tuning", "IA brasileira"]
 featured: true
-image: "/blog/obxat-producao-cover.svg"
+image: "/blog/obxat-producao-cover.png"
 imageAlt: "Diagrama de arquitetura do OBXat: SLM on-premises, RAG com documentos públicos, guardrails e interface para gestor municipal"
 ---
 

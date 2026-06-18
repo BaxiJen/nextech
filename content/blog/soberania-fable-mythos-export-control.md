@@ -15,7 +15,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO, BaXiJen"
 tags: ["soberania-digital", "ia-brasileira", "anthropic", "export-control", "on-premise", "slm"]
 featured: true
-image: "/blog/soberania-fable-mythos.svg"
+image: "/blog/soberania-fable-mythos.png"
 imageAlt: "Timeline: governo corta acesso a IA, empresas ficam sem nada"
 ```
 

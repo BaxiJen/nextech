@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO e Co-fundador na BaXiJen"
 tags: ["edge AI", "SLM", "small language models", "on-device AI", "quantização", "NPU", "dispositivos constraint", "Phi-4", "Llama 3.2", "Aion", "BaXiJen"]
 featured: true
-image: "/blog/edge-ai-slms-cover.svg"
+image: "/blog/edge-ai-slms-cover.png"
 imageAlt: "Diagrama mostrando a pirâmide de dispositivos edge: no topo, smartphones flagship com NPU de 100 TOPS; no meio, laptops e mini-PCs; na base, Raspberry Pi e dispositivos IoT. Setas indicando que SLMs de diferentes tamanhos (1B, 3B, 7B) se encaixam em cada camada conforme técnicas de compressão aplicadas."
 ---
 

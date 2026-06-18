@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO e Tech Lead na BaXiJen"
 tags: ["guardrails", "alinhamento", "produção", "NeMo Guardrails", "Llama Guard", "OWASP", "prompt injection", "PII", "agentes IA", "segurança"]
 featured: true
-image: "/blog/guardrails-alinhamento-producao.svg"
+image: "/blog/guardrails-alinhamento-producao.png"
 imageAlt: "Arquitetura de 6 camadas de guardrails em produção: input validation, prompt hardening, retrieval rail, output filtering, tool-call gating e moderation API"
 ---
 

@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO na BaXiJen"
 tags: ["MCP", "Model Context Protocol", "agentes IA", "integração", "ferramentas", "IA soberana", "segurança", "Anthropic", "OpenAI", "protocolo aberto"]
 featured: true
-image: "/blog/mcp-model-context-protocol-cover.svg"
+image: "/blog/mcp-model-context-protocol-cover.png"
 imageAlt: "Arquitetura MCP: cliente, servidor e protocolo resolvendo o problema N×M de integração entre agentes de IA e fontes de dados"
 ---
 

@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "Head de Business Development na BaXiJen"
 tags: ["pricing", "IA", "SLM", "modelo de negócio", "monetização", "on-premise", "SaaS", "startup", "Brasil", "BaXiJen"]
 featured: true
-image: "/blog/pricing-slm-producao-cover.svg"
+image: "/blog/pricing-slm-producao-cover.png"
 imageAlt: "Diagrama comparativo de modelos de pricing para SLM em produção: licença perpétua, assinatura por usuário, pay-per-token e modelo híbrido"
 ---
 

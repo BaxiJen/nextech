@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO / Tech Lead"
 tags: ["RAG", "fine-tuning", "LLM", "produção", "RAFT", "SLM", "IA brasileira"]
 featured: false
-image: "/blog/rag-vs-fine-tuning.svg"
+image: "/blog/rag-vs-fine-tuning.png"
 imageAlt: "Comparativo visual entre RAG e Fine-tuning: pipeline de retrieval vs atualização de pesos do modelo"
 ---
 

@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "BD / Comercial, BaXiJen"
 tags: ["prompt engineering", "produção", "structured outputs", "DSPy", "LLM", "LLMOps", "prompt ops", "evals", "IA brasileira"]
 featured: false
-image: "/blog/prompt-engineering-producao-cover.svg"
+image: "/blog/prompt-engineering-producao-cover.png"
 imageAlt: "Diagrama comparando prompt artesanal (texto solto, sem validação) com prompt em produção (schema JSON, evals, versionamento, CI/CD), mostrando a evolução do playground para o pipeline robusto"
 ---
 

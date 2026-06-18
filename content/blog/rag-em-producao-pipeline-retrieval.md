@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO & Co-fundador, BaXiJen"
 tags: ["RAG", "retrieval", "produção", "chunking", "reranking", "busca híbrida", "RAGAS", "SLM", "BXat"]
 featured: true
-image: "/blog/rag-producao-cover.svg"
+image: "/blog/rag-producao-cover.png"
 imageAlt: "Pipeline de RAG em produção: do chunking ao reranking"
 ---
 

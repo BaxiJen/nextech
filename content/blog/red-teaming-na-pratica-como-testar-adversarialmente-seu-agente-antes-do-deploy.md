@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO na BaXiJen"
 tags: ["red teaming", "segurança", "agentes IA", "OWASP", "prompt injection", "PyRIT", "Garak", "Promptfoo", "adversarial testing", "LGPD", "produção"]
 featured: true
-image: "/blog/red-teaming-adversarial-agentes-ia-cover.svg"
+image: "/blog/red-teaming-adversarial-agentes-ia-cover.png"
 imageAlt: "Pipeline de red teaming para agentes IA: da modelagem de ameaças às camadas de cobertura, com ferramentas open-source e mapeamento OWASP"
 ---
 

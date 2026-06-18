@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "Head de Comercial e Parcerias na BaXiJen"
 tags: ["data mesh", "agentes IA", "dados federados", "multiagente", "governança de dados", "MCP", "context engineering", "IA brasileira", "BaXiJen", "produção"]
 featured: true
-image: "/blog/data-mesh-ia-multiagente-cover.svg"
+image: "/blog/data-mesh-ia-multiagente-cover.png"
 imageAlt: "Diagrama de arquitetura data mesh para IA: múltiplos agentes acessando domínios de dados federados via backbone semântico e protocolos MCP"
 ---
 

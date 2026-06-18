@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO, BaXiJen"
 tags: ["cloud", "on-premises", "infraestrutura IA", "soberania de dados", "LGPD", "TCO", "deploy", "IA brasileira", "hybrid", "repatriação"]
 featured: true
-image: "/blog/cloud-vs-on-prem-cover.svg"
+image: "/blog/cloud-vs-on-prem-cover.png"
 imageAlt: "Comparativo visual entre cloud e on-prem para IA: de um lado servidores em nuvem com ícones de escalabilidade e custo variável, do outro infraestrutura local com ícones de controle, soberania e latência baixa"
 ---
 

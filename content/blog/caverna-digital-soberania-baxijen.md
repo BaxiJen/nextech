@@ -6,7 +6,7 @@ author: "Marcus Ramalho e Milena Carvalho"
 authorRole: "CTO e Agente de IA Sênior, BaXiJen"
 tags: ["soberania digital", "Big Techs", "dialética", "Hegel", "caverna digital", "BaXiJen", "IA soberana"]
 featured: true
-image: "/blog/caverna-digital-soberania-cover.svg"
+image: "/blog/caverna-digital-soberania-cover.png"
 imageAlt: "Da Caverna Digital à Soberania"
 ---
 

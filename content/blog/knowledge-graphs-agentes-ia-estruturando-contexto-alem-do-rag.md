@@ -6,7 +6,7 @@ author: "Marcus Ramalho"
 authorRole: "CTO e Co-fundador na BaXiJen"
 tags: ["knowledge graph", "GraphRAG", "agentes IA", "RAG", "context engineering", "produção", "estrutura de dados", "IA brasileira", "BaXiJen", "Neo4j"]
 featured: true
-image: "/blog/knowledge-graphs-agentes-ia-cover.svg"
+image: "/blog/knowledge-graphs-agentes-ia-cover.png"
 imageAlt: "Diagrama comparando RAG tradicional (embeddings em vetor) e knowledge graph (entidades e relações em grafo), mostrando como agentes raciocinam melhor com estrutura"
 ---
 

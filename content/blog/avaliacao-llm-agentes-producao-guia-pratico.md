@@ -6,7 +6,7 @@ author: "Leonardo Camilo"
 authorRole: "CEO / Tech Lead, BaXiJen"
 tags: ["avaliação", "LLM", "agentes IA", "RAGAS", "LLM-as-judge", "benchmarks", "golden dataset", "produção", "métricas", "SLM", "IA brasileira"]
 featured: false
-image: "/blog/avaliacao-llm-agentes-cover.svg"
+image: "/blog/avaliacao-llm-agentes-cover.png"
 imageAlt: "Diagrama mostrando o pipeline de avaliação de LLMs: golden dataset, métricas offline (faithfulness, relevance, recall) e online (latência, custo, satisfação), conectados ao ciclo de melhoria contínua"
 ---
 
