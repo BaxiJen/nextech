@@ -54,9 +54,6 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
-            <Link href="/contato">
-              <Button size="sm">Contato</Button>
-            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -96,11 +93,6 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
-            <div className="pt-4 px-3">
-              <Link href="/contato" className="w-full">
-                <Button className="w-full">Contato</Button>
-              </Link>
-            </div>
           </div>
         </div>
       )}
