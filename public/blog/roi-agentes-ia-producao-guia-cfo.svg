@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0d1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="green1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="amber1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="barBlue" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#1d4ed8;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="barCyan" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#0891b2;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="barGreen" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="barPurple" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#6d28d9;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="barAmber" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#d97706;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="barRed" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#b91c1c;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern (subtle) -->
+  <g opacity="0.04" stroke="#3b82f6" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="630"/>
+    <line x1="100" y1="0" x2="1200" y2="530"/>
+    <line x1="200" y1="0" x2="1200" y2="430"/>
+    <line x1="0" y1="100" x2="1100" y2="630"/>
+    <line x1="0" y1="200" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Decorative circuit lines -->
+  <g opacity="0.08" stroke="#06b6d4" stroke-width="1" fill="none">
+    <path d="M0,80 H160 L190,50 H360 L390,80 H560"/>
+    <path d="M640,560 H820 L850,530 H1020 L1050,560 H1200"/>
+    <circle cx="160" cy="80" r="3" fill="#06b6d4"/>
+    <circle cx="360" cy="80" r="3" fill="#06b6d4"/>
+    <circle cx="820" cy="560" r="3" fill="#06b6d4"/>
+  </g>
+
+  <!-- BaXiJen logo mark (top-left) -->
+  <g transform="translate(50, 45)">
+    <rect x="0" y="0" width="32" height="32" rx="6" fill="url(#blue1)" filter="url(#glow)"/>
+    <text x="16" y="22" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">B</text>
+    <text x="42" y="22" fill="#e2e8f0" font-size="14" font-weight="600">BaXiJen</text>
+  </g>
+
+  <!-- ROI Chart area -->
+  <g transform="translate(100, 140)">
+    <!-- Chart title -->
+    <text x="0" y="0" fill="#94a3b8" font-size="13" font-weight="600" letter-spacing="1">PAYBACK MEDIANO POR FUNÇÃO (MESES) · BAIN 2026</text>
+
+    <!-- Y-axis line -->
+    <line x1="0" y1="20" x2="0" y2="240" stroke="#334155" stroke-width="1"/>
+    <!-- X-axis line -->
+    <line x1="0" y1="240" x2="700" y2="240" stroke="#334155" stroke-width="1"/>
+
+    <!-- Gridlines -->
+    <g opacity="0.1" stroke="#3b82f6" stroke-width="0.5" stroke-dasharray="3,4">
+      <line x1="0" y1="60" x2="700" y2="60"/>
+      <line x1="0" y1="120" x2="700" y2="120"/>
+      <line x1="0" y1="180" x2="700" y2="180"/>
+    </g>
+
+    <!-- Axis labels -->
+    <text x="-8" y="244" text-anchor="end" fill="#64748b" font-size="9">0</text>
+    <text x="-8" y="184" text-anchor="end" fill="#64748b" font-size="9">6</text>
+    <text x="-8" y="124" text-anchor="end" fill="#64748b" font-size="9">12</text>
+    <text x="-8" y="64" text-anchor="end" fill="#64748b" font-size="9">18</text>
+
+    <!-- Bars: each bar = (payback_months / 18.4) * 180 height, starting from y=240 going up -->
+    <!-- Scale: 1 month = 9.78px. Bar width = 55px, gap = 25px -->
+
+    <!-- SDR: 3.4 months -> 33px -->
+    <rect x="20" y="207" width="55" height="33" fill="url(#barGreen)" rx="3" filter="url(#glow)"/>
+    <text x="47" y="200" text-anchor="middle" fill="#10b981" font-size="10" font-weight="700">3.4</text>
+    <text x="47" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">SDR</text>
+
+    <!-- Customer Service: 4.1 months -> 40px -->
+    <rect x="100" y="200" width="55" height="40" fill="url(#barGreen)" rx="3" filter="url(#glow)"/>
+    <text x="127" y="193" text-anchor="middle" fill="#10b981" font-size="10" font-weight="700">4.1</text>
+    <text x="127" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">Support</text>
+
+    <!-- Marketing Ops: 6.7 months -> 65px -->
+    <rect x="180" y="175" width="55" height="65" fill="url(#barCyan)" rx="3" filter="url(#glow)"/>
+    <text x="207" y="168" text-anchor="middle" fill="#06b6d4" font-size="10" font-weight="700">6.7</text>
+    <text x="207" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">Marketing</text>
+
+    <!-- IT Helpdesk: 8.0 months -> 78px -->
+    <rect x="260" y="162" width="55" height="78" fill="url(#barCyan)" rx="3" filter="url(#glow)"/>
+    <text x="287" y="155" text-anchor="middle" fill="#06b6d4" font-size="10" font-weight="700">8.0</text>
+    <text x="287" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">IT</text>
+
+    <!-- Finance: 8.9 months -> 87px -->
+    <rect x="340" y="153" width="55" height="87" fill="url(#barBlue)" rx="3" filter="url(#glow)"/>
+    <text x="367" y="146" text-anchor="middle" fill="#3b82f6" font-size="10" font-weight="700">8.9</text>
+    <text x="367" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">Finance</text>
+
+    <!-- Engineering: 9.3 months -> 91px -->
+    <rect x="420" y="149" width="55" height="91" fill="url(#barBlue)" rx="3" filter="url(#glow)"/>
+    <text x="447" y="142" text-anchor="middle" fill="#3b82f6" font-size="10" font-weight="700">9.3</text>
+    <text x="447" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">Eng</text>
+
+    <!-- HR: 11.2 months -> 109px -->
+    <rect x="500" y="131" width="55" height="109" fill="url(#barPurple)" rx="3" filter="url(#glow)"/>
+    <text x="527" y="124" text-anchor="middle" fill="#a855f7" font-size="10" font-weight="700">11.2</text>
+    <text x="527" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">HR</text>
+
+    <!-- Legal: 14.8 months -> 145px -->
+    <rect x="580" y="95" width="55" height="145" fill="url(#barAmber)" rx="3" filter="url(#glow)"/>
+    <text x="607" y="88" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="700">14.8</text>
+    <text x="607" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">Legal</text>
+
+    <!-- Clinical: 18.4 months -> 180px -->
+    <rect x="660" y="60" width="55" height="180" fill="url(#barRed)" rx="3" filter="url(#glow)"/>
+    <text x="687" y="53" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700">18.4</text>
+    <text x="687" y="258" text-anchor="middle" fill="#94a3b8" font-size="9">Clinical</text>
+
+    <!-- 22% failure callout -->
+    <g transform="translate(830, 140)">
+      <rect x="0" y="0" width="280" height="110" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1" opacity="0.95"/>
+      <rect x="0" y="0" width="4" height="110" rx="2" fill="url(#amber1)"/>
+      <text x="20" y="28" fill="#f59e0b" font-size="28" font-weight="800">22%</text>
+      <text x="75" y="25" fill="#e2e8f0" font-size="12" font-weight="600">dos deployments</text>
+      <text x="75" y="42" fill="#94a3b8" font-size="11">ainda no vermelho</text>
+      <text x="75" y="56" fill="#94a3b8" font-size="11">após 12 meses</text>
+      <line x1="20" y1="68" x2="260" y2="68" stroke="#334155" stroke-width="0.5"/>
+      <text x="20" y="84" fill="#64748b" font-size="9">Causa raiz #1:</text>
+      <text x="20" y="98" fill="#e2e8f0" font-size="10" font-weight="600">critérios de sucesso pouco claros</text>
+    </g>
+
+    <!-- Payback median callout -->
+    <g transform="translate(830, 270)">
+      <rect x="0" y="0" width="280" height="90" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1" opacity="0.95"/>
+      <rect x="0" y="0" width="4" height="90" rx="2" fill="url(#green1)"/>
+      <text x="20" y="32" fill="#10b981" font-size="28" font-weight="800">5,1</text>
+      <text x="80" y="28" fill="#e2e8f0" font-size="12" font-weight="600">meses</text>
+      <text x="80" y="44" fill="#94a3b8" font-size="11">payback mediano</text>
+      <text x="80" y="58" fill="#94a3b8" font-size="11">todas as funções</text>
+      <line x1="20" y1="66" x2="260" y2="66" stroke="#334155" stroke-width="0.5"/>
+      <text x="20" y="82" fill="#64748b" font-size="9">Fonte: BCG + Forrester 2026</text>
+    </g>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="470" text-anchor="middle" fill="#f8fafc" font-size="36" font-weight="800" letter-spacing="-0.5">
+    ROI de Agentes IA em Produção
+  </text>
+  <text x="600" y="510" text-anchor="middle" fill="#06b6d4" font-size="18" font-weight="600" letter-spacing="0.5">
+    O guia que o CFO quer ver antes de assinar
+  </text>
+
+  <!-- Author + date -->
+  <text x="600" y="555" text-anchor="middle" fill="#64748b" font-size="13" font-weight="500">
+    Luiz Felipe Barbedo · BaXiJen · 19/06/2026
+  </text>
+
+  <!-- Bottom decorative bar -->
+  <rect x="0" y="620" width="1200" height="10" fill="url(#blue1)" opacity="0.6"/>
+</svg>
