@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A0E1A"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0A0E1A"/>
+    </linearGradient>
+    <linearGradient id="ingest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="valid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="version" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="serve" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#6D28D9" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.05" stroke="#3B82F6" stroke-width="0.5">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Title -->
+  <text x="60" y="60" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">
+    Pipeline de Dados para Agentes IA
+  </text>
+  <text x="60" y="92" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="400" fill="#94A3B8" letter-spacing="0">
+    Ingestão · Validação · Versionamento em Produção
+  </text>
+
+  <!-- BaXiJen badge -->
+  <g transform="translate(1050, 45)">
+    <rect x="0" y="0" width="120" height="36" rx="18" fill="#1E293B" stroke="#3B82F6" stroke-width="1" opacity="0.8"/>
+    <text x="60" y="23" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#3B82F6" text-anchor="middle">BaXiJen</text>
+  </g>
+
+  <!-- Layer 1: Ingestão -->
+  <g transform="translate(60, 140)">
+    <rect x="0" y="0" width="1080" height="110" rx="12" fill="url(#ingest)" opacity="0.15"/>
+    <rect x="0" y="0" width="1080" height="110" rx="12" fill="none" stroke="#3B82F6" stroke-width="1.5" opacity="0.6"/>
+
+    <text x="24" y="36" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#60A5FA">01 INGESTÃO</text>
+
+    <!-- Source icons -->
+    <g transform="translate(180, 50)">
+      <rect x="0" y="0" width="80" height="50" rx="6" fill="#1E3A5F" stroke="#3B82F6" stroke-width="1"/>
+      <text x="40" y="30" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#93C5FD" text-anchor="middle">PostgreSQL</text>
+    </g>
+    <g transform="translate(270, 50)">
+      <rect x="0" y="0" width="80" height="50" rx="6" fill="#1E3A5F" stroke="#3B82F6" stroke-width="1"/>
+      <text x="40" y="30" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#93C5FD" text-anchor="middle">APIs REST</text>
+    </g>
+    <g transform="translate(360, 50)">
+      <rect x="0" y="0" width="80" height="50" rx="6" fill="#1E3A5F" stroke="#3B82F6" stroke-width="1"/>
+      <text x="40" y="30" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#93C5FD" text-anchor="middle">S3 / MinIO</text>
+    </g>
+    <g transform="translate(450, 50)">
+      <rect x="0" y="0" width="80" height="50" rx="6" fill="#1E3A5F" stroke="#3B82F6" stroke-width="1"/>
+      <text x="40" y="30" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#93C5FD" text-anchor="middle">Vector DB</text>
+    </g>
+    <g transform="translate(540, 50)">
+      <rect x="0" y="0" width="80" height="50" rx="6" fill="#1E3A5F" stroke="#3B82F6" stroke-width="1"/>
+      <text x="40" y="30" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#93C5FD" text-anchor="middle">Kafka</text>
+    </g>
+
+    <!-- Arrow -->
+    <text x="660" y="80" font-family="Inter, system-ui, sans-serif" font-size="24" fill="#3B82F6">→</text>
+
+    <!-- Schema registry -->
+    <g transform="translate(700, 50)">
+      <rect x="0" y="0" width="160" height="50" rx="6" fill="#1E3A5F" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="80" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#93C5FD" text-anchor="middle">Schema Registry</text>
+      <text x="80" y="38" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#60A5FA" text-anchor="middle">CDC + Buffer + Backpressure</text>
+    </g>
+  </g>
+
+  <!-- Arrow down -->
+  <text x="600" y="268" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#475569" text-anchor="middle">↓</text>
+
+  <!-- Layer 2: Validação -->
+  <g transform="translate(60, 285)">
+    <rect x="0" y="0" width="1080" height="110" rx="12" fill="url(#valid)" opacity="0.15"/>
+    <rect x="0" y="0" width="1080" height="110" rx="12" fill="none" stroke="#10B981" stroke-width="1.5" opacity="0.6"/>
+
+    <text x="24" y="36" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#34D399">02 VALIDAÇÃO</text>
+
+    <!-- Gate icons -->
+    <g transform="translate(180, 50)">
+      <rect x="0" y="0" width="140" height="50" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+      <text x="70" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#6EE7B7" text-anchor="middle">Gate de Schema</text>
+      <text x="70" y="38" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#34D399" text-anchor="middle">Pydantic / Great Expectations</text>
+    </g>
+    <g transform="translate(340, 50)">
+      <rect x="0" y="0" width="140" height="50" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+      <text x="70" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#6EE7B7" text-anchor="middle">Gate de Distribuição</text>
+      <text x="70" y="38" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#34D399" text-anchor="middle">PSI &gt; 0.2 = drift</text>
+    </g>
+    <g transform="translate(500, 50)">
+      <rect x="0" y="0" width="140" height="50" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+      <text x="70" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#6EE7B7" text-anchor="middle">Gate Semântico</text>
+      <text x="70" y="38" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#34D399" text-anchor="middle">Two-stage parsing</text>
+    </g>
+    <g transform="translate(660, 50)">
+      <rect x="0" y="0" width="140" height="50" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+      <text x="70" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#6EE7B7" text-anchor="middle">Guardrails</text>
+      <text x="70" y="38" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#34D399" text-anchor="middle">Pre-execution check</text>
+    </g>
+
+    <text x="860" y="80" font-family="Inter, system-ui, sans-serif" font-size="24" fill="#10B981">→</text>
+  </g>
+
+  <!-- Arrow down -->
+  <text x="600" y="413" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#475569" text-anchor="middle">↓</text>
+
+  <!-- Layer 3: Versionamento -->
+  <g transform="translate(60, 430)">
+    <rect x="0" y="0" width="1080" height="80" rx="12" fill="url(#version)" opacity="0.15"/>
+    <rect x="0" y="0" width="1080" height="80" rx="12" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity="0.6"/>
+
+    <text x="24" y="32" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#FBBF24">03 VERSIONAMENTO</text>
+
+    <!-- Branch visual -->
+    <g transform="translate(200, 20)">
+      <rect x="0" y="0" width="120" height="40" rx="6" fill="#78350F" stroke="#F59E0B" stroke-width="1"/>
+      <text x="60" y="25" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D" text-anchor="middle">main</text>
+    </g>
+    <g transform="translate(340, 10)">
+      <line x1="0" y1="30" x2="30" y2="15" stroke="#F59E0B" stroke-width="1.5"/>
+      <line x1="0" y1="30" x2="30" y2="45" stroke="#F59E0B" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(380, 0)">
+      <rect x="0" y="0" width="120" height="40" rx="6" fill="#78350F" stroke="#F59E0B" stroke-width="1"/>
+      <text x="60" y="25" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D" text-anchor="middle">agent-01</text>
+    </g>
+    <g transform="translate(380, 40)">
+      <rect x="0" y="0" width="120" height="40" rx="6" fill="#78350F" stroke="#F59E0B" stroke-width="1"/>
+      <text x="60" y="25" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D" text-anchor="middle">agent-02</text>
+    </g>
+    <g transform="translate(520, 20)">
+      <text x="0" y="25" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#FBBF24">zero-copy branches</text>
+    </g>
+
+    <!-- Tools -->
+    <g transform="translate(700, 20)">
+      <rect x="0" y="0" width="100" height="40" rx="6" fill="#78350F" stroke="#F59E0B" stroke-width="1"/>
+      <text x="50" y="25" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D" text-anchor="middle">lakeFS</text>
+    </g>
+    <g transform="translate(820, 20)">
+      <rect x="0" y="0" width="100" height="40" rx="6" fill="#78350F" stroke="#F59E0B" stroke-width="1"/>
+      <text x="50" y="25" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D" text-anchor="middle">DVC 3.0</text>
+    </g>
+    <g transform="translate(940, 20)">
+      <rect x="0" y="0" width="100" height="40" rx="6" fill="#78350F" stroke="#F59E0B" stroke-width="1"/>
+      <text x="50" y="25" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D" text-anchor="middle">Audit Trail</text>
+    </g>
+  </g>
+
+  <!-- Bottom bar: serving -->
+  <g transform="translate(60, 530)">
+    <rect x="0" y="0" width="1080" height="70" rx="12" fill="url(#serve)" opacity="0.15"/>
+    <rect x="0" y="0" width="1080" height="70" rx="12" fill="none" stroke="#8B5CF6" stroke-width="1.5" opacity="0.6"/>
+
+    <text x="24" y="30" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#A78BFA">SERVING</text>
+    <text x="24" y="50" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#C4B5FD">Agentes consomem branch isolado · Outputs validados · Ações auditadas</text>
+
+    <!-- Agent dots -->
+    <g transform="translate(700, 20)">
+      <circle cx="0" cy="15" r="12" fill="#6D28D9" stroke="#A78BFA" stroke-width="1.5"/>
+      <text x="0" y="19" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#E9D5FF" text-anchor="middle">A1</text>
+    </g>
+    <g transform="translate(740, 20)">
+      <circle cx="0" cy="15" r="12" fill="#6D28D9" stroke="#A78BFA" stroke-width="1.5"/>
+      <text x="0" y="19" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#E9D5FF" text-anchor="middle">A2</text>
+    </g>
+    <g transform="translate(780, 20)">
+      <circle cx="0" cy="15" r="12" fill="#6D28D9" stroke="#A78BFA" stroke-width="1.5"/>
+      <text x="0" y="19" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#E9D5FF" text-anchor="middle">A3</text>
+    </g>
+    <g transform="translate(820, 20)">
+      <circle cx="0" cy="15" r="12" fill="#6D28D9" stroke="#A78BFA" stroke-width="1.5"/>
+      <text x="0" y="19" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#E9D5FF" text-anchor="middle">A4</text>
+    </g>
+    <g transform="translate(860, 20)">
+      <circle cx="0" cy="15" r="12" fill="#6D28D9" stroke="#A78BFA" stroke-width="1.5"/>
+      <text x="0" y="19" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#E9D5FF" text-anchor="middle">A5</text>
+    </g>
+
+    <text x="920" y="35" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#A78BFA">→ Produção</text>
+  </g>
+
+  <!-- Decorative dots -->
+  <g opacity="0.3">
+    <circle cx="30" cy="300" r="2" fill="#3B82F6"/>
+    <circle cx="1170" cy="200" r="2" fill="#10B981"/>
+    <circle cx="1170" cy="400" r="2" fill="#F59E0B"/>
+    <circle cx="30" cy="500" r="2" fill="#8B5CF6"/>
+  </g>
+</svg>
