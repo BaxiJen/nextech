@@ -1,0 +1,121 @@
+<svg width="1200" height="627" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+    <linearGradient id="layerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#58A6FF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#58A6FF" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="layerGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3FB950" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3FB950" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="layerGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0883E" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#F0883E" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="layerGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#BC8CFF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#BC8CFF" stop-opacity="0.03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#F0F6FC" text-anchor="middle" letter-spacing="0.5">
+    Memória de Agentes IA em Produção
+  </text>
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="400" fill="#8B949E" text-anchor="middle">
+    Quatro camadas de memória que um agente precisa ter
+  </text>
+
+  <!-- Left side: 4 memory layers stacked -->
+  <!-- Layer 1: Working Memory -->
+  <rect x="50" y="100" width="520" height="110" rx="12" fill="url(#layerGrad)" stroke="#58A6FF" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="70" y="128" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#58A6FF">1. Memória de Trabalho</text>
+  <text x="70" y="150" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">Context window do LLM. Instrução atual, últimas</text>
+  <text x="70" y="168" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">mensagens, resultados de tools recentes. Volátil.</text>
+  <text x="70" y="192" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">Custo: O(n²) por token. Retornos decrescentes.</text>
+
+  <!-- Arrow down -->
+  <line x1="310" y1="215" x2="310" y2="230" stroke="#30363D" stroke-width="2"/>
+
+  <!-- Layer 2: Episodic Memory -->
+  <rect x="50" y="235" width="520" height="110" rx="12" fill="url(#layerGrad2)" stroke="#3FB950" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="70" y="263" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#3FB950">2. Memória Episódica</text>
+  <text x="70" y="285" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">Eventos específicos passados. "Na sessão de ontem,</text>
+  <text x="70" y="303" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">o usuário perguntou X e o agente respondeu Y."</text>
+  <text x="70" y="327" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">Log estruturado com timestamps. Recuperação por similaridade.</text>
+
+  <!-- Arrow down -->
+  <line x1="310" y1="350" x2="310" y2="365" stroke="#30363D" stroke-width="2"/>
+
+  <!-- Layer 3: Semantic Memory -->
+  <rect x="50" y="370" width="520" height="110" rx="12" fill="url(#layerGrad3)" stroke="#F0883E" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="70" y="398" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#F0883E">3. Memória Semântica</text>
+  <text x="70" y="420" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">Fatos extraídos das interações. "O usuário prefere</text>
+  <text x="70" y="438" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">respostas em português formal."</text>
+  <text x="70" y="462" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">Vector store + extração por LLM. Custo de escrita alto.</text>
+
+  <!-- Arrow down -->
+  <line x1="310" y1="485" x2="310" y2="500" stroke="#30363D" stroke-width="2"/>
+
+  <!-- Layer 4: Procedural Memory -->
+  <rect x="50" y="505" width="520" height="100" rx="12" fill="url(#layerGrad4)" stroke="#BC8CFF" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="70" y="533" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#BC8CFF">4. Memória Procedural</text>
+  <text x="70" y="555" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">Skills e procedimentos aprendidos. "Para responder sobre</text>
+  <text x="70" y="573" font-family="system-ui, sans-serif" font-size="12" fill="#C9D1D9">impostos, consulte a API da Receita primeiro."</text>
+  <text x="70" y="595" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">System prompts dinâmicos. Cross-trajectory abstraction.</text>
+
+  <!-- Divider -->
+  <line x1="600" y1="100" x2="600" y2="605" stroke="#30363D" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Right side: Framework comparison -->
+  <text x="900" y="125" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#F0F6FC" text-anchor="middle">
+    Frameworks em 2026
+  </text>
+
+  <!-- Letta -->
+  <rect x="630" y="145" width="540" height="85" rx="10" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+  <text x="645" y="168" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#58A6FF">Letta (MemGPT)</text>
+  <text x="645" y="188" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">Agente gerencia própria memória via tool calls.</text>
+  <text x="645" y="204" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">3 tiers: core, archival, recall. Self-hosted.</text>
+  <text x="645" y="220" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Leitura: baixa latência | Escrita: baixo custo</text>
+
+  <!-- Mem0 -->
+  <rect x="630" y="245" width="540" height="85" rx="10" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+  <text x="645" y="268" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#3FB950">Mem0</text>
+  <text x="645" y="288" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">API managed. Extração automática de fatos.</text>
+  <text x="645" y="304" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">Vector + graph + key-value. 94.4% LongMemEval.</text>
+  <text x="645" y="320" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Leitura: 0.148s p50 | Escrita: alto (LLM/turno)</text>
+
+  <!-- Zep -->
+  <rect x="630" y="345" width="540" height="85" rx="10" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+  <text x="645" y="368" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#F0883E">Zep (Graphiti)</text>
+  <text x="645" y="388" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">Grafo de conhecimento bi-temporal.</text>
+  <text x="645" y="404" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">Rastreia quando fatos mudaram. 63.8% LongMemEval.</text>
+  <text x="645" y="420" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Leitura: &lt;50ms pós-build | Escrita: muito alto</text>
+
+  <!-- LangMem -->
+  <rect x="630" y="445" width="540" height="85" rx="10" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+  <text x="645" y="468" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#BC8CFF">LangMem</text>
+  <text x="645" y="488" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">Nativo do LangGraph. Open source.</text>
+  <text x="645" y="504" font-family="system-ui, sans-serif" font-size="11" fill="#C9D1D9">SQLite/Postgres. Tool calls explícitas.</text>
+  <text x="645" y="520" font-family="system-ui, sans-serif" font-size="10" fill="#F85149">Leitura: ~18s p50 | Apenas pipelines batch</text>
+
+  <!-- Bottom bar -->
+  <rect x="630" y="548" width="540" height="57" rx="10" fill="#1C2128" stroke="#30363D" stroke-width="1"/>
+  <text x="900" y="572" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#8B949E" text-anchor="middle">
+    Padrão 2026: camada de consolidação
+  </text>
+  <text x="900" y="590" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E" text-anchor="middle">
+    Roteia cada tipo de memória para o store apropriado
+  </text>
+
+  <!-- BaXiJen logo placeholder -->
+  <text x="1160" y="615" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#58A6FF" text-anchor="end">BaXiJen</text>
+</svg>
