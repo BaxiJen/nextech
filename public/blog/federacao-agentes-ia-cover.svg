@@ -1,0 +1,234 @@
+<svg width="1200" height="627" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+    <linearGradient id="coordGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#58A6FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#58A6FF" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="pipeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3FB950" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#3FB950" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="meshGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0883E" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#F0883E" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="hierGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#BC8CFF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#BC8CFF" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="fwGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1F6FEB" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#1F6FEB" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#F0F6FC" text-anchor="middle" letter-spacing="0.5">
+    Federação de Agentes IA em Produção
+  </text>
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#8B949E" text-anchor="middle">
+    Quatro padrões de orquestração · Três frameworks · Dois protocolos
+  </text>
+
+  <!-- ===== LEFT SIDE: Four Orchestration Patterns ===== -->
+
+  <!-- Pattern 1: Coordinator (hub-and-spoke) -->
+  <g transform="translate(40, 100)">
+    <rect width="250" height="120" rx="8" fill="url(#coordGrad)" stroke="#58A6FF" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="125" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#58A6FF" text-anchor="middle">Coordinator (hub-and-spoke)</text>
+    
+    <!-- Central coordinator node -->
+    <circle cx="125" cy="70" r="16" fill="#58A6FF" fill-opacity="0.8"/>
+    <text x="125" y="74" font-family="system-ui, sans-serif" font-size="9" fill="#0D1117" text-anchor="middle" font-weight="700">COORD</text>
+    
+    <!-- Spoke agents -->
+    <circle cx="65" cy="45" r="10" fill="#58A6FF" fill-opacity="0.4" stroke="#58A6FF" stroke-width="1"/>
+    <circle cx="185" cy="45" r="10" fill="#58A6FF" fill-opacity="0.4" stroke="#58A6FF" stroke-width="1"/>
+    <circle cx="65" cy="95" r="10" fill="#58A6FF" fill-opacity="0.4" stroke="#58A6FF" stroke-width="1"/>
+    <circle cx="185" cy="95" r="10" fill="#58A6FF" fill-opacity="0.4" stroke="#58A6FF" stroke-width="1"/>
+    
+    <!-- Connection lines -->
+    <line x1="125" y1="70" x2="65" y2="45" stroke="#58A6FF" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="125" y1="70" x2="185" y2="45" stroke="#58A6FF" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="125" y1="70" x2="65" y2="95" stroke="#58A6FF" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="125" y1="70" x2="185" y2="95" stroke="#58A6FF" stroke-opacity="0.4" stroke-width="1.5"/>
+  </g>
+
+  <!-- Pattern 2: Pipeline (sequential) -->
+  <g transform="translate(40, 235)">
+    <rect width="250" height="120" rx="8" fill="url(#pipeGrad)" stroke="#3FB950" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="125" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#3FB950" text-anchor="middle">Pipeline (sequencial)</text>
+    
+    <!-- Sequential nodes -->
+    <rect x="20" y="55" width="35" height="30" rx="4" fill="#3FB950" fill-opacity="0.5" stroke="#3FB950" stroke-width="1"/>
+    <text x="37" y="74" font-family="system-ui, sans-serif" font-size="9" fill="#0D1117" text-anchor="middle">A1</text>
+    
+    <rect x="80" y="55" width="35" height="30" rx="4" fill="#3FB950" fill-opacity="0.5" stroke="#3FB950" stroke-width="1"/>
+    <text x="97" y="74" font-family="system-ui, sans-serif" font-size="9" fill="#0D1117" text-anchor="middle">A2</text>
+    
+    <rect x="140" y="55" width="35" height="30" rx="4" fill="#3FB950" fill-opacity="0.5" stroke="#3FB950" stroke-width="1"/>
+    <text x="157" y="74" font-family="system-ui, sans-serif" font-size="9" fill="#0D1117" text-anchor="middle">A3</text>
+    
+    <rect x="200" y="55" width="35" height="30" rx="4" fill="#3FB950" fill-opacity="0.7" stroke="#3FB950" stroke-width="1"/>
+    <text x="217" y="74" font-family="system-ui, sans-serif" font-size="9" fill="#0D1117" text-anchor="middle">A4</text>
+    
+    <!-- Arrows -->
+    <polygon points="58,70 65,67 65,73" fill="#3FB950" fill-opacity="0.6"/>
+    <polygon points="118,70 125,67 125,73" fill="#3FB950" fill-opacity="0.6"/>
+    <polygon points="178,70 185,67 185,73" fill="#3FB950" fill-opacity="0.6"/>
+  </g>
+
+  <!-- Pattern 3: Peer-to-peer (mesh) -->
+  <g transform="translate(40, 370)">
+    <rect width="250" height="120" rx="8" fill="url(#meshGrad)" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="125" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0883E" text-anchor="middle">Peer-to-peer (mesh)</text>
+    
+    <!-- Mesh nodes -->
+    <circle cx="60" cy="55" r="11" fill="#F0883E" fill-opacity="0.4" stroke="#F0883E" stroke-width="1"/>
+    <circle cx="190" cy="55" r="11" fill="#F0883E" fill-opacity="0.4" stroke="#F0883E" stroke-width="1"/>
+    <circle cx="125" cy="80" r="11" fill="#F0883E" fill-opacity="0.5" stroke="#F0883E" stroke-width="1"/>
+    <circle cx="80" cy="105" r="11" fill="#F0883E" fill-opacity="0.4" stroke="#F0883E" stroke-width="1"/>
+    <circle cx="170" cy="105" r="11" fill="#F0883E" fill-opacity="0.4" stroke="#F0883E" stroke-width="1"/>
+    
+    <!-- Mesh connections -->
+    <line x1="60" y1="55" x2="190" y2="55" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="60" y1="55" x2="125" y2="80" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="190" y1="55" x2="125" y2="80" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="125" y1="80" x2="80" y2="105" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="125" y1="80" x2="170" y2="105" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="80" y1="105" x2="170" y2="105" stroke="#F0883E" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="60" y1="55" x2="80" y2="105" stroke="#F0883E" stroke-opacity="0.2" stroke-width="1"/>
+    <line x1="190" y1="55" x2="170" y2="105" stroke="#F0883E" stroke-opacity="0.2" stroke-width="1"/>
+  </g>
+
+  <!-- Pattern 4: Hierarchical (tree) -->
+  <g transform="translate(40, 505)">
+    <rect width="250" height="110" rx="8" fill="url(#hierGrad)" stroke="#BC8CFF" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="125" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#BC8CFF" text-anchor="middle">Hierarchical (árvore)</text>
+    
+    <!-- Root -->
+    <rect x="105" y="35" width="40" height="22" rx="4" fill="#BC8CFF" fill-opacity="0.6" stroke="#BC8CFF" stroke-width="1"/>
+    <text x="125" y="50" font-family="system-ui, sans-serif" font-size="8" fill="#0D1117" text-anchor="middle">ROOT</text>
+    
+    <!-- Level 2 -->
+    <rect x="40" y="70" width="35" height="20" rx="4" fill="#BC8CFF" fill-opacity="0.4" stroke="#BC8CFF" stroke-width="1"/>
+    <rect x="107" y="70" width="35" height="20" rx="4" fill="#BC8CFF" fill-opacity="0.4" stroke="#BC8CFF" stroke-width="1"/>
+    <rect x="175" y="70" width="35" height="20" rx="4" fill="#BC8CFF" fill-opacity="0.4" stroke="#BC8CFF" stroke-width="1"/>
+    
+    <!-- Level 3 -->
+    <rect x="18" y="98" width="28" height="16" rx="3" fill="#BC8CFF" fill-opacity="0.25" stroke="#BC8CFF" stroke-width="0.8"/>
+    <rect x="52" y="98" width="28" height="16" rx="3" fill="#BC8CFF" fill-opacity="0.25" stroke="#BC8CFF" stroke-width="0.8"/>
+    <rect x="115" y="98" width="28" height="16" rx="3" fill="#BC8CFF" fill-opacity="0.25" stroke="#BC8CFF" stroke-width="0.8"/>
+    <rect x="183" y="98" width="28" height="16" rx="3" fill="#BC8CFF" fill-opacity="0.25" stroke="#BC8CFF" stroke-width="0.8"/>
+    
+    <!-- Tree lines -->
+    <line x1="125" y1="57" x2="57" y2="70" stroke="#BC8CFF" stroke-opacity="0.4" stroke-width="1"/>
+    <line x1="125" y1="57" x2="125" y2="70" stroke="#BC8CFF" stroke-opacity="0.4" stroke-width="1"/>
+    <line x1="125" y1="57" x2="192" y2="70" stroke="#BC8CFF" stroke-opacity="0.4" stroke-width="1"/>
+    <line x1="57" y1="90" x2="32" y2="98" stroke="#BC8CFF" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="57" y1="90" x2="66" y2="98" stroke="#BC8CFF" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="125" y1="90" x2="129" y2="98" stroke="#BC8CFF" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="192" y1="90" x2="197" y2="98" stroke="#BC8CFF" stroke-opacity="0.3" stroke-width="1"/>
+  </g>
+
+  <!-- ===== RIGHT SIDE: Framework Comparison ===== -->
+
+  <line x1="320" y1="100" x2="320" y2="615" stroke="#30363D" stroke-width="1"/>
+
+  <!-- Frameworks Section -->
+  <text x="640" y="115" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#F0F6FC" text-anchor="middle">
+    Frameworks em Produção
+  </text>
+
+  <!-- LangGraph -->
+  <g transform="translate(345, 135)">
+    <rect width="570" height="140" rx="8" fill="url(#fwGrad)" stroke="#58A6FF" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#58A6FF">LangGraph</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">Grafos de estado determinísticos</text>
+    
+    <!-- Bars -->
+    <text x="20" y="72" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Controle</text>
+    <rect x="90" y="65" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="65" width="190" height="10" rx="3" fill="#58A6FF" fill-opacity="0.7"/>
+    <text x="300" y="72" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Alto</text>
+    
+    <text x="20" y="92" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Prototipação</text>
+    <rect x="90" y="85" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="85" width="110" height="10" rx="3" fill="#F0883E" fill-opacity="0.6"/>
+    <text x="300" y="92" font-family="system-ui, sans-serif" font-size="10" fill="#F0883E">Média</text>
+    
+    <text x="20" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Produção</text>
+    <rect x="90" y="105" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="105" width="195" height="10" rx="3" fill="#3FB950" fill-opacity="0.7"/>
+    <text x="300" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Alto</text>
+
+    <text x="20" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Custo infra</text>
+    <rect x="90" y="125" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="125" width="120" height="10" rx="3" fill="#F0883E" fill-opacity="0.5"/>
+    <text x="300" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#F0883E">Médio</text>
+  </g>
+
+  <!-- CrewAI -->
+  <g transform="translate(345, 285)">
+    <rect width="570" height="140" rx="8" fill="url(#fwGrad)" stroke="#3FB950" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#3FB950">CrewAI</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">Equipes baseadas em papéis</text>
+    
+    <text x="20" y="72" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Controle</text>
+    <rect x="90" y="65" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="65" width="110" height="10" rx="3" fill="#F0883E" fill-opacity="0.6"/>
+    <text x="300" y="72" font-family="system-ui, sans-serif" font-size="10" fill="#F0883E">Médio</text>
+    
+    <text x="20" y="92" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Prototipação</text>
+    <rect x="90" y="85" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="85" width="195" height="10" rx="3" fill="#3FB950" fill-opacity="0.7"/>
+    <text x="300" y="92" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Alta</text>
+    
+    <text x="20" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Produção</text>
+    <rect x="90" y="105" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="105" width="110" height="10" rx="3" fill="#F0883E" fill-opacity="0.6"/>
+    <text x="300" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#F0883E">Médio</text>
+
+    <text x="20" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Custo infra</text>
+    <rect x="90" y="125" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="125" width="80" height="10" rx="3" fill="#3FB950" fill-opacity="0.6"/>
+    <text x="300" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#3FB950">Baixo</text>
+  </g>
+
+  <!-- AutoGen -->
+  <g transform="translate(345, 435)">
+    <rect width="570" height="140" rx="8" fill="url(#fwGrad)" stroke="#BC8CFF" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#BC8CFF">AutoGen</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E">Conversas multi-agente</text>
+    
+    <text x="20" y="72" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Controle</text>
+    <rect x="90" y="65" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="65" width="60" height="10" rx="3" fill="#F85149" fill-opacity="0.6"/>
+    <text x="300" y="72" font-family="system-ui, sans-serif" font-size="10" fill="#F85149">Baixo</text>
+    
+    <text x="20" y="92" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Prototipação</text>
+    <rect x="90" y="85" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="85" width="120" height="10" rx="3" fill="#F0883E" fill-opacity="0.6"/>
+    <text x="300" y="92" font-family="system-ui, sans-serif" font-size="10" fill="#F0883E">Média</text>
+    
+    <text x="20" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Produção</text>
+    <rect x="90" y="105" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="105" width="70" height="10" rx="3" fill="#F85149" fill-opacity="0.5"/>
+    <text x="300" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#F85149">Baixo</text>
+
+    <text x="20" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#C9D1D9">Custo infra</text>
+    <rect x="90" y="125" width="200" height="10" rx="3" fill="#21262D"/>
+    <rect x="90" y="125" width="175" height="10" rx="3" fill="#F85149" fill-opacity="0.5"/>
+    <text x="300" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#F85149">Alto</text>
+  </g>
+
+  <!-- BaXiJen logo mark -->
+  <text x="1160" y="610" font-family="system-ui, sans-serif" font-size="11" fill="#8B949E" text-anchor="end" opacity="0.6">BaXiJen · IA brasileira</text>
+</svg>
