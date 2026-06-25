@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A0E1A"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative grid lines -->
+  <g opacity="0.06" stroke="#3B82F6" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="472" x2="1200" y2="472"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#E5E7EB" letter-spacing="2">
+    DE SAAS PARA SERVICE-AS-SOFTWARE
+  </text>
+  <text x="600" y="82" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="#9CA3AF" letter-spacing="1">
+    Como agentes IA estao reescrevendo o modelo de negocio de software
+  </text>
+
+  <!-- LEFT SIDE: SaaS Traditional -->
+  <g transform="translate(60, 120)">
+    <!-- Label -->
+    <rect x="0" y="0" width="480" height="36" rx="6" fill="#1E293B" stroke="#475569" stroke-width="1"/>
+    <text x="240" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#94A3B8">SaaS TRADICIONAL</text>
+
+    <!-- Horizontal generic boxes -->
+    <g transform="translate(20, 55)">
+      <rect x="0" y="0" width="440" height="50" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" opacity="0.8"/>
+      <text x="220" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748B">CRM horizontal</text>
+    </g>
+    <g transform="translate(20, 115)">
+      <rect x="0" y="0" width="440" height="50" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" opacity="0.8"/>
+      <text x="220" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748B">Project management</text>
+    </g>
+    <g transform="translate(20, 175)">
+      <rect x="0" y="0" width="440" height="50" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" opacity="0.8"/>
+      <text x="220" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748B">Form builder</text>
+    </g>
+    <g transform="translate(20, 235)">
+      <rect x="0" y="0" width="440" height="50" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" opacity="0.8"/>
+      <text x="220" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748B">Social scheduler</text>
+    </g>
+
+    <!-- Pricing model -->
+    <g transform="translate(20, 310)">
+      <rect x="0" y="0" width="200" height="28" rx="4" fill="#334155"/>
+      <text x="100" y="19" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1">Pricing: per-seat</text>
+    </g>
+    <g transform="translate(240, 310)">
+      <rect x="0" y="0" width="200" height="28" rx="4" fill="#334155"/>
+      <text x="100" y="19" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1">Usuario: humano</text>
+    </g>
+
+    <!-- Market size -->
+    <text x="240" y="375" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#64748B">~US$ 200B</text>
+    <text x="240" y="395" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748B">mercado SaaS global</text>
+  </g>
+
+  <!-- Arrow / Transition -->
+  <g transform="translate(540, 230)">
+    <path d="M 0 80 L 120 80 L 120 70 L 140 90 L 120 110 L 120 100 L 0 100 Z" fill="url(#accentGrad)" filter="url(#glow)"/>
+    <text x="70" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#F59E0B" letter-spacing="1">FEVEREIRO 2026</text>
+    <text x="70" y="135" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#EF4444">SaaSpocalypse</text>
+  </g>
+
+  <!-- RIGHT SIDE: Service-as-Software -->
+  <g transform="translate(700, 120)">
+    <!-- Label -->
+    <rect x="0" y="0" width="440" height="36" rx="6" fill="#1E1B0E" stroke="url(#accentGrad)" stroke-width="1.5"/>
+    <text x="220" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#F59E0B">SERVICE-AS-SOFTWARE</text>
+
+    <!-- Vertical specialized agents -->
+    <g transform="translate(10, 55)">
+      <rect x="0" y="0" width="130" height="70" rx="8" fill="#292524" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="65" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D">IA Legal</text>
+      <text x="65" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">contratos</text>
+      <text x="65" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">redigidos</text>
+    </g>
+    <g transform="translate(155, 55)">
+      <rect x="0" y="0" width="130" height="70" rx="8" fill="#292524" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="65" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D">IA Fiscal</text>
+      <text x="65" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">compliance</text>
+      <text x="65" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">auditada</text>
+    </g>
+    <g transform="translate(300, 55)">
+      <rect x="0" y="0" width="130" height="70" rx="8" fill="#292524" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="65" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D">IA Public</text>
+      <text x="65" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">gestao</text>
+      <text x="65" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">publica</text>
+    </g>
+
+    <g transform="translate(10, 135)">
+      <rect x="0" y="0" width="130" height="70" rx="8" fill="#292524" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="65" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D">IA SDR</text>
+      <text x="65" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">prospecting</text>
+      <text x="65" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">autonomo</text>
+    </g>
+    <g transform="translate(155, 135)">
+      <rect x="0" y="0" width="130" height="70" rx="8" fill="#292524" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="65" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D">IA SRE</text>
+      <text x="65" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">monitoramento</text>
+      <text x="65" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">incidentes</text>
+    </g>
+    <g transform="translate(300, 135)">
+      <rect x="0" y="0" width="130" height="70" rx="8" fill="#292524" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="65" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#FCD34D">IA RevOps</text>
+      <text x="65" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">analise</text>
+      <text x="65" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#A8A29E">receita</text>
+    </g>
+
+    <!-- Pricing model -->
+    <g transform="translate(10, 225)">
+      <rect x="0" y="0" width="200" height="28" rx="4" fill="#422006"/>
+      <text x="100" y="19" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#FCD34D">Pricing: por outcome</text>
+    </g>
+    <g transform="translate(230, 225)">
+      <rect x="0" y="0" width="200" height="28" rx="4" fill="#422006"/>
+      <text x="100" y="19" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#FCD34D">Usuario: agente IA</text>
+    </g>
+
+    <!-- Market size -->
+    <text x="220" y="375" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" font-weight="700" fill="#F59E0B" filter="url(#glow)">~US$ 4,6T</text>
+    <text x="220" y="395" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#FCD34D">oportunidade services white-collar</text>
+  </g>
+
+  <!-- Bottom data points -->
+  <g transform="translate(60, 540)">
+    <!-- Data point 1 -->
+    <rect x="0" y="0" width="350" height="60" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="22" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#EF4444">US$ 285B</text>
+    <text x="15" y="40" font-family="system-ui, sans-serif" font-size="10" fill="#94A3B8">apagados em 1 dia no SaaSpocalypse</text>
+    <text x="15" y="52" font-family="system-ui, sans-serif" font-size="9" fill="#64748B">SaaSCity, 2026</text>
+
+    <!-- Data point 2 -->
+    <rect x="370" y="0" width="350" height="60" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+    <text x="385" y="22" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#3B82F6">80%</text>
+    <text x="385" y="40" font-family="system-ui, sans-serif" font-size="10" fill="#94A3B8">orgs com ROI mensuravel de agentes</text>
+    <text x="385" y="52" font-family="system-ui, sans-serif" font-size="9" fill="#64748B">State of AI Agents 2026</text>
+
+    <!-- Data point 3 -->
+    <rect x="740" y="0" width="350" height="60" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+    <text x="755" y="22" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#F59E0B">2028</text>
+    <text x="755" y="40" font-family="system-ui, sans-serif" font-size="10" fill="#94A3B8">fim do AI assistive para outcome workflow</text>
+    <text x="755" y="52" font-family="system-ui, sans-serif" font-size="9" fill="#64748B">Gartner, abril 2026</text>
+  </g>
+
+  <!-- BaXiJen watermark -->
+  <text x="1140" y="620" text-anchor="end" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#475569" opacity="0.5">BaXiJen</text>
+</svg>
