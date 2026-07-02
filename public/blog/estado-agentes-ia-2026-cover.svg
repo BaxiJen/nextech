@@ -1,0 +1,167 @@
+<svg width="1200" height="627" viewBox="0 0 1200 627" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#58A6FF"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="funnelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#58A6FF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bgGrad)"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accentGrad)"/>
+
+  <!-- Title section -->
+  <text x="60" y="55" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">
+    Estado dos Agentes IA em 2026
+  </text>
+  <text x="60" y="85" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="400" fill="#8B949E">
+    O que 500+ líderes técnicos revelaram sobre produção, ROI e gargalos reais
+  </text>
+
+  <!-- LEFT SIDE: Adoption Funnel -->
+  <text x="80" y="135" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" fill="#58A6FF" text-anchor="middle">
+    Curva de Adoção
+  </text>
+
+  <!-- Funnel: 88% -->
+  <rect x="30" y="150" width="100" height="42" rx="4" fill="url(#funnelGrad)" opacity="0.95"/>
+  <text x="80" y="176" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">88%</text>
+  <text x="145" y="172" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#C9D1D9">usa IA em 1+ função</text>
+  <text x="145" y="187" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">McKinsey 2026</text>
+
+  <!-- Funnel: 54% -->
+  <rect x="50" y="205" width="60" height="42" rx="4" fill="url(#funnelGrad)" opacity="0.85"/>
+  <text x="80" y="231" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">54%</text>
+  <text x="125" y="227" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#C9D1D9">agentes em produção</text>
+  <text x="125" y="242" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">KPMG Q1 2026</text>
+
+  <!-- Funnel: 80% -->
+  <rect x="45" y="260" width="70" height="42" rx="4" fill="url(#funnelGrad)" opacity="0.9"/>
+  <text x="80" y="286" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">80%</text>
+  <text x="130" y="282" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#C9D1D9">reportam ROI mensurável</text>
+  <text x="130" y="297" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">Anthropic/Material 2026</text>
+
+  <!-- Funnel: 19% -->
+  <rect x="55" y="315" width="50" height="36" rx="4" fill="#DA3633" opacity="0.7"/>
+  <text x="80" y="338" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">19%</text>
+  <text x="120" y="334" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#F85149">não atingem payback</text>
+  <text x="120" y="348" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">BCG 2026 (era 34%)</text>
+
+  <!-- MIDDLE: Bottlenecks -->
+  <line x1="240" y1="120" x2="240" y2="560" stroke="#30363D" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <text x="420" y="135" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" fill="#F85149" text-anchor="middle">
+    Gargalos de Escala
+  </text>
+
+  <!-- Bottleneck bars -->
+  <text x="260" y="168" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Integração c/ sistemas</text>
+  <rect x="430" y="156" width="230" height="20" rx="3" fill="#21262D"/>
+  <rect x="430" y="156" width="105.8" height="20" rx="3" fill="#F85149" opacity="0.8"/>
+  <text x="640" y="170" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#F85149">46%</text>
+
+  <text x="260" y="208" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Qualidade de dados</text>
+  <rect x="430" y="196" width="230" height="20" rx="3" fill="#21262D"/>
+  <rect x="430" y="196" width="96.6" height="20" rx="3" fill="#F85149" opacity="0.7"/>
+  <text x="640" y="210" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#F85149">42%</text>
+
+  <text x="260" y="248" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Gestão de mudança</text>
+  <rect x="430" y="236" width="230" height="20" rx="3" fill="#21262D"/>
+  <rect x="430" y="236" width="89.7" height="20" rx="3" fill="#F85149" opacity="0.6"/>
+  <text x="640" y="250" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#F85149">39%</text>
+
+  <!-- RIGHT SIDE: Success Factors -->
+  <line x1="680" y1="120" x2="680" y2="560" stroke="#30363D" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <text x="900" y="135" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" fill="#3FB950" text-anchor="middle">
+    Fatores de Sucesso (Top-Quartile)
+  </text>
+
+  <!-- Factor 1 -->
+  <circle cx="710" cy="170" r="6" fill="#3FB950"/>
+  <text x="730" y="165" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#C9D1D9">Eval spend &gt; 15% do budget</text>
+  <text x="730" y="181" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#8B949E">Best-in-class: 18-24% do programa</text>
+
+  <!-- Factor 2 -->
+  <circle cx="710" cy="220" r="6" fill="#3FB950"/>
+  <text x="730" y="215" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#C9D1D9">Sponsor executivo C-1+</text>
+  <text x="730" y="231" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#8B949E">Decisão sem burocracia intermediária</text>
+
+  <!-- Factor 3 -->
+  <circle cx="710" cy="270" r="6" fill="#3FB950"/>
+  <text x="730" y="265" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#C9D1D9">Métrica clara no kickoff</text>
+  <text x="730" y="281" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#8B949E">Definida antes, não retroajustada</text>
+
+  <!-- Factor 4 -->
+  <circle cx="710" cy="320" r="6" fill="#3FB950"/>
+  <text x="730" y="315" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#C9D1D9">Integração c/ sistema de registro</text>
+  <text x="730" y="331" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#8B949E">ERP/CRM/HRIS, não interface paralela</text>
+
+  <!-- Bottom stats bar -->
+  <line x1="60" y1="400" x2="1140" y2="400" stroke="#30363D" stroke-width="1"/>
+
+  <!-- Stat 1 -->
+  <text x="120" y="440" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="32" font-weight="700" fill="#58A6FF" text-anchor="middle">6,7</text>
+  <text x="120" y="465" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#8B949E" text-anchor="middle">meses de payback mediano</text>
+  <text x="120" y="480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#484F58" text-anchor="middle">Bain 2026</text>
+
+  <!-- Stat 2 -->
+  <text x="340" y="440" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="32" font-weight="700" fill="#58A6FF" text-anchor="middle">327%</text>
+  <text x="340" y="465" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#8B949E" text-anchor="middle">crescimento multi-agent</text>
+  <text x="340" y="480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#484F58" text-anchor="middle">Databricks 2026</text>
+
+  <!-- Stat 3 -->
+  <text x="560" y="440" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="32" font-weight="700" fill="#58A6FF" text-anchor="middle">9-66x</text>
+  <text x="560" y="465" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#8B949E" text-anchor="middle">redução de custo por tarefa</text>
+  <text x="560" y="480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#484F58" text-anchor="middle">Forrester TEI 2026</text>
+
+  <!-- Stat 4 -->
+  <text x="780" y="440" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="32" font-weight="700" fill="#58A6FF" text-anchor="middle">$207M</text>
+  <text x="780" y="465" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#8B949E" text-anchor="middle">orçamento médio de IA/12mo</text>
+  <text x="780" y="480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#484F58" text-anchor="middle">KPMG 2026</text>
+
+  <!-- Stat 5 -->
+  <text x="1000" y="440" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="32" font-weight="700" fill="#DA3633" text-anchor="middle">40%</text>
+  <text x="1000" y="465" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#8B949E" text-anchor="middle">projetos falharão até 2027</text>
+  <text x="1000" y="480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#484F58" text-anchor="middle">Gartner 2026</text>
+
+  <!-- Bottom: Payback ladder -->
+  <text x="60" y="520" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" fill="#8B949E">
+    Payback mediano por domínio (meses):
+  </text>
+
+  <rect x="60" y="535" width="48" height="14" rx="2" fill="#3FB950" opacity="0.7"/>
+  <text x="115" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">CS 4,1</text>
+
+  <rect x="170" y="535" width="80" height="14" rx="2" fill="#3FB950" opacity="0.5"/>
+  <text x="258" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">Marketing 6,7</text>
+
+  <rect x="340" y="535" width="86" height="14" rx="2" fill="#58A6FF" opacity="0.5"/>
+  <text x="435" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">SDR 7,2</text>
+
+  <rect x="480" y="535" width="96" height="14" rx="2" fill="#58A6FF" opacity="0.4"/>
+  <text x="585" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">TI 8,0</text>
+
+  <rect x="620" y="535" width="112" height="14" rx="2" fill="#D29922" opacity="0.4"/>
+  <text x="742" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">Eng 9,3</text>
+
+  <rect x="790" y="535" width="121" height="14" rx="2" fill="#D29922" opacity="0.3"/>
+  <text x="920" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">Fin 10,1</text>
+
+  <rect x="970" y="535" width="134" height="14" rx="2" fill="#DA3633" opacity="0.3"/>
+  <text x="1115" y="546" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#8B949E">Jur 14,8</text>
+
+  <!-- BaXiJen logo text -->
+  <text x="1140" y="600" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#58A6FF" text-anchor="end">BaXiJen</text>
+  <text x="1140" y="615" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#484F58" text-anchor="end">Antes de tudo, Brasileiro.</text>
+</svg>
