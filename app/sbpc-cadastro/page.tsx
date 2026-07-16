@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { SbpcCadastroContent } from './SbpcCadastroContent';
+
 export default function SbpcCadastroPage() {
   return <SbpcCadastroContent />;
 }
