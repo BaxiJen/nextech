@@ -108,10 +108,18 @@ export function SbpcCadastroContent() {
     };
 
     try {
-      // === INTEGRAR COM BACKEND AQUI ===
-      // Ex: await fetch('/api/cadastro-sbpc', { method: 'POST', body: JSON.stringify(payload) })
-      console.log('Payload cadastro SBPC:', payload);
+      const res = await fetch('/api/cadastro-sbpc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Erro ao enviar');
+      }
+
+      // Backup local também
       const cadastros = JSON.parse(localStorage.getItem('cadastros_sbpc') || '[]');
       cadastros.push(payload);
       localStorage.setItem('cadastros_sbpc', JSON.stringify(cadastros));
