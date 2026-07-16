@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
-import { FrostTransition } from '@/components/FrostTransition';
-import { Mail, User, Building2, Briefcase, ArrowRight, CheckCircle2, Sparkles, Calendar } from 'lucide-react';
+import { Mail, User, Building2, Briefcase, ArrowRight, CheckCircle2, Sparkles, CalendarPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const profissoes = [
@@ -27,6 +26,48 @@ const profissoes = [
   { value: 'outro', label: 'Outro' },
 ];
 
+// Evento SBPC 2026 para o botão "Adicionar ao calendário"
+const SBPC_EVENT = {
+  title: 'SBPC 2026 — Reunião Anual da Sociedade Brasileira para o Progresso da Ciência',
+  description: 'BaXi × Zhipu AI — Pré-registro confirmado. Experiência integrada com a BaXi durante o evento.',
+  location: 'Universidade Federal Fluminense (UFF), Campus Gragoatá, Niterói, RJ',
+  startDate: '2026-07-26',
+  endDate: '2026-08-01',
+};
+
+function generateICalLink() {
+  const ical = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//BaXiJen//SBPC 2026//PT',
+    'BEGIN:VEVENT',
+    `UID:${Date.now()}@baxijen.com.br`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+    `DTSTART:${SBPC_EVENT.startDate.replace(/-/g, '')}`,
+    `DTEND:${SBPC_EVENT.endDate.replace(/-/g, '')}`,
+    `SUMMARY:${SBPC_EVENT.title}`,
+    `DESCRIPTION:${SBPC_EVENT.description}`,
+    `LOCATION:${SBPC_EVENT.location}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+
+  const blob = new Blob([ical], { type: 'text/calendar;charset=utf-8' });
+  return URL.createObjectURL(blob);
+}
+
+function generateGoogleCalendarLink() {
+  const fmt = (d: string) => d.replace(/-/g, '');
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: SBPC_EVENT.title,
+    dates: `${fmt(SBPC_EVENT.startDate)}/${fmt(SBPC_EVENT.endDate)}`,
+    details: SBPC_EVENT.description,
+    location: SBPC_EVENT.location,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
 export function SbpcCadastroContent() {
   const [formData, setFormData] = useState({
     email: '',
@@ -34,7 +75,9 @@ export function SbpcCadastroContent() {
     sobrenome: '',
     profissao: '',
     instituicao: '',
-    autorizacao: false,
+    contato_zhipu: true, // já marcado por padrão
+    novidades_baxi: false,
+    termos: false,
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -48,7 +91,9 @@ export function SbpcCadastroContent() {
       sobrenome: formData.sobrenome,
       profissao: formData.profissao,
       instituicao: formData.instituicao || null,
-      autorizacao_zhipu: formData.autorizacao,
+      contato_zhipu: formData.contato_zhipu,
+      novidades_baxi: formData.novidades_baxi,
+      termos_aceitos: formData.termos,
       timestamp: new Date().toISOString(),
       evento: 'sbpc_2026',
       parceria: 'baxi_zhipu',
@@ -90,12 +135,30 @@ export function SbpcCadastroContent() {
               <p className="text-muted-foreground max-w-md mx-auto mb-2">
                 {formData.nome} {formData.sobrenome}, seu cadastro foi realizado com sucesso.
               </p>
-              <p className="text-sm text-muted-foreground/70 max-w-md mx-auto">
-                {formData.autorizacao
-                  ? 'Você autorizou o compartilhamento com a Zhipu AI. '
-                  : ''}
+              <p className="text-sm text-muted-foreground/70 max-w-md mx-auto mb-8">
                 Bem-vindo(a) à SBPC 2026! Em breve você poderá conversar com a IA BaXi ao vivo.
               </p>
+
+              {/* Botão adicionar ao calendário */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href={generateGoogleCalendarLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-primary/30 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 transition-colors"
+                >
+                  <CalendarPlus className="h-4 w-4" />
+                  Adicionar ao Google Calendar
+                </a>
+                <a
+                  href={generateICalLink()}
+                  download="sbpc-2026.ics"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground text-sm font-medium hover:bg-white/10 transition-colors"
+                >
+                  <CalendarPlus className="h-4 w-4" />
+                  Adicionar ao Outlook / Apple
+                </a>
+              </div>
             </div>
           </motion.div>
         </Container>
@@ -113,22 +176,31 @@ export function SbpcCadastroContent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
+          {/* Botão "Adicionar ao calendário" */}
           <motion.div
-            className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur-md border-primary/20 bg-background/50 mb-6"
+            className="flex justify-center mb-6"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <Calendar className="h-4 w-4 mr-2 text-primary" /> SBPC 2026 · Niterói, RJ
+            <a
+              href={generateGoogleCalendarLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur-md border-primary/20 bg-background/50 hover:border-primary/40 hover:bg-primary/5 transition-colors"
+            >
+              <CalendarPlus className="h-4 w-4 text-primary" />
+              SBPC 2026 · Niterói, RJ · 26/07 a 01/08
+            </a>
           </motion.div>
 
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl mb-4">
             Pré-registro para a SBPC 2026
-            <span className="block text-primary mt-2">BaXi × Zhipu AI</span>
+            <span className="block text-primary mt-2">BaXi + Zhipu AI</span>
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Faça seu cadastro e converse com a IA BaXi ao vivo no evento. Menos de 1 minuto.
+            Cadastre-se e tenha uma experiência integrada com a BaXi durante o evento.
           </p>
         </motion.div>
 
@@ -244,34 +316,91 @@ export function SbpcCadastroContent() {
                   </div>
                 </div>
 
-                {/* Termo de aceite */}
-                <div
-                  className="flex items-start gap-3 p-4 rounded-xl border border-white/10"
-                  style={{ background: 'rgba(255,255,255,0.02)' }}
-                >
-                  <input
-                    type="checkbox"
-                    name="autorizacao"
-                    id="autorizacao"
-                    checked={formData.autorizacao}
-                    onChange={(e) => setFormData((s) => ({ ...s, autorizacao: e.target.checked }))}
-                    className="mt-1 accent-primary cursor-pointer"
-                  />
-                  <label
-                    htmlFor="autorizacao"
-                    className="text-xs text-muted-foreground leading-relaxed cursor-pointer"
+                {/* === TERMOS === */}
+                <div className="space-y-3 pt-2">
+                  {/* a) Contato comercial Zhipu (já marcado) */}
+                  <div
+                    className="flex items-start gap-3 p-4 rounded-xl border border-white/10"
+                    style={{ background: 'rgba(255,255,255,0.02)' }}
                   >
-                    <strong className="text-foreground">
-                      Quer receber novidades da Zhipu AI?
-                    </strong>
-                    <br />
-                    A Zhipu AI é parceira da BaXiJen e uma das líderes mundiais em
-                    inteligência artificial. Ao marcar esta opção, você autoriza o
-                    compartilhamento do seu e-mail e perfil com a Zhipu para receber
-                    conteúdos, convites e oportunidades relacionadas a IA. Seus
-                    dados não serão vendidos a terceiros. Você pode cancelar a
-                    qualquer momento.
-                  </label>
+                    <input
+                      type="checkbox"
+                      name="contato_zhipu"
+                      id="contato_zhipu"
+                      checked={formData.contato_zhipu}
+                      onChange={(e) => setFormData((s) => ({ ...s, contato_zhipu: e.target.checked }))}
+                      className="mt-1 accent-primary cursor-pointer"
+                    />
+                    <label
+                      htmlFor="contato_zhipu"
+                      className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
+                    >
+                      <strong className="text-foreground">
+                        Tenho interesse em receber contato comercial da Zhipu
+                      </strong>
+                      <br />
+                      A Zhipu AI é parceira da BaXiJen e uma das líderes mundiais em inteligência artificial. Ao marcar esta opção, você autoriza o compartilhamento do seu e-mail e perfil com a Zhipu para contato comercial e oportunidades relacionadas a IA.
+                    </label>
+                  </div>
+
+                  {/* b) Novidades BaXiJen */}
+                  <div
+                    className="flex items-start gap-3 p-4 rounded-xl border border-white/10"
+                    style={{ background: 'rgba(255,255,255,0.02)' }}
+                  >
+                    <input
+                      type="checkbox"
+                      name="novidades_baxi"
+                      id="novidades_baxi"
+                      checked={formData.novidades_baxi}
+                      onChange={(e) => setFormData((s) => ({ ...s, novidades_baxi: e.target.checked }))}
+                      className="mt-1 accent-primary cursor-pointer"
+                    />
+                    <label
+                      htmlFor="novidades_baxi"
+                      className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
+                    >
+                      <strong className="text-foreground">
+                        Aceito receber novidades da BaXiJen
+                      </strong>
+                      <br />
+                      Conteúdos, lançamentos e atualizações sobre nossos produtos e serviços.
+                    </label>
+                  </div>
+
+                  {/* c) Termos e condições */}
+                  <div
+                    className="flex items-start gap-3 p-4 rounded-xl border border-white/10"
+                    style={{ background: 'rgba(255,255,255,0.02)' }}
+                  >
+                    <input
+                      type="checkbox"
+                      name="termos"
+                      id="termos"
+                      checked={formData.termos}
+                      onChange={(e) => setFormData((s) => ({ ...s, termos: e.target.checked }))}
+                      required
+                      className="mt-1 accent-primary cursor-pointer"
+                    />
+                    <label
+                      htmlFor="termos"
+                      className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
+                    >
+                      <strong className="text-foreground">
+                        Aceito os termos e condições da BaXiJen
+                      </strong>
+                      <br />
+                      Ao continuar, você concorda com nossos{' '}
+                      <a
+                        href="/privacy"
+                        target="_blank"
+                        className="text-primary hover:underline"
+                      >
+                        Termos de Uso e Política de Privacidade
+                      </a>
+                      . Seus dados são tratados em conformidade com a LGPD e não serão vendidos a terceiros.
+                    </label>
+                  </div>
                 </div>
 
                 {/* Submit */}
@@ -285,7 +414,7 @@ export function SbpcCadastroContent() {
                     'Enviando...'
                   ) : (
                     <>
-                      Confirmar pré-registro <ArrowRight className="h-5 w-5" />
+                      Cadastrar <ArrowRight className="h-5 w-5" />
                     </>
                   )}
                 </Button>
