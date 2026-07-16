@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import { Container } from '@/components/Container';
-import { ArrowRight, CheckCircle2, Mail, User, Building2, Briefcase } from 'lucide-react';
+import { Button } from '@/components/Button';
+import { FrostTransition } from '@/components/FrostTransition';
+import { Mail, User, Building2, Briefcase, ArrowRight, CheckCircle2, Sparkles, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const profissoes = [
@@ -36,17 +38,6 @@ export function SbpcCadastroContent() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
@@ -68,7 +59,6 @@ export function SbpcCadastroContent() {
       // Ex: await fetch('/api/cadastro-sbpc', { method: 'POST', body: JSON.stringify(payload) })
       console.log('Payload cadastro SBPC:', payload);
 
-      // Fallback: salva no localStorage
       const cadastros = JSON.parse(localStorage.getItem('cadastros_sbpc') || '[]');
       cadastros.push(payload);
       localStorage.setItem('cadastros_sbpc', JSON.stringify(cadastros));
@@ -84,23 +74,29 @@ export function SbpcCadastroContent() {
       <div className="py-20">
         <Container>
           <motion.div
+            className="max-w-lg mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-lg mx-auto text-center"
+            transition={{ duration: 0.6 }}
           >
-            <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-6" />
-            <h1 className="text-3xl font-bold mb-4">Pré-registro confirmado!</h1>
-            <p className="text-lg text-white/70 mb-2">
-              {formData.nome} {formData.sobrenome}, seu cadastro foi realizado com
-              sucesso.
-            </p>
-            <p className="text-sm text-white/50">
-              {formData.autorizacao
-                ? 'Você autorizou o compartilhamento com a Zhipu AI. '
-                : ''}
-              Bem-vindo(a) à SBPC 2026! Em breve você poderá conversar com a IA
-              BaXi ao vivo.
-            </p>
+            <div
+              className="rounded-3xl p-12 text-center border border-green-500/20"
+              style={{ background: 'rgba(16,185,129,0.03)' }}
+            >
+              <div className="w-16 h-16 rounded-full border border-green-500/30 bg-green-500/10 flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="h-8 w-8 text-green-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Pré-registro confirmado!</h3>
+              <p className="text-muted-foreground max-w-md mx-auto mb-2">
+                {formData.nome} {formData.sobrenome}, seu cadastro foi realizado com sucesso.
+              </p>
+              <p className="text-sm text-muted-foreground/70 max-w-md mx-auto">
+                {formData.autorizacao
+                  ? 'Você autorizou o compartilhamento com a Zhipu AI. '
+                  : ''}
+                Bem-vindo(a) à SBPC 2026! Em breve você poderá conversar com a IA BaXi ao vivo.
+              </p>
+            </div>
           </motion.div>
         </Container>
       </div>
@@ -108,184 +104,206 @@ export function SbpcCadastroContent() {
   }
 
   return (
-    <div className="py-16">
+    <div className="py-20">
       <Container>
+        {/* ====== HERO ====== */}
         <motion.div
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-lg mx-auto"
+          transition={{ duration: 0.6 }}
         >
-          {/* Logos */}
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <span className="text-3xl font-bold text-[#2d5a87]">BaXi</span>
-            <span className="text-xl text-white/40">×</span>
-            <span className="text-3xl font-bold text-[#c8102e]">Zhipu</span>
-          </div>
-
-          {/* Título */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold mb-2">Bem-vindo(a) 👋</h1>
-            <p className="text-sm text-white/60 leading-relaxed">
-              Faça seu pré-registro para a SBPC 2026 e converse com a IA BaXi ao
-              vivo. É rápido — menos de 1 minuto.
-            </p>
-          </div>
-
-          {/* Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6 bg-white/[0.03] border border-white/10 rounded-2xl p-8"
+          <motion.div
+            className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur-md border-primary/20 bg-background/50 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {/* E-mail */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                E-mail <span className="text-[#c8102e]">*</span>
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="seu@email.com"
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:border-[#2d5a87] focus:outline-none transition-colors"
-                />
-              </div>
-            </div>
+            <Calendar className="h-4 w-4 mr-2 text-primary" /> SBPC 2026 · Niterói, RJ
+          </motion.div>
 
-            {/* Nome + Sobrenome */}
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <label className="block text-sm font-medium mb-2">
-                  Nome <span className="text-[#c8102e]">*</span>
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                  <input
-                    type="text"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleChange}
-                    required
-                    placeholder="Maria"
-                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:border-[#2d5a87] focus:outline-none transition-colors"
-                  />
-                </div>
-              </div>
-              <div className="flex-1">
-                <label className="block text-sm font-medium mb-2">
-                  Sobrenome <span className="text-[#c8102e]">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="sobrenome"
-                  value={formData.sobrenome}
-                  onChange={handleChange}
-                  required
-                  placeholder="Silva"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:border-[#2d5a87] focus:outline-none transition-colors"
-                />
-              </div>
-            </div>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl mb-4">
+            Pré-registro para a SBPC 2026
+            <span className="block text-primary mt-2">BaXi × Zhipu AI</span>
+          </h1>
 
-            {/* Profissão */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Profissão <span className="text-[#c8102e]">*</span>
-              </label>
-              <div className="relative">
-                <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none" />
-                <select
-                  name="profissao"
-                  value={formData.profissao}
-                  onChange={handleChange}
-                  required
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:border-[#2d5a87] focus:outline-none transition-colors appearance-none cursor-pointer"
-                >
-                  {profissoes.map((p) => (
-                    <option key={p.value} value={p.value} className="bg-[#0f1923] text-white">
-                      {p.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Empresa/Instituição */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Empresa / Instituição
-              </label>
-              <div className="relative">
-                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                <input
-                  type="text"
-                  name="instituicao"
-                  value={formData.instituicao}
-                  onChange={handleChange}
-                  placeholder="Ex: UFF, Petrobras, Minha Startup..."
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:border-[#2d5a87] focus:outline-none transition-colors"
-                />
-              </div>
-            </div>
-
-            {/* Termo de aceite */}
-            <div className="flex items-start gap-3 p-4 bg-white/[0.03] border border-white/10 rounded-lg">
-              <input
-                type="checkbox"
-                name="autorizacao"
-                id="autorizacao"
-                checked={formData.autorizacao}
-                onChange={handleChange}
-                className="mt-1 accent-[#2d5a87] cursor-pointer"
-              />
-              <label
-                htmlFor="autorizacao"
-                className="text-xs text-white/60 leading-relaxed cursor-pointer"
-              >
-                <strong className="text-white">
-                  Quer receber novidades da Zhipu AI?
-                </strong>
-                <br />
-                A Zhipu AI é parceira da BaXiJen e uma das líderes mundiais em
-                inteligência artificial. Ao marcar esta opção, você autoriza o
-                compartilhamento do seu e-mail e perfil com a Zhipu para receber
-                conteúdos, convites e oportunidades relacionadas a IA. Seus
-                dados não serão vendidos a terceiros. Você pode cancelar a
-                qualquer momento.
-              </label>
-            </div>
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={status === 'loading'}
-              className="w-full py-3.5 bg-gradient-to-r from-[#1a3a5c] to-[#2d5a87] text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
-            >
-              {status === 'loading' ? (
-                'Enviando...'
-              ) : (
-                <>
-                  Confirmar pré-registro
-                  <ArrowRight className="w-5 h-5" />
-                </>
-              )}
-            </button>
-
-            {status === 'error' && (
-              <p className="text-sm text-red-400 text-center">
-                Algo deu errado. Tente novamente ou entre em contato via
-                contato@baxi.ia.br
-              </p>
-            )}
-          </form>
-
-          <p className="text-center mt-6 text-xs text-white/40">
-            BaXiJen × Zhipu AI — SBPC 2026 · Niterói, RJ
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Faça seu cadastro e converse com a IA BaXi ao vivo no evento. Menos de 1 minuto.
           </p>
         </motion.div>
+
+        {/* ====== FORM ====== */}
+        <div className="max-w-xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div
+              className="rounded-3xl p-8 md:p-10 border border-white/10 backdrop-blur-md"
+              style={{ background: 'rgba(255,255,255,0.02)' }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <h3 className="text-xl font-bold">Cadastro rápido</h3>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* E-mail */}
+                <div>
+                  <label className="text-sm font-medium mb-1 block">
+                    E-mail <span className="text-primary">*</span>
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/40" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData((s) => ({ ...s, email: e.target.value }))}
+                      required
+                      placeholder="seu@email.com"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Nome + Sobrenome */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-1 block">
+                      Nome <span className="text-primary">*</span>
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/40" />
+                      <input
+                        type="text"
+                        name="nome"
+                        value={formData.nome}
+                        onChange={(e) => setFormData((s) => ({ ...s, nome: e.target.value }))}
+                        required
+                        placeholder="Maria"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none transition-colors"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-1 block">
+                      Sobrenome <span className="text-primary">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="sobrenome"
+                      value={formData.sobrenome}
+                      onChange={(e) => setFormData((s) => ({ ...s, sobrenome: e.target.value }))}
+                      required
+                      placeholder="Silva"
+                      className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Profissão */}
+                <div>
+                  <label className="text-sm font-medium mb-1 block">
+                    Profissão <span className="text-primary">*</span>
+                  </label>
+                  <div className="relative">
+                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/40 pointer-events-none" />
+                    <select
+                      name="profissao"
+                      value={formData.profissao}
+                      onChange={(e) => setFormData((s) => ({ ...s, profissao: e.target.value }))}
+                      required
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground focus:border-primary/50 focus:outline-none transition-colors appearance-none cursor-pointer"
+                    >
+                      {profissoes.map((p) => (
+                        <option key={p.value} value={p.value} className="bg-background text-foreground">
+                          {p.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Empresa/Instituição */}
+                <div>
+                  <label className="text-sm font-medium mb-1 block">
+                    Empresa / Instituição
+                  </label>
+                  <div className="relative">
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/40" />
+                    <input
+                      type="text"
+                      name="instituicao"
+                      value={formData.instituicao}
+                      onChange={(e) => setFormData((s) => ({ ...s, instituicao: e.target.value }))}
+                      placeholder="Ex: UFF, Petrobras, Minha Startup..."
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Termo de aceite */}
+                <div
+                  className="flex items-start gap-3 p-4 rounded-xl border border-white/10"
+                  style={{ background: 'rgba(255,255,255,0.02)' }}
+                >
+                  <input
+                    type="checkbox"
+                    name="autorizacao"
+                    id="autorizacao"
+                    checked={formData.autorizacao}
+                    onChange={(e) => setFormData((s) => ({ ...s, autorizacao: e.target.checked }))}
+                    className="mt-1 accent-primary cursor-pointer"
+                  />
+                  <label
+                    htmlFor="autorizacao"
+                    className="text-xs text-muted-foreground leading-relaxed cursor-pointer"
+                  >
+                    <strong className="text-foreground">
+                      Quer receber novidades da Zhipu AI?
+                    </strong>
+                    <br />
+                    A Zhipu AI é parceira da BaXiJen e uma das líderes mundiais em
+                    inteligência artificial. Ao marcar esta opção, você autoriza o
+                    compartilhamento do seu e-mail e perfil com a Zhipu para receber
+                    conteúdos, convites e oportunidades relacionadas a IA. Seus
+                    dados não serão vendidos a terceiros. Você pode cancelar a
+                    qualquer momento.
+                  </label>
+                </div>
+
+                {/* Submit */}
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full flex gap-2 h-14 text-lg mt-2 shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-shadow"
+                  disabled={status === 'loading'}
+                >
+                  {status === 'loading' ? (
+                    'Enviando...'
+                  ) : (
+                    <>
+                      Confirmar pré-registro <ArrowRight className="h-5 w-5" />
+                    </>
+                  )}
+                </Button>
+
+                {status === 'error' && (
+                  <p className="text-sm text-red-400 text-center">
+                    Algo deu errado. Tente novamente ou entre em contato via
+                    contato@baxi.ia.br
+                  </p>
+                )}
+
+                <p className="text-xs text-muted-foreground/60 text-center">
+                  Seus dados são protegidos pela LGPD. Não compartilhamos com terceiros sem autorização.
+                </p>
+              </form>
+            </div>
+          </motion.div>
+        </div>
       </Container>
     </div>
   );
