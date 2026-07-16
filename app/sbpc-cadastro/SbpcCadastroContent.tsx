@@ -411,12 +411,23 @@ export function SbpcCadastroContent() {
                   </div>
                 </div>
 
-                {/* Submit */}
+                {/* Aviso: termos obrigatórios */}
+                {!formData.termos && (
+                  <p className="text-xs text-muted-foreground/50 text-center">
+                    Você precisa aceitar os termos e condições da BaXiJen para continuar.
+                  </p>
+                )}
+
+                {/* Submit — bloqueado até aceitar os termos */}
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full flex gap-2 h-14 text-lg mt-2 shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-shadow"
-                  disabled={status === 'loading'}
+                  className={`w-full flex gap-2 h-14 text-lg mt-2 transition-all ${
+                    formData.termos
+                      ? 'shadow-xl shadow-primary/25 hover:shadow-primary/40'
+                      : 'opacity-40 cursor-not-allowed shadow-none'
+                  }`}
+                  disabled={status === 'loading' || !formData.termos}
                 >
                   {status === 'loading' ? (
                     'Enviando...'
