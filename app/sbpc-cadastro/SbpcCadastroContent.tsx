@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
 import { Mail, User, Building2, Briefcase, ArrowRight, CheckCircle2, Sparkles, CalendarPlus } from 'lucide-react';
@@ -80,6 +80,14 @@ export function SbpcCadastroContent() {
     termos: false,
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  // Esconde o widget LiveAgent nesta página
+  useEffect(() => {
+    document.body.classList.add('hide-live-agent');
+    return () => {
+      document.body.classList.remove('hide-live-agent');
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

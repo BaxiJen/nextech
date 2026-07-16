@@ -271,3 +271,8 @@ canvas {
   border-top: 1px solid var(--border);
   margin: 3rem 0;
 }
+
+/* Esconde o widget LiveAgent em páginas específicas */
+body.hide-live-agent [data-live-agent] {
+  display: none !important;
+}

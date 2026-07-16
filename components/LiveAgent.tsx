@@ -73,7 +73,7 @@ export function LiveAgent() {
   };
 
   return (
-    <div className="fixed bottom-6 right-4 sm:right-24 z-50 flex flex-col items-end max-w-[calc(100vw-2rem)]">
+    <div data-live-agent="true" className="fixed bottom-6 right-4 sm:right-24 z-50 flex flex-col items-end max-w-[calc(100vw-2rem)]">
       {/* Balão de Boas-vindas */}
       {!isOpen && showBubble && (
         <div className="mb-4 bg-background border-2 border-primary rounded-2xl p-4 shadow-xl max-w-[280px] animate-in slide-in-from-bottom-5">
