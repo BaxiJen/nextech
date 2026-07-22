@@ -1,13 +1,4 @@
-# Blog: O Dia Que o Governo Cortou a IA — O Que o Caso Fable/Mythos Significa Para o Brasil
-
-> Rascunho para aprovação. Autor: Marcus Ramalho (CTO BaXiJen)
-> Data: 2026-06-13
-
 ---
-
-## Frontmatter
-
-```yaml
 title: "O Dia Que o Governo Cortou a IA: Fable 5, Mythos 5 e Soberania Digital"
 description: "O governo dos EUA suspendeu o acesso a dois dos modelos mais avançados da Anthropic. O que isso significa para empresas e governos que dependem de IA estrangeira?"
 date: "2026-06-13"
@@ -15,13 +6,9 @@ author: "Marcus Ramalho"
 authorRole: "CTO, BaXiJen"
 tags: ["soberania-digital", "ia-brasileira", "anthropic", "export-control", "on-premise", "slm"]
 featured: true
-image: "/blog/soberania-fable-mythos.png"
+image: "/blog/fable-5-mythos-5-brazil.png"
 imageAlt: "Timeline: governo corta acesso a IA, empresas ficam sem nada"
-```
-
 ---
-
-## Texto completo
 
 Hoje, 12 de junho de 2026, a Anthropic publicou um comunicado que deveria fazer todo CTO e gestor público repensar sua dependência de IA estrangeira.
 
