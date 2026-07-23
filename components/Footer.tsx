@@ -20,7 +20,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-muted-foreground max-w-xs">
-              <span className="text-primary font-semibold">巴西人</span> BaXiJen® — Tecnologia brasileira com visão global. Agentes de IA que pensam, lembram e resolvem. Seus dados ficam no Brasil.
+              BaXiJen® — Tecnologia brasileira com visão global. Agentes de IA que pensam, lembram e resolvem. Seus dados ficam no Brasil.
             </p>
           </div>
           <div>

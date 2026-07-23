@@ -13,7 +13,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const variants = {
-    primary: 'bg-primary text-primary-foreground hover:bg-[#2E7D32] transition-colors',
+    primary: 'bg-primary text-primary-foreground hover:bg-[#0f4027] transition-colors',
     outline: 'border border-primary text-primary hover:bg-primary/10 transition-colors',
     ghost: 'hover:bg-muted text-foreground transition-colors',
   };

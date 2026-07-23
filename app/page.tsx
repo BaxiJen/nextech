@@ -4,16 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
-import { TypeWriter } from '@/components/TypeWriter';
-import { IceBlockCard } from '@/components/IceBlockCard';
+import { BuritiCard } from '@/components/BuritiCard';
 import { ProcessTimeline } from '@/components/ProcessTimeline';
-import { MorphParticles } from '@/components/MorphParticles';
-import { FrostTransition } from '@/components/FrostTransition';
-import { CTAExplosion } from '@/components/CTAExplosion';
 import {
-  BarChart,
-  Bot,
-  Cpu
+  Cpu,
+  Bot
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -30,7 +25,6 @@ export default function Home() {
     <>
       {/* ====== HERO SECTION ====== */}
       <section className="relative py-24 md:py-40 min-h-[80vh] flex items-center">
-        {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/70 to-background z-10" />
 
         <Container className="relative z-20">
@@ -40,27 +34,36 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            {/* Badge */}
-            <motion.div
-              className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur-md border-primary/20 bg-background/50"
+            {/* Eyebrow */}
+            <motion.p
+              className="text-sm font-mono uppercase tracking-[0.15em]"
+              style={{ color: '#97c459', fontFamily: 'var(--font-geist-mono)' }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Cpu className="h-4 w-4 mr-2 text-primary" /> IA brasileira com soberania de dados
-            </motion.div>
+              Soberania de Dados
+            </motion.p>
 
-            {/* Main heading with TypeWriter */}
-            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground max-w-5xl font-sans leading-[1.1]">
-              <span className="sr-only">IA desenvolvida no Brasil, para o Brasil</span>
-              <TypeWriter
-                text="IA desenvolvida no Brasil, para o Brasil"
-                className="text-foreground"
-                speed={50}
-              />
+            {/* Headline — Newsreader serif */}
+            <h1
+              className="text-5xl md:text-7xl max-w-5xl leading-[1.05]"
+              style={{
+                fontFamily: 'var(--font-newsreader)',
+                fontWeight: 500,
+                letterSpacing: '-0.035em',
+                color: 'var(--foreground)',
+              }}
+            >
+              IA que pensa, lembra e resolve.
             </h1>
 
-            {/* CTA Buttons with glow */}
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-foreground/70 max-w-2xl" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+              Agentes autônomos para empresas brasileiras. Dados no Brasil. Decisões em tempo real.
+            </p>
+
+            {/* CTAs */}
             <motion.div
               className="flex flex-col sm:flex-row gap-4 pt-4"
               initial={{ opacity: 0 }}
@@ -73,7 +76,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/bxat">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto h-14 px-8 text-lg backdrop-blur-sm">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto h-14 px-8 text-lg">
                   Conhecer o BXat
                 </Button>
               </Link>
@@ -82,147 +85,188 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ====== BREATHING ROOM — reveal the 3D background ====== */}
-      <div className="h-40 md:h-64" aria-hidden="true" />
+      {/* ====== SERVICES ====== */}
+      <section className="py-20">
+        <Container>
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2
+              className="text-3xl md:text-4xl mb-4"
+              style={{
+                fontFamily: 'var(--font-newsreader)',
+                fontWeight: 500,
+                letterSpacing: '-0.025em',
+              }}
+            >
+              IA soberana para negócios brasileiros
+            </h2>
+            <p className="text-foreground/70 max-w-2xl mx-auto">
+              Agentes que pensam, lembram e evoluem. Seus dados ficam no Brasil.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <BuritiCard
+              title="BXat — Agente de IA Completo"
+              description="O cérebro da sua empresa. IA que centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida."
+              href="/bxat"
+              icon={Cpu}
+            />
+            <BuritiCard
+              title="Agentes de WhatsApp"
+              description="IA generativa para atendimento humano e conversacional 24/7. Direto no WhatsApp do seu cliente."
+              href="/agentes-ia"
+              icon={Bot}
+            />
+          </div>
+        </Container>
+      </section>
 
-      {/* ====== SERVICES (ICE BLOCKS) ====== */}
-      <FrostTransition>
-        <section className="py-20 bg-background/80 backdrop-blur-xl">
-          <Container>
-            <motion.div
-              className="text-center mb-16"
+      {/* ====== PROCESS TIMELINE ====== */}
+      <section className="py-20">
+        <Container>
+          <div className="text-center mb-16">
+            <motion.h2
+              className="text-3xl md:text-4xl mb-4"
+              style={{
+                fontFamily: 'var(--font-newsreader)',
+                fontWeight: 500,
+                letterSpacing: '-0.025em',
+              }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">IA soberana para negócios brasileiros</h2>
-              <p className="text-foreground/70 max-w-2xl mx-auto">
-                Agentes que pensam, lembram e evoluem. Seus dados ficam no Brasil.
-              </p>
-            </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <IceBlockCard
-                title="BXat — Agente de IA Completo"
-                description="O cérebro da sua empresa. IA que centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida."
-                href="/bxat"
-                icon={Cpu}
-              />
-              <IceBlockCard
-                title="Agentes de WhatsApp"
-                description="IA generativa para atendimento humano e conversacional 24/7. Direto no WhatsApp do seu cliente."
-                href="/agentes-ia"
-                icon={Bot}
-              />
-            </div>
+              Como Funciona
+            </motion.h2>
+            <motion.p
+              className="text-foreground/70 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              Nosso processo é direto e focado na entrega de valor contínuo para o seu negócio.
+            </motion.p>
+          </div>
+          <ProcessTimeline />
+        </Container>
+      </section>
 
-          </Container>
-        </section>
-      </FrostTransition>
-
-      {/* ====== BREATHING ROOM — smaller gap between Services and Process ====== */}
-      <div className="h-24 md:h-36" aria-hidden="true" />
-
-      {/* ====== PROCESS TIMELINE (CRYSTAL GROWTH) ====== */}
-      <FrostTransition>
-        <section className="py-20 bg-background/80 backdrop-blur-xl">
-          <Container>
-            <div className="text-center mb-16">
-              <motion.h2
-                className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                Como Funciona
-              </motion.h2>
-              <motion.p
-                className="text-foreground/70 max-w-2xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                Nosso processo é direto e focado na entrega de valor contínuo para o seu negócio.
-              </motion.p>
-            </div>
-            <ProcessTimeline />
-          </Container>
-        </section>
-      </FrostTransition>
-
-      {/* ====== BREATHING ROOM — reveal the 3D background ====== */}
-      <div className="h-24 md:h-36" aria-hidden="true" />
-
-      {/* ====== DIFFERENTIALS (MORPH PARTICLES) ====== */}
-      <FrostTransition>
-        <section className="py-20 bg-background/80 backdrop-blur-xl">
-          <Container>
-            <motion.div
-              className="text-center mb-16"
+      {/* ====== FAQ ====== */}
+      <section className="py-20">
+        <Container>
+          <div className="max-w-3xl mx-auto">
+            <motion.h2
+              className="text-3xl md:text-4xl text-center mb-12"
+              style={{
+                fontFamily: 'var(--font-newsreader)',
+                fontWeight: 500,
+                letterSpacing: '-0.025em',
+              }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4 font-sans">Por que escolher a BaXiJen®?</h2>
-            </motion.div>
-            <MorphParticles />
-          </Container>
-        </section>
-      </FrostTransition>
-
-      {/* ====== BREATHING ROOM — reveal the 3D background ====== */}
-      <div className="h-24 md:h-36" aria-hidden="true" />
-
-      {/* ====== FAQ (FROST GLASS) ====== */}
-      <FrostTransition>
-        <section className="py-20 bg-background/80 backdrop-blur-xl">
-          <Container>
-            <div className="max-w-3xl mx-auto">
-              <motion.h2
-                className="text-3xl font-bold tracking-tight text-center mb-12"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                Perguntas Frequentes
-              </motion.h2>
-              <div className="space-y-4">
-                {faqs.map((faq, i) => (
-                  <motion.div
-                    key={i}
-                    className="group p-6 rounded-2xl transition-all duration-300 cursor-default backdrop-blur-sm"
-                    style={{
-                      background: 'rgba(255,255,255,0.03)',
-                      border: '1px solid rgba(255,255,255,0.06)',
-                    }}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.08 }}
-                    whileHover={{
-                      background: 'rgba(0,229,255,0.03)',
-                      borderColor: 'rgba(0,229,255,0.15)',
-                      boxShadow: '0 0 20px rgba(0,229,255,0.05)',
-                    }}
-                  >
-                    <h3 className="text-lg font-bold mb-2 flex gap-3 text-foreground">
-                      <span className="text-primary font-mono">?</span> {faq.q}
-                    </h3>
-                    <p className="text-foreground/70 text-sm leading-relaxed">{faq.a}</p>
-                  </motion.div>
-                ))}
-              </div>
+              Perguntas Frequentes
+            </motion.h2>
+            <div className="space-y-4">
+              {faqs.map((faq, i) => (
+                <motion.div
+                  key={i}
+                  className="group p-6 rounded-2xl transition-all duration-300 cursor-default"
+                  style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    borderRadius: '16px',
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  whileHover={{
+                    borderColor: 'rgba(26,93,58,0.3)',
+                    boxShadow: '0 0 20px rgba(26,93,58,0.06)',
+                  }}
+                >
+                  <h3 className="text-lg font-bold mb-2 flex gap-3 text-foreground">
+                    <span className="font-mono" style={{ color: '#97c459' }}>?</span> {faq.q}
+                  </h3>
+                  <p className="text-foreground/70 text-sm leading-relaxed">{faq.a}</p>
+                </motion.div>
+              ))}
             </div>
-          </Container>
-        </section>
-      </FrostTransition>
+          </div>
+        </Container>
+      </section>
 
-      {/* ====== CTA (EXPLOSION) ====== */}
-      <CTAExplosion />
+      {/* ====== CTA FINAL ====== */}
+      <section className="py-20 border-t relative overflow-hidden">
+        {/* Subtle green gradient background */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(26,93,58,0.03), rgba(26,93,58,0.05), rgba(26,93,58,0.02))',
+          }}
+        />
+        <Container className="relative z-10">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <motion.h2
+              className="text-3xl md:text-5xl"
+              style={{
+                fontFamily: 'var(--font-newsreader)',
+                fontWeight: 500,
+                letterSpacing: '-0.025em',
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              Comece hoje
+            </motion.h2>
+            <motion.p
+              className="text-lg text-foreground/70 max-w-xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              Fale com a gente e descubra como um agente de IA pode transformar seu atendimento.
+            </motion.p>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <a
+                href="https://wa.me/5521933009048"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-shadow">
+                  Falar no WhatsApp
+                </Button>
+              </a>
+              <a
+                href="mailto:contato@baxi.ia.br"
+              >
+                <Button variant="outline" size="lg" className="w-full sm:w-auto h-14 px-8 text-lg">
+                  Enviar e-mail
+                </Button>
+              </a>
+            </motion.div>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }
