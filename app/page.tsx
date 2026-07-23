@@ -12,9 +12,6 @@ import { MorphParticles } from '@/components/MorphParticles';
 import { FrostTransition } from '@/components/FrostTransition';
 import { CTAExplosion } from '@/components/CTAExplosion';
 import {
-  MessageSquare,
-  Layout,
-  Zap,
   BarChart,
   Bot,
   Cpu
@@ -171,26 +168,7 @@ export default function Home() {
                 icon={Bot}
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <IceBlockCard
-                title="Sites Express"
-                description="Site profissional com IA integrada. Entrega rápida."
-                href="/sites-express"
-                icon={Zap}
-              />
-              <IceBlockCard
-                title="Chatbots Oficiais"
-                description="Integração com API WhatsApp para vendas e suporte."
-                href="/chatbots-whatsapp"
-                icon={MessageSquare}
-              />
-              <IceBlockCard
-                title="Sistemas sob Medida"
-                description="Backend robusto e interfaces modernas para seu negócio."
-                href="/sistemas-web"
-                icon={Layout}
-              />
-            </div>
+
           </Container>
         </section>
       </FrostTransition>
