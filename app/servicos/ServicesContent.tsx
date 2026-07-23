@@ -6,12 +6,9 @@ import { Button } from '@/components/Button';
 import { IceBlockCard } from '@/components/IceBlockCard';
 import { FrostTransition } from '@/components/FrostTransition';
 import {
-  Globe,
   MessageSquare,
   Layout,
   Smartphone,
-  Search,
-  Database,
   Zap,
   Bot,
   Cpu,
@@ -24,9 +21,6 @@ const services = [
   { title: 'Agentes de WhatsApp', description: 'Agentes inteligentes com linguagem natural para vendas e suporte avançado.', href: '/bxat', icon: MessageSquare },
   { title: 'Sistemas sob Medida', description: 'Criamos sistemas que se adaptam ao seu negócio. Soluções escaláveis e seguras.', href: '/sistemas-web', icon: Layout },
   { title: 'Chatbots Oficiais', description: 'Integração oficial com API do WhatsApp para automação de fluxos padrão.', href: '/chatbots-whatsapp', icon: MessageSquare },
-  { title: 'Sites de Alta Performance', description: 'Landing pages e sites institucionais otimizados para máxima conversão.', href: '/', icon: Globe },
-  { title: 'Sistemas de Gestão (ERP)', description: 'Dashboards e painéis administrativos para controle total da sua operação.', href: '/sistemas-web', icon: Database },
-  { title: 'SEO e Visibilidade', description: 'Otimização técnica para garantir que sua empresa seja encontrada no Google.', href: '/', icon: Search },
 ];
 
 export function ServicesContent() {
