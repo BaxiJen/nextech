@@ -61,13 +61,13 @@ export function SobreContent() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <p>
-                Era 6 de fevereiro de 2026. Um Google Meet. Três pesquisadores do COPPEAD que estudavam Inteligência Artificial e Administração olharam um para o outro e disseram: <em>"A academia produz pesquisa de ponta, mas o mercado não consegue acessar isso."</em> Naquela noite, o nome <strong>BaXiJen</strong> — "povo brasileiro" em mandarim — foi definido. Duas meses depois, em 6 de abril, o CNPJ foi aberto. Zero a empresa em 60 dias.
+                Era 6 de fevereiro de 2026. Um Google Meet. Três pesquisadores do COPPEAD que estudavam Inteligência Artificial e Administração olharam um para o outro e disseram: <em>"A academia produz pesquisa de ponta, mas o mercado não consegue acessar isso."</em> Naquela noite, o nome <strong>BaXiJen</strong> — "povo brasileiro" em mandarim — foi definido. Dois meses depois, em 6 de abril, o CNPJ foi aberto. Zero a empresa em 60 dias.
               </p>
               <p>
-                Nascemos dessa inquietação: a tecnologia não deveria ser privilégio de quem tem orçamento de multinacional. Empresas brasileiras merecem a mesma inteligência artificial, a mesma automação, o mesmo nível de engenharia — sem o juro de ser pequeno. Na BaXiJen®, tecnologia é alavanca. Nunca frustração.
+                Nascemos dessa inquietação: a tecnologia não deveria ser privilégio de quem tem orçamento de multinacional. Empresas brasileiras merecem a mesma inteligência artificial, a mesma automação, o mesmo nível de engenharia — sem o juro de ser pequeno. Na BaXiJen®, tecnologia é alavanca, nunca frustração.
               </p>
               <p>
-                Unimos a velocidade e interatividade das interfaces modernas com a robustez e segurança de sistemas empresariais. Cada projeto é resolvido como engenheiro resolve: técnica, pragmática e focada em resultado. Sem firula. Sem promessa vazia. Código que funciona.
+                Unimos a velocidade e a interatividade das interfaces modernas com a robustez e a segurança de sistemas empresariais. Cada projeto é resolvido como engenheiro resolve: técnica, pragmática e focada em resultado. Sem firula. Sem promessa vazia. Código que funciona.
               </p>
             </motion.div>
 
