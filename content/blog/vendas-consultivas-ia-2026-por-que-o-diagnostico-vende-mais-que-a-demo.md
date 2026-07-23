@@ -6,7 +6,7 @@ author: "Luiz Felipe Barbedo"
 authorRole: "Business Development | Co-Founder BaXiJen"
 tags: ["vendas-consultivas", "vendas-b2b", "ia", "b2b", "go-to-market", "brasil", "baixijen"]
 featured: true
-image: "/blog/vendas-consultivas-ia-2026.svg"
+image: "/blog/vendas-consultivas-ia-2026.png"
 imageAlt: "Vendas Consultivas de IA em 2026: o diagnóstico antes da demo"
 ---
 
