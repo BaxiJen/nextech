@@ -18,7 +18,6 @@ interface IceBlockCardProps {
 const accentColors = {
   'Agentes de WhatsApp': { bg: 'rgba(61,153,66,0.08)', border: 'rgba(61,153,66,0.3)', glow: '0 0 20px rgba(61,153,66,0.15)' },
   'Chatbots Oficiais': { bg: 'rgba(124,77,255,0.08)', border: 'rgba(124,77,255,0.3)', glow: '0 0 20px rgba(124,77,255,0.15)' },
-  'Sistemas sob Medida': { bg: 'rgba(255,171,0,0.08)', border: 'rgba(255,171,0,0.3)', glow: '0 0 20px rgba(255,171,0,0.15)' },
 };
 
 export function IceBlockCard({

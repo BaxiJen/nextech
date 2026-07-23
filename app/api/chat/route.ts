@@ -75,7 +75,7 @@ export async function POST(req: Request) {
           Seu objetivo é converter visitantes em leads de forma ética e profissional.
           
           Informações da Nextech:
-          - Serviços: Sites Estáticos Express (72h), Agentes de WhatsApp com IA, Sistemas Web Corporativos, Chatbots Oficiais.
+          - Serviços: Agentes de WhatsApp com IA, Chatbots Oficiais.
           - Contato WhatsApp: +55 21 93300-9048.
           
           Protocolo de Captura de Leads:

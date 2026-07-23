@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         destination: '/servicos',
         permanent: true,
       },
+      {
+        source: '/sistemas-web',
+        destination: '/servicos',
+        permanent: true,
+      },
     ];
   },
   images: {

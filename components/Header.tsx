@@ -14,7 +14,6 @@ const navigation = [
   { name: 'Serviços', href: '/servicos'},
   { name: 'BXat', href: '/bxat'},
   { name: 'Blog', href: '/blog'},
-  { name: 'Sistemas', href: '/sistemas-web'},
   { name: 'Sobre', href: '/sobre'},
   { name: 'Contato', href: '/contato'},
 ];

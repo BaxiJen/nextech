@@ -7,7 +7,6 @@ import { IceBlockCard } from '@/components/IceBlockCard';
 import { FrostTransition } from '@/components/FrostTransition';
 import {
   MessageSquare,
-  Layout,
   Smartphone,
   Zap,
   Bot,
@@ -66,7 +65,7 @@ export function ServicesContent() {
                   <Bot className="h-4 w-4 text-cyan-400" />
                 </div>
                 <div className="absolute -bottom-4 -left-4 w-8 h-8 rounded-lg border border-purple-500/20 backdrop-blur-sm bg-purple-500/10 flex items-center justify-center">
-                  <Layout className="h-4 w-4 text-purple-400" />
+                  <Cpu className="h-4 w-4 text-purple-400" />
                 </div>
               </div>
             </div>

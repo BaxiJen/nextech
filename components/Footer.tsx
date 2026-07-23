@@ -29,7 +29,6 @@ export function Footer() {
               <li><Link href="/servicos" className="text-sm text-muted-foreground hover:text-primary transition-colors">Todos os Serviços</Link></li>
               <li><Link href="/agentes-ia" className="text-sm text-muted-foreground hover:text-primary transition-colors">Agentes de IA</Link></li>
               <li><Link href="/chatbots-whatsapp" className="text-sm text-muted-foreground hover:text-primary transition-colors">Chatbots WhatsApp</Link></li>
-              <li><Link href="/sistemas-web" className="text-sm text-muted-foreground hover:text-primary transition-colors">Sistemas Web</Link></li>
             </ul>
           </div>
           <div>

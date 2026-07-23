@@ -30,12 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseURL}/sistemas-web`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-    {
       url: `${baseURL}/blog`,
       lastModified,
       changeFrequency: "weekly" as const,
