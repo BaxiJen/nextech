@@ -66,7 +66,7 @@ export default function Home() {
   const faqs = [
     { q: "Meus dados ficam no Brasil?", a: "Sim. Nossos modelos rodam em infraestrutura brasileira. Nenhum dado sensível sai do país. Soberania de dados não é promessa, é arquitetura." },
     { q: "O agente de IA funciona 24 horas?", a: "Sim! Nossos agentes de IA funcionam ininterruptamente, atendendo e qualificando seus contatos mesmo enquanto você dorme." },
-    { q: "Qual a diferença entre o BXat e um chatbot comum?", a: "Chatbots seguem scripts rígidos. O BXat raciocina, lembra conversas anteriores e toma decisões. É um agente, não um robô de perguntas e respostas." },
+    { q: "Qual a diferença entre o BXat e um chatbot comum?", a: "Chatbots comuns seguem árvores de decisão pré-programadas e travam quando o cliente sai do roteiro. O BXat entende linguagem natural, lembra o histórico de cada conversa, consulta seus sistemas em tempo real (CRM, planilhas, estoque) e toma decisões com autonomia. Em vez de perguntas e respostas fixas, ele raciocina e age como um atendente humano treinado." },
     { q: "Posso integrar com meus sistemas?", a: "Com certeza. O BXat conecta via API com CRMs, planilhas, bancos de dados e qualquer sistema que sua empresa já utiliza." },
     { q: "Como começar?", a: "Fale com a gente pelo WhatsApp ou pelo formulário de contato. Entendemos sua dor e configuramos um agente personalizado para seu negócio." }
   ];
