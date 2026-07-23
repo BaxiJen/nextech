@@ -108,9 +108,9 @@ export default function Home() {
 
             {/* Main heading with TypeWriter */}
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground max-w-5xl font-sans leading-[1.1]">
-              <span className="sr-only">Seus dados no Brasil. IA que pensa, lembra e resolve.</span>
+              <span className="sr-only">IA desenvolvida no Brasil, para o Brasil</span>
               <TypeWriter
-                text="Seus dados no Brasil. IA que pensa, lembra e resolve."
+                text="IA desenvolvida no Brasil, para o Brasil"
                 className="text-foreground"
                 speed={50}
               />
