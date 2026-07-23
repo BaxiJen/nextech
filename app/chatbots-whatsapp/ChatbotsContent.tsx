@@ -200,19 +200,6 @@ export function ChatbotsContent() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <IceBlockCard
-                title="Sites Express"
-                description="Atenda centenas de pessoas simultaneamente sem aumentar sua equipe."
-                href="/chatbots-whatsapp"
-                icon={Zap}
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <IceBlockCard
