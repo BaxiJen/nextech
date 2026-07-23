@@ -174,11 +174,8 @@ export function SobreContent() {
         </Container>
       </section>
 
-      {/* CTA FINAL */}
-      <section className="py-24">
-        <Container>
-        </Container>
-      </section>
+      {/* CTA FINAL — removido */}
+      {/* <section className="py-24"><Container></Container></section> */}
     </div>
   );
 }
