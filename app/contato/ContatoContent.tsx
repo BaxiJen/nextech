@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
-import { FrostTransition } from '@/components/FrostTransition';
 import { Mail, MessageCircle, Shield, Cpu, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -67,7 +66,7 @@ export function ContatoContent() {
           transition={{ duration: 0.6 }}
         >
           <motion.div
-            className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur-md border-primary/20 bg-background/50 mb-6"
+            className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium border-primary/20 bg-primary/5 mb-6"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -75,7 +74,7 @@ export function ContatoContent() {
             <Cpu className="h-4 w-4 mr-2 text-primary" /> Fale com a BaXiJen
           </motion.div>
 
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl mb-4">
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl mb-4" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>
             Seus dados no Brasil.
             <span className="block text-primary mt-2">IA que resolve de verdade.</span>
           </h1>
@@ -95,26 +94,20 @@ export function ContatoContent() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {status === 'success' ? (
-              <div
-                className="rounded-3xl p-12 text-center border border-green-500/20"
-                style={{ background: 'rgba(16,185,129,0.03)' }}
-              >
-                <div className="w-16 h-16 rounded-full border border-green-500/30 bg-green-500/10 flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle2 className="h-8 w-8 text-green-400" />
+              <div className="rounded-3xl p-12 text-center border border-primary/20 buriti-card">
+                <div className="w-16 h-16 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle2 className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Mensagem enviada!</h3>
+                <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>Mensagem enviada!</h3>
                 <p className="text-muted-foreground max-w-md mx-auto">
                   Recebemos seu contato. A equipe BaXiJen vai analisar e responder em até 24 horas no email ou WhatsApp informados.
                 </p>
               </div>
             ) : (
-              <div
-                className="rounded-3xl p-8 md:p-10 border border-white/10 backdrop-blur-md"
-                style={{ background: 'rgba(255,255,255,0.02)' }}
-              >
+              <div className="rounded-3xl p-8 md:p-10 buriti-card">
                 <div className="flex items-center gap-3 mb-6">
                   <Sparkles className="h-5 w-5 text-primary" />
-                  <h3 className="text-xl font-bold">Formulário de contato</h3>
+                  <h3 className="text-xl font-bold" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>Formulário de contato</h3>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -126,7 +119,7 @@ export function ContatoContent() {
                         type="text"
                         value={formData.nome}
                         onChange={e => setFormData(s => ({ ...s, nome: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none"
+                        className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                         placeholder="Seu nome"
                       />
                     </div>
@@ -137,7 +130,7 @@ export function ContatoContent() {
                         type="email"
                         value={formData.email}
                         onChange={e => setFormData(s => ({ ...s, email: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none"
+                        className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                         placeholder="voce@empresa.com.br"
                       />
                     </div>
@@ -150,7 +143,7 @@ export function ContatoContent() {
                         type="text"
                         value={formData.empresa}
                         onChange={e => setFormData(s => ({ ...s, empresa: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none"
+                        className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                         placeholder="Nome da empresa"
                       />
                     </div>
@@ -160,7 +153,7 @@ export function ContatoContent() {
                         type="text"
                         value={formData.cargo}
                         onChange={e => setFormData(s => ({ ...s, cargo: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none"
+                        className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                         placeholder="Diretor, Gerente, Sócio..."
                       />
                     </div>
@@ -172,7 +165,7 @@ export function ContatoContent() {
                       type="tel"
                       value={formData.telefone}
                       onChange={e => setFormData(s => ({ ...s, telefone: e.target.value }))}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none"
+                      className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                       placeholder="(21) 9XXXX-XXXX"
                     />
                   </div>
@@ -183,7 +176,7 @@ export function ContatoContent() {
                       required
                       value={formData.assunto}
                       onChange={e => setFormData(s => ({ ...s, assunto: e.target.value }))}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground focus:border-primary/50 focus:outline-none"
+                      className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                     >
                       {assuntos.map(a => (
                         <option key={a.value} value={a.value}>{a.label}</option>
@@ -198,7 +191,7 @@ export function ContatoContent() {
                       rows={4}
                       value={formData.mensagem}
                       onChange={e => setFormData(s => ({ ...s, mensagem: e.target.value }))}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none resize-none"
+                      className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
                       placeholder="Ex: Precisamos de um agente que atenda clientes no WhatsApp e consulte nosso ERP..."
                     />
                   </div>
@@ -228,10 +221,7 @@ export function ContatoContent() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             {/* Soberania card */}
-            <div
-              className="rounded-2xl p-6 border border-primary/15 backdrop-blur-md"
-              style={{ background: 'rgba(0,229,255,0.03)' }}
-            >
+            <div className="rounded-2xl p-6 border border-primary/15 buriti-card">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl border border-primary/20 bg-primary/5 flex items-center justify-center">
                   <Shield className="h-5 w-5 text-primary" />
@@ -244,12 +234,9 @@ export function ContatoContent() {
             </div>
 
             {/* Email card */}
-            <div
-              className="rounded-2xl p-6 border border-white/5 backdrop-blur-md"
-              style={{ background: 'rgba(255,255,255,0.02)' }}
-            >
+            <div className="rounded-2xl p-6 buriti-card">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl border border-primary/20 bg-primary/5 flex items-center justify-center">
                   <Mail className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
@@ -265,13 +252,10 @@ export function ContatoContent() {
             </div>
 
             {/* WhatsApp card */}
-            <div
-              className="rounded-2xl p-6 border border-white/5 backdrop-blur-md"
-              style={{ background: 'rgba(255,255,255,0.02)' }}
-            >
+            <div className="rounded-2xl p-6 buriti-card">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                  <MessageCircle className="h-5 w-5 text-green-400" />
+                <div className="w-10 h-10 rounded-xl border border-primary/20 bg-primary/5 flex items-center justify-center">
+                  <MessageCircle className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-bold">WhatsApp</h3>
@@ -286,10 +270,7 @@ export function ContatoContent() {
             </div>
 
             {/* Localização */}
-            <div
-              className="rounded-2xl p-6 border border-white/5 backdrop-blur-md"
-              style={{ background: 'rgba(255,255,255,0.02)' }}
-            >
+            <div className="rounded-2xl p-6 buriti-card">
               <p className="text-xs text-muted-foreground/60">
                 <span className="text-primary font-semibold">巴西人</span> BaXiJen® — Atendimento nacional, escritório remoto.
               </p>

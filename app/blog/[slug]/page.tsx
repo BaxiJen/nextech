@@ -90,7 +90,16 @@ export default async function BlogPostPage({
 
         {/* Header */}
         <header className="mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold tracking-tight leading-tight mb-6">
+          {/* Eyebrow with tags */}
+          {post.tags.length > 0 && (
+            <div className="mb-4 text-sm font-medium text-[#97c459]" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+              {post.tags.slice(0, 3).join(' · ').toUpperCase()}
+            </div>
+          )}
+          <h1
+            className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold tracking-tight leading-tight mb-6"
+            style={{ fontFamily: 'var(--font-newsreader, serif)' }}
+          >
             {post.title}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
@@ -98,7 +107,7 @@ export default async function BlogPostPage({
           </p>
 
           {/* Author + meta bar */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground border-t border-b py-4">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground border-t border-b border-border py-4">
             <div className="flex items-center gap-1.5">
               <User className="h-3.5 w-3.5" />
               <span className="font-medium text-foreground">{post.author}</span>
@@ -124,7 +133,7 @@ export default async function BlogPostPage({
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border px-3 py-1 text-xs text-muted-foreground hover:border-primary/50 transition-colors"
+                  className="rounded-full border border-primary/20 px-3 py-1 text-xs text-muted-foreground hover:border-primary/50 transition-colors"
                 >
                   {tag}
                 </span>
@@ -137,7 +146,7 @@ export default async function BlogPostPage({
         <BlogMarkdown post={post} />
 
         {/* Share buttons */}
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t pt-6">
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-border pt-6">
           <span className="text-sm text-muted-foreground">Compartilhar:</span>
           <ShareButtons title={post.title} slug={slug} description={post.description} />
         </div>
@@ -145,9 +154,9 @@ export default async function BlogPostPage({
         {/* Separator */}
         <hr className="my-12 border-border" />
 
-        {/* Footer CTA */}
-        <div className="rounded-2xl border bg-gradient-to-br from-card to-muted/50 p-8 md:p-10">
-          <h3 className="text-xl font-semibold mb-2">
+        {/* Footer CTA — Buriti style */}
+        <div className="rounded-2xl p-8 md:p-10 buriti-card">
+          <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>
             Quer construir IA soberana?
           </h3>
           <p className="text-muted-foreground mb-6 leading-relaxed">
@@ -156,7 +165,7 @@ export default async function BlogPostPage({
           </p>
           <Link
             href="/contato"
-            className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
           >
             Fale conosco
           </Link>

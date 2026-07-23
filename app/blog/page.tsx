@@ -23,7 +23,13 @@ export default function BlogPage() {
       <div className="mx-auto max-w-5xl px-4">
         {/* Hero */}
         <div className="mb-16 md:mb-20">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <div className="text-sm font-medium text-[#97c459] mb-3" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+            INSIGHTS
+          </div>
+          <h1
+            className="text-4xl md:text-5xl font-bold tracking-tight mb-4"
+            style={{ fontFamily: 'var(--font-newsreader, serif)' }}
+          >
             Blog
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">

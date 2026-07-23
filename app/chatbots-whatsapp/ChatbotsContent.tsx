@@ -3,8 +3,7 @@
 import React from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
-import { IceBlockCard } from '@/components/IceBlockCard';
-import { FrostTransition } from '@/components/FrostTransition';
+import { BuritiCard } from '@/components/BuritiCard';
 import { Clock, Zap, Users, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -28,7 +27,10 @@ export function ChatbotsContent() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl font-bold tracking-tight">Chatbots para WhatsApp</h1>
+            <div className="text-sm font-medium text-[#97c459] mb-2" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+              WHATSAPP BUSINESS
+            </div>
+            <h1 className="text-4xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>Chatbots para WhatsApp</h1>
             <p className="text-lg text-muted-foreground">
               Automatize seu atendimento, reduza o tempo de resposta e nunca mais perca uma oportunidade de venda.
             </p>
@@ -55,7 +57,7 @@ export function ChatbotsContent() {
             </div>
           </motion.div>
 
-          {/* CSS Chat Simulation — replaces Unsplash */}
+          {/* CSS Chat Simulation */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -64,25 +66,21 @@ export function ChatbotsContent() {
             <div
               className="relative aspect-square rounded-2xl overflow-hidden p-6"
               style={{
-                background: 'linear-gradient(135deg, rgba(0,229,255,0.05) 0%, rgba(76,175,80,0.05) 50%, rgba(124,77,255,0.03) 100%)',
-                border: '1px solid rgba(255,255,255,0.06)',
+                background: 'linear-gradient(135deg, rgba(26,93,58,0.05) 0%, rgba(151,196,89,0.05) 50%, rgba(26,93,58,0.03) 100%)',
+                border: '1px solid rgba(26,93,58,0.15)',
               }}
             >
               {/* Chat header */}
               <div
-                className="flex items-center gap-3 mb-6 p-3 rounded-xl"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}
+                className="flex items-center gap-3 mb-6 p-3 rounded-xl border border-primary/15"
+                style={{ background: 'rgba(26,93,58,0.05)' }}
               >
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                   <MessageSquare className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <div className="text-sm font-bold text-foreground">BaXiJen Bot</div>
-                  <div className="text-[10px] text-green-400">Online</div>
+                  <div className="text-[10px] text-[#97c459]">Online</div>
                 </div>
               </div>
 
@@ -96,12 +94,8 @@ export function ChatbotsContent() {
                   transition={{ duration: 0.5, delay: 0.5 }}
                 >
                   <div
-                    className="p-3 rounded-xl rounded-tl-sm text-sm"
-                    style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      backdropFilter: 'blur(12px)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                    }}
+                    className="p-3 rounded-xl rounded-tl-sm text-sm border border-primary/15"
+                    style={{ background: 'rgba(26,93,58,0.06)' }}
                   >
                     Olá! Como posso ajudar?
                   </div>
@@ -118,9 +112,8 @@ export function ChatbotsContent() {
                   <div
                     className="p-3 rounded-xl rounded-tr-sm text-sm text-white"
                     style={{
-                      background: 'rgba(76,175,80,0.25)',
-                      backdropFilter: 'blur(12px)',
-                      border: '1px solid rgba(76,175,80,0.3)',
+                      background: 'rgba(26,93,58,0.25)',
+                      border: '1px solid rgba(26,93,58,0.3)',
                     }}
                   >
                     Quero um orçamento para um site!
@@ -136,15 +129,10 @@ export function ChatbotsContent() {
                   transition={{ duration: 0.5, delay: 1.5 }}
                 >
                   <div
-                    className="p-3 rounded-xl rounded-tl-sm text-sm"
-                    style={{
-                      background: 'rgba(0,229,255,0.08)',
-                      backdropFilter: 'blur(12px)',
-                      border: '1px solid rgba(0,229,255,0.15)',
-                      boxShadow: '0 0 15px rgba(0,229,255,0.05)',
-                    }}
+                    className="p-3 rounded-xl rounded-tl-sm text-sm border border-primary/15"
+                    style={{ background: 'rgba(151,196,89,0.08)' }}
                   >
-                    <span className="font-semibold text-cyan-400">BaXiJen Bot:</span> Ótimo! Vou conectar você com um especialista. Enquanto isso, qual tipo de projeto você tem em mente?
+                    <span className="font-semibold text-[#97c459]">BaXiJen Bot:</span> Ótimo! Vou conectar você com um especialista. Enquanto isso, qual tipo de projeto você tem em mente?
                   </div>
                   <div className="text-[9px] text-muted-foreground mt-1 ml-1">10:33</div>
                 </motion.div>
@@ -164,12 +152,8 @@ export function ChatbotsContent() {
 
               {/* Input bar */}
               <div
-                className="absolute bottom-6 left-6 right-6 p-3 rounded-xl flex items-center gap-2"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
+                className="absolute bottom-6 left-6 right-6 p-3 rounded-xl flex items-center gap-2 border border-primary/15"
+                style={{ background: 'rgba(26,93,58,0.05)' }}
               >
                 <div className="flex-1 text-[11px] text-muted-foreground">Digite sua mensagem...</div>
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
@@ -181,36 +165,34 @@ export function ChatbotsContent() {
         </div>
 
         {/* Feature Cards */}
-        <FrostTransition>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <IceBlockCard
-                title="Chatbots Oficiais"
-                description="Não deixe seu cliente esperando. O bot responde no ato conforme a sua regra."
-                href="/chatbots-whatsapp"
-                icon={Clock}
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <IceBlockCard
-                title="Agentes de WhatsApp"
-                description="Passe para o atendimento humano apenas o que já está qualificado."
-                href="/chatbots-whatsapp"
-                icon={Users}
-              />
-            </motion.div>
-          </div>
-        </FrostTransition>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <BuritiCard
+              title="Chatbots Oficiais"
+              description="Não deixe seu cliente esperando. O bot responde no ato conforme a sua regra."
+              href="/chatbots-whatsapp"
+              icon={Clock}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <BuritiCard
+              title="Agentes de WhatsApp"
+              description="Passe para o atendimento humano apenas o que já está qualificado."
+              href="/chatbots-whatsapp"
+              icon={Users}
+            />
+          </motion.div>
+        </div>
       </Container>
     </div>
   );

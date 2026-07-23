@@ -10,7 +10,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
   });
 
   return (
-    <article className="group flex flex-col rounded-2xl border bg-card overflow-hidden transition-all hover:border-primary/40 hover:shadow-xl">
+    <article className="group flex flex-col rounded-2xl overflow-hidden buriti-card transition-all">
       {/* Cover image */}
       {post.image && (
         <Link
@@ -24,7 +24,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           {post.featured && (
-            <span className="absolute top-4 left-4 rounded-full bg-primary/90 px-3 py-1 text-xs font-medium text-primary-foreground backdrop-blur-sm">
+            <span className="absolute top-4 left-4 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
               Destaque
             </span>
           )}
@@ -32,7 +32,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
       )}
       {!post.image && post.featured && (
         <div className="px-6 pt-6">
-          <span className="inline-block w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+          <span className="inline-block w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary border border-primary/20">
             Destaque
           </span>
         </div>
@@ -44,7 +44,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
         <p className="mb-5 text-sm text-muted-foreground leading-relaxed line-clamp-3 flex-grow">
           {post.description}
         </p>
-        <div className="flex items-center gap-3 text-xs text-muted-foreground pt-4 border-t">
+        <div className="flex items-center gap-3 text-xs text-muted-foreground pt-4 border-t border-border">
           <span className="font-medium text-foreground">{post.author}</span>
           <span>·</span>
           <time dateTime={post.date}>{formattedDate}</time>
@@ -60,7 +60,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
             {post.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border px-2 py-0.5 text-xs text-muted-foreground"
+                className="rounded-full border border-primary/20 px-2 py-0.5 text-xs text-muted-foreground"
               >
                 {tag}
               </span>
