@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
 import { TypeWriter } from '@/components/TypeWriter';
@@ -18,48 +17,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Dynamic import for 3D scene (SSR disabled)
-const HeroScene = dynamic(
-  () => import('@/components/three/HeroScene').then((mod) => ({ default: mod.HeroScene })),
-  { ssr: false, loading: () => <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-muted/30" /> }
-);
-
-// Check if device can handle WebGL
-function canUseWebGL(): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    return !!gl;
-  } catch {
-    return false;
-  }
-}
-
-// Static hero fallback for low-end devices
-function StaticHero() {
-  return (
-    <div className="absolute inset-0 z-0">
-      {/* Gradient background with subtle animated pattern */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-muted/30" />
-      {/* Decorative floating elements */}
-      <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-primary/5 blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-cyan-500/5 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-primary/10" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full border border-cyan-500/5" />
-    </div>
-  );
-}
-
 export default function Home() {
-  const [use3D, setUse3D] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    setUse3D(canUseWebGL());
-  }, []);
-
   const faqs = [
     { q: "Meus dados ficam no Brasil?", a: "Sim. Nossos modelos rodam em infraestrutura brasileira. Nenhum dado sensível sai do país. Soberania de dados não é promessa, é arquitetura." },
     { q: "O agente de IA funciona 24 horas?", a: "Sim! Nossos agentes de IA funcionam ininterruptamente, atendendo e qualificando seus contatos mesmo enquanto você dorme." },
@@ -70,17 +28,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Fixed 3D Background — stays behind all sections on scroll */}
-      {mounted && use3D ? (
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          <HeroScene />
-        </div>
-      ) : (
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          <StaticHero />
-        </div>
-      )}
-
       {/* ====== HERO SECTION ====== */}
       <section className="relative py-24 md:py-40 min-h-[80vh] flex items-center">
         {/* Overlay for text readability */}
