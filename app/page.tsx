@@ -55,7 +55,7 @@ export default function Home() {
                 color: 'var(--foreground)',
               }}
             >
-              IA que pensa, lembra e resolve.
+              IA desenvolvida no Brasil, para o Brasil.
             </h1>
 
             {/* Subtitle */}
