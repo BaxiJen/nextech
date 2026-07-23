@@ -248,12 +248,10 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <a
-                href="https://wa.me/5521933009048"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contato"
               >
                 <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-shadow">
-                  Falar no WhatsApp
+                  Falar com a BaXiJen
                 </Button>
               </a>
               <a

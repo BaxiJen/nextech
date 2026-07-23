@@ -177,28 +177,6 @@ export function SobreContent() {
       {/* CTA FINAL */}
       <section className="py-24">
         <Container>
-          <motion.div
-            className="rounded-3xl p-12 text-center space-y-8 max-w-3xl mx-auto buriti-card"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>Quer conversar sobre um projeto ou ideia?</h3>
-            <p className="text-muted-foreground">
-              Para discutir viabilidade técnica ou propostas de desenvolvimento especializado, entre em contato direto.
-            </p>
-            <div className="flex justify-center">
-              <a
-                href="https://wa.me/5521933009048?text=Olá%20Marcus,%20venho%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-lg shadow-lg scale-100 hover:scale-[1.05] transition-all"
-              >
-                Falar no WhatsApp
-              </a>
-            </div>
-          </motion.div>
         </Container>
       </section>
     </div>

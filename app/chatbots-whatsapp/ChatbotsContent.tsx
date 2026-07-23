@@ -51,7 +51,7 @@ export function ChatbotsContent() {
               ))}
             </div>
             <div className="pt-6">
-              <Link href="https://wa.me/5521933009048" target="_blank">
+              <Link href="/contato">
                 <Button size="lg">Quero uma Automação</Button>
               </Link>
             </div>
