@@ -46,10 +46,10 @@ export function SobreContent() {
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl font-extrabold tracking-tighter text-primary">
-                    巴西人
+                  <div className="text-5xl font-bold tracking-tight text-primary" style={{ fontFamily: 'var(--font-newsreader)' }}>
+                    BaXiJen®
                   </div>
-                  <div className="text-sm text-muted-foreground mt-2" style={{ fontFamily: 'var(--font-geist-mono)' }}>tecnologia com visão global</div>
+                  <div className="text-sm text-muted-foreground mt-2" style={{ fontFamily: 'var(--font-geist-mono)', letterSpacing: '0.15em' }}>TECNOLOGIA COM VISÃO GLOBAL</div>
                 </div>
               </div>
             </motion.div>
@@ -61,7 +61,7 @@ export function SobreContent() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <p>
-                Era 6 de fevereiro de 2026. Um Google Meet. Três pesquisadores do COPPEAD que estudavam Inteligência Artificial e Administração olharam um para o outro e disseram: <em>"A academia produz pesquisa de ponta, mas o mercado não consegue acessar isso."</em> Naquela noite, o nome <strong>BaXiJen</strong> — 巴西人, "povo brasileiro" — foi definido. Duas meses depois, em 6 de abril, o CNPJ foi aberto. Zero a empresa em 60 dias.
+                Era 6 de fevereiro de 2026. Um Google Meet. Três pesquisadores do COPPEAD que estudavam Inteligência Artificial e Administração olharam um para o outro e disseram: <em>"A academia produz pesquisa de ponta, mas o mercado não consegue acessar isso."</em> Naquela noite, o nome <strong>BaXiJen</strong> — "povo brasileiro" em mandarim — foi definido. Duas meses depois, em 6 de abril, o CNPJ foi aberto. Zero a empresa em 60 dias.
               </p>
               <p>
                 Nascemos dessa inquietação: a tecnologia não deveria ser privilégio de quem tem orçamento de multinacional. Empresas brasileiras merecem a mesma inteligência artificial, a mesma automação, o mesmo nível de engenharia — sem o juro de ser pequeno. Na BaXiJen®, tecnologia é alavanca. Nunca frustração.

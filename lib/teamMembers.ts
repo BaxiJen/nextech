@@ -22,7 +22,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Leonardo Camilo',
     headline: 'Data Science Researcher | Engenharia de ML/IA | RAG & LLM',
     role: 'founder',
-    roleLabel: 'Tech Lead & CEO',
+    roleLabel: 'CEO',
     skills: [
       'Machine Learning & IA Aplicada',
       'NLP e Embeddings Semânticos',
