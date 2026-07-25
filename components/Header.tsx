@@ -29,7 +29,7 @@ export function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Image 
-                src="/baxijen_symbol.png" 
+                src="/baxijen_symbol_transparent.svg" 
                 alt="BaXiJen" 
                 width={40} 
                 height={40}
