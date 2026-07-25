@@ -38,7 +38,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Luiz Felipe Barbedo',
     headline: 'Data Scientist | Senior Python Developer',
     role: 'founder',
-    roleLabel: 'Head de Negócios',
+    roleLabel: 'CFO',
     skills: [
       'Ciência de Dados Aplicada',
       'Python & R',
@@ -52,15 +52,15 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'aurelio',
     name: 'Aurélio Lamare Soares Murta',
-    headline: 'Professor Adjunto UFF | Doutor em Engenharia de Transportes COPPE/UFRJ | Logística e Projetos Especiais',
+    headline: 'Professor Titular UFF | Doutor em Engenharia de Transportes COPPE/UFRJ | Logística e Projetos Especiais',
     role: 'advisor',
-    roleLabel: 'Professor Consultor',
+    roleLabel: 'Pesquisador & Mentor',
     skills: [
       'Engenharia de Transportes e Logística',
       'Gerenciamento de Projetos',
       'Licenciamento Ambiental',
       'Biocombustíveis e Energia',
-      'Relações Institucionais e Setor Público'
+      'Inteligência Artificial'
     ],
     linkedinUrl: 'https://www.linkedin.com/in/aureliomurta/',
     photo: '/aurelio.jpg'
@@ -68,9 +68,9 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'camilo',
     name: 'Eduardo Camilo da Silva, DSc',
-    headline: 'Professor Adjunto UFF | Doutor em Administração COPPEAD/UFRJ | Finanças Comportamentais e Data Science',
+    headline: 'Professor Associado UFF | Doutor em Administração COPPEAD/UFRJ | Finanças Comportamentais e Data Science',
     role: 'advisor',
-    roleLabel: 'Professor Consultor',
+    roleLabel: 'Pesquisador & Mentor',
     skills: [
       'Finanças Comportamentais',
       'Microestrutura de Mercado',
@@ -83,14 +83,13 @@ export const teamMembers: TeamMember[] = [
   },
   {
     id: 'barbedo',
-    name: 'Cláudio Barbedo',
-    headline: 'Doutor em Finanças COPPEAD/UFRJ | Professor IBMEC | Pesquisador UFF | Banco Central do Brasil',
+    name: 'Claudio Barbedo',
+    headline: 'Doutor em Finanças COPPEAD/UFRJ | Professor IBMEC | Pesquisador UFF',
     role: 'advisor',
-    roleLabel: 'Professor Consultor',
+    roleLabel: 'Pesquisador & Mentor',
     skills: [
       'Finanças e Mercado de Capitais',
       'Microestrutura de Mercado',
-      'Regulação Financeira',
       'Pesquisa Acadêmica em Administração',
       'Relações Institucionais e Setor Público'
     ],
