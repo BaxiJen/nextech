@@ -121,7 +121,7 @@ export default function Home() {
             <BuritiCard
               title="GREC"
               description="Gerenciamento de risco e crises. Plataforma já em operação para proteção institucional."
-              href="/contato"
+              href="/grec"
               icon={ShieldCheck}
             />
             <BuritiCard

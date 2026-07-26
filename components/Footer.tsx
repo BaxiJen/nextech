@@ -28,7 +28,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li><Link href="/servicos" className="text-sm text-muted-foreground hover:text-primary transition-colors">Todos os Serviços</Link></li>
               <li><Link href="/bxat" className="text-sm text-muted-foreground hover:text-primary transition-colors">BXat</Link></li>
-              <li><Link href="/contato" className="text-sm text-muted-foreground hover:text-primary transition-colors">GREC</Link></li>
+              <li><Link href="/grec" className="text-sm text-muted-foreground hover:text-primary transition-colors">GREC</Link></li>
               <li><Link href="/contato" className="text-sm text-muted-foreground hover:text-primary transition-colors">Diana</Link></li>
               <li><Link href="/contato" className="text-sm text-muted-foreground hover:text-primary transition-colors">Gêmeos Digitais</Link></li>
             </ul>
