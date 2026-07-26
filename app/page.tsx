@@ -165,7 +165,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Nosso processo é direto e focado na entrega de valor contínuo para o seu negócio.
+              Da imersão à evolução contínua. Seu agente de IA em produção, com dados no Brasil.
             </motion.p>
           </div>
           <ProcessTimeline />

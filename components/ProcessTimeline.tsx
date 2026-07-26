@@ -6,26 +6,26 @@ import { motion } from 'framer-motion';
 const steps = [
   {
     step: '01',
-    title: 'Diagnóstico',
-    desc: 'Entendemos seu negócio e identificamos onde IA gera mais valor.',
+    title: 'Imersão',
+    desc: 'Mergulhamos no seu contexto. Entendemos processos, dores e onde IA generativa gera valor real — seja em atendimento, gestão de crises, educação ou simulação.',
     color: '#1a5d3a',
   },
   {
     step: '02',
-    title: 'Configuração',
-    desc: 'Seu agente é criado, conectado aos seus sistemas e personalizado.',
+    title: 'Arquitetura',
+    desc: 'Desenhamos a solução sob medida: agentes customizados, integrações com seus sistemas e soberania de dados. Tudo rodando em infraestrutura brasileira.',
     color: '#0f4027',
   },
   {
     step: '03',
-    title: 'Atuação',
-    desc: 'O agente atende, decide e aprende 24/7, integrado ao seu WhatsApp e CRM.',
+    title: 'Implantação',
+    desc: 'Deploy e ativação do agente em produção. Conectado aos seus canais (WhatsApp, web, API) e treinado com sua base de conhecimento.',
     color: '#97c459',
   },
   {
     step: '04',
-    title: 'Evolução',
-    desc: 'Métricas e feedback alimentam melhorias contínuas.',
+    title: 'Evolução Contínua',
+    desc: 'Monitoramento de métricas, feedback de usuários e melhorias contínuas. O agente aprende e evolui com cada interação.',
     color: '#2d7a4f',
   },
 ];
