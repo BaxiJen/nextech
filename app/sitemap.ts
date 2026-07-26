@@ -18,13 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseURL}/agentes-ia`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseURL}/chatbots-whatsapp`,
+      url: `${baseURL}/bxat`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.8,

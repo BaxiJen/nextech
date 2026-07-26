@@ -272,7 +272,7 @@ export function ContatoContent() {
             {/* Localização */}
             <div className="rounded-2xl p-6 buriti-card">
               <p className="text-xs text-muted-foreground/60">
-                <span className="text-primary font-semibold">巴西人</span> BaXiJen® — Atendimento nacional, escritório remoto.
+                <span className="text-primary font-semibold">BaXiJen®</span> — Atendimento nacional, escritório remoto.
               </p>
             </div>
           </motion.div>

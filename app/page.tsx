@@ -8,7 +8,9 @@ import { BuritiCard } from '@/components/BuritiCard';
 import { ProcessTimeline } from '@/components/ProcessTimeline';
 import {
   Cpu,
-  Bot
+  ShieldCheck,
+  GraduationCap,
+  Boxes
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -109,18 +111,30 @@ export default function Home() {
               Agentes que pensam, lembram e evoluem. Seus dados ficam no Brasil.
             </p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <BuritiCard
-              title="BXat — Agente de IA Completo"
-              description="O cérebro da sua empresa. IA que centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida."
+              title="BXat Corporativo"
+              description="Agente de IA completo. Centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida."
               href="/bxat"
               icon={Cpu}
             />
             <BuritiCard
-              title="Agentes de WhatsApp"
-              description="IA generativa para atendimento humano e conversacional 24/7. Direto no WhatsApp do seu cliente."
-              href="/agentes-ia"
-              icon={Bot}
+              title="GREC"
+              description="Gerenciamento de risco e crises. Plataforma já em operação para proteção institucional."
+              href="/contato"
+              icon={ShieldCheck}
+            />
+            <BuritiCard
+              title="Diana"
+              description="Professora particular e guardiã digital. IA educacional que protege crianças e adolescentes."
+              href="/contato"
+              icon={GraduationCap}
+            />
+            <BuritiCard
+              title="Gêmeos Digitais"
+              description="Réplicas virtuais de processos para simulação e otimização. Decisões baseadas em dados."
+              href="/contato"
+              icon={Boxes}
             />
           </div>
         </Container>
