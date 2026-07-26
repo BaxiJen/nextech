@@ -114,7 +114,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <BuritiCard
               title="BXat Corporativo"
-              description="Agente de IA completo. Centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida."
+              description="IA Vertical para empresas. Agentes customizados treinados para o seu domínio. Soberania de dados garantida."
               href="/bxat"
               icon={Cpu}
             />

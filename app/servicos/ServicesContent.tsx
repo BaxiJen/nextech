@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const services = [
-  { title: 'BXat Corporativo', description: 'Agente de IA completo para empresas. IA que centraliza informações, aprende com cada interação e atende 24/7. Soberania de dados garantida. Inclui desenvolvimento de agentes customizados.', href: '/bxat', icon: Bot },
+  { title: 'BXat Corporativo', description: 'IA Vertical para empresas. Agentes customizados treinados para o seu domínio — atendimento, análise e automação. Soberania de dados garantida, infraestrutura brasileira.', href: '/bxat', icon: Bot },
   { title: 'GREC', description: 'Gerenciamento de Risco e Crises. Plataforma de monitoramento e gestão de crises com IA, já em operação. Solução madura (TRL 9) para proteção institucional.', href: '/contato', icon: ShieldCheck },
   { title: 'Diana', description: 'Professora particular e guardiã digital. IA educacional que protege crianças e adolescentes no ambiente digital, com tutoria personalizada.', href: '/contato', icon: GraduationCap },
   { title: 'Gêmeos Digitais', description: 'Réplicas virtuais de processos e sistemas para simulação e otimização. Modelagem digital de operações para decisão estratégica.', href: '/contato', icon: Boxes },
