@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
-import { Mail, MessageCircle, Shield, Cpu, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { Mail, Shield, Cpu, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const assuntos = [
@@ -251,23 +251,7 @@ export function ContatoContent() {
               </p>
             </div>
 
-            {/* WhatsApp card */}
-            <div className="rounded-2xl p-6 buriti-card">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl border border-primary/20 bg-primary/5 flex items-center justify-center">
-                  <MessageCircle className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-bold">WhatsApp</h3>
-                  <a href="https://wa.me/5521933009048" target="_blank" className="text-sm text-primary hover:underline">
-                    (21) 93300-9048
-                  </a>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground/60">
-                Preferência para PMEs e atendimento rápido. Empresas e órgãos públicos podem preferir o formulário.
-              </p>
-            </div>
+            {/* WhatsApp card — removido até termos número dedicado */}
 
             {/* Localização */}
             <div className="rounded-2xl p-6 buriti-card">
