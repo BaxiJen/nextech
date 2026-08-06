@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#0d2137"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#0099cc"/>
+    </linearGradient>
+    <linearGradient id="warn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff4757"/>
+      <stop offset="100%" stop-color="#ff6b7a"/>
+    </linearGradient>
+    <linearGradient id="ok" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2ed573"/>
+      <stop offset="100%" stop-color="#1abc9c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- BaXiJen logo mark top-left -->
+  <g transform="translate(60, 50)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="url(#accent)"/>
+    <text x="20" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#0a1628">BX</text>
+  </g>
+  <text x="112" y="80" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#00d4ff">BaXiJen</text>
+
+  <!-- Title section -->
+  <text x="60" y="140" font-family="Inter, sans-serif" font-size="36" font-weight="800" fill="#ffffff" letter-spacing="-0.5">
+    GPU Management: Por Que GPUs Ociosas
+  </text>
+  <text x="60" y="182" font-family="Inter, sans-serif" font-size="36" font-weight="800" fill="#00d4ff" letter-spacing="-0.5">
+    São o Novo Avião no Chão
+  </text>
+
+  <!-- Subtitle -->
+  <text x="60" y="220" font-family="Inter, sans-serif" font-size="16" font-weight="400" fill="#8899aa">
+    Utilização, não inteligência, é a próxima restrição real em IA
+  </text>
+
+  <!-- LEFT CHART: API cost vs Owned infra (break-even) -->
+  <g transform="translate(60, 270)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#8899aa">CUSTO: API vs INFRA PRÓPRIA</text>
+
+    <!-- Axes -->
+    <line x1="0" y1="20" x2="0" y2="200" stroke="#334455" stroke-width="2"/>
+    <line x1="0" y1="200" x2="400" y2="200" stroke="#334455" stroke-width="2"/>
+
+    <!-- Y-axis label -->
+    <text x="-10" y="110" text-anchor="end" font-family="Inter, sans-serif" font-size="11" fill="#667788" transform="rotate(-90, -10, 110)">Custo acumulado (R$)</text>
+    <!-- X-axis label -->
+    <text x="200" y="225" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#667788">Volume de requests →</text>
+
+    <!-- API cost line (ascending red) -->
+    <polyline points="10,190 80,170 150,145 220,115 290,80 360,45" fill="none" stroke="url(#warn)" stroke-width="3"/>
+    <text x="370" y="48" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#ff4757">API</text>
+
+    <!-- Owned infra line (fixed green) -->
+    <polyline points="10,100 80,98 150,97 220,96 290,95 360,94" fill="none" stroke="url(#ok)" stroke-width="3"/>
+    <text x="370" y="97" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2ed573">Infra própria</text>
+
+    <!-- Break-even point -->
+    <circle cx="180" cy="110" r="6" fill="#ffaa00" stroke="#0a1628" stroke-width="2"/>
+    <line x1="180" y1="20" x2="180" y2="200" stroke="#ffaa00" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
+    <text x="190" y="35" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffaa00">Break-even</text>
+  </g>
+
+  <!-- RIGHT CHART: Utilization gauge -->
+  <g transform="translate(560, 270)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#8899aa">UTILIZAÇÃO DE GPU</text>
+
+    <!-- Gauge background arc (semicircle) -->
+    <path d="M 30 180 A 120 120 0 0 1 270 180" fill="none" stroke="#1a2a3a" stroke-width="24" stroke-linecap="round"/>
+
+    <!-- Typical utilization (30-40%) - red zone -->
+    <path d="M 30 180 A 120 120 0 0 1 100 75" fill="none" stroke="url(#warn)" stroke-width="24" stroke-linecap="round"/>
+
+    <!-- Target utilization (85%+) - green zone -->
+    <path d="M 30 180 A 120 120 0 0 1 230 95" fill="none" stroke="url(#ok)" stroke-width="24" stroke-linecap="round" opacity="0.3"/>
+
+    <!-- Target marker -->
+    <path d="M 30 180 A 120 120 0 0 1 222 100" fill="none" stroke="url(#ok)" stroke-width="24" stroke-linecap="round"/>
+
+    <!-- Labels -->
+    <text x="30" y="205" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#667788">0%</text>
+    <text x="270" y="205" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#667788">100%</text>
+
+    <!-- Typical marker -->
+    <text x="80" y="65" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ff4757">35%</text>
+    <text x="80" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#ff4757">sem gestão</text>
+
+    <!-- Target marker -->
+    <text x="225" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#2ed573">85%+</text>
+    <text x="225" y="95" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#2ed573">com GPU mgmt</text>
+
+    <!-- Center value -->
+    <text x="150" y="155" text-anchor="middle" font-family="Inter, sans-serif" font-size="28" font-weight="800" fill="#ffffff">2-3x</text>
+    <text x="150" y="175" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">redução de custo</text>
+  </g>
+
+  <!-- Workload icons row -->
+  <g transform="translate(60, 520)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#556677">Workloads competindo pelo mesmo hardware:</text>
+
+    <g transform="translate(0, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Real-time</text>
+    </g>
+    <g transform="translate(90, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Batch</text>
+    </g>
+    <g transform="translate(180, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Training</text>
+    </g>
+    <g transform="translate(270, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Fine-tune</text>
+    </g>
+    <g transform="translate(360, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Quantize</text>
+    </g>
+    <g transform="translate(450, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Embed</text>
+    </g>
+    <g transform="translate(540, 15)">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#1a2a3a" stroke="#334455" stroke-width="1"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#8899aa">Evals</text>
+    </g>
+  </g>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="610" width="1200" height="20" fill="url(#accent)" opacity="0.8"/>
+  <text x="60" y="625" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#0a1628">baxijen.com.br/blog · Marcus Ramalho · CTO</text>
+  <text x="1140" y="625" text-anchor="end" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#0a1628">06/08/2026</text>
+</svg>
