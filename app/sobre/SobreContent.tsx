@@ -5,7 +5,7 @@ import { Container } from '@/components/Container';
 import { BuritiCard } from '@/components/BuritiCard';
 import { TeamMemberCard } from '@/components/TeamMemberCard';
 import { teamMembers } from '@/lib/teamMembers';
-import { Target, Eye, ShieldCheck } from 'lucide-react';
+import { Target, Eye, ShieldCheck, Landmark } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function SobreContent() {
@@ -170,6 +170,43 @@ export function SobreContent() {
                 ))}
               </div>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* SEÇÃO 3: PARCERIAS INSTITUCIONAIS */}
+      <section className="py-24">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="text-sm font-medium text-[#97c459] mb-3" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+                PARCERIAS INSTITUCIONAIS
+              </div>
+              <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>Parcerias Institucionais</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Iniciativas públicas e colaborações que unem pesquisa acadêmica e setor público para gerar impacto real.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <BuritiCard
+                title="Ministério da Ciência, Tecnologia e Inovação (MCTI)"
+                description="Projeto Lei do Bem: análise de dados dos projetos de P&D submetidos ao sistema da Lei do Bem, em parceria com o CID/UFF. Mapeamento, tratamento e visualização de dados para apoiar a avaliação de incentivos fiscais à inovação."
+                href="#"
+                icon={Landmark}
+              />
+            </motion.div>
           </div>
         </Container>
       </section>
