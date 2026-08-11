@@ -203,7 +203,7 @@ export function SobreContent() {
               <BuritiCard
                 title="Ministério da Ciência, Tecnologia e Inovação (MCTI)"
                 description="Projeto Lei do Bem: análise de dados dos projetos de P&D submetidos ao sistema da Lei do Bem, em parceria com o CID/UFF. Mapeamento, tratamento e visualização de dados para apoiar a avaliação de incentivos fiscais à inovação."
-                href="#"
+                href="/sibem"
                 icon={Landmark}
               />
             </motion.div>
