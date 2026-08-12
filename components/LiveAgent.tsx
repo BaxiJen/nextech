@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Bot, User, Loader2, HelpCircle, Mail } from 'lucide-react';
+import { MessageSquare, X, Send, Bot, Loader2, HelpCircle } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from '@/lib/utils';
+import { GREETING_MESSAGE } from '@/lib/ai/greeting';
 import ReactMarkdown from 'react-markdown';
 
 interface Message {
@@ -20,10 +21,7 @@ export function LiveAgent() {
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   });
   const [messages, setMessages] = useState<Message[]>([
-    { 
-      role: 'assistant', 
-      content: 'Olá! 👋 Seja bem-vindo à **BaXiJen**. \n\nSou seu assistente virtual e estou aqui para te ajudar a tirar sua ideia do papel. \n\nQual o objetivo do seu projeto hoje?' 
-    }
+    { role: 'assistant', content: GREETING_MESSAGE }
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -65,7 +63,7 @@ export function LiveAgent() {
           content: `[Clique aqui para continuar no WhatsApp](${data.whatsappLink})` 
         }]);
       }
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: 'Desculpe, tive um problema técnico. Pode me chamar no WhatsApp? +55 21 93300-9048' }]);
     } finally {
       setIsLoading(false);

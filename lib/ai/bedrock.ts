@@ -13,8 +13,14 @@ import { OpenAI } from 'openai'
  */
 export const BEDROCK_REGION = process.env.BEDROCK_REGION || 'sa-east-1'
 
-/** GLM 4.7 Flash: 203K de contexto, até 4K de saída, tool calling client-side. */
-export const CHAT_MODEL = process.env.BEDROCK_CHAT_MODEL || 'zai.glm-4.7-flash'
+/**
+ * GLM 5, servido em sa-east-1. Escolhido sobre o GLM 4.7 Flash por qualidade de
+ * condução do funil: em eval da conversa completa, extraiu o objetivo do lead
+ * com o contexto todo (volume, urgência) em vez de repetir a frase literal do
+ * visitante. Custa ~1s por turno contra ~0,4s do Flash, o que é irrelevante
+ * para um chat de site.
+ */
+export const CHAT_MODEL = process.env.BEDROCK_CHAT_MODEL || 'zai.glm-5'
 
 export const BEDROCK_BASE_URL =
   process.env.BEDROCK_BASE_URL || `https://bedrock-mantle.${BEDROCK_REGION}.api.aws/v1`
