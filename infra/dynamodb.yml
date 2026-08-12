@@ -16,6 +16,17 @@ Parameters:
       - dev
       - staging
       - prod
+  NewsletterDigestScheduleState:
+    Type: String
+    Default: DISABLED
+    AllowedValues:
+      - ENABLED
+      - DISABLED
+    Description: Keep DISABLED until SES production access and controlled tests are complete.
+  NewsletterDigestScheduleExpression:
+    Type: String
+    Default: 'cron(0 13 ? * FRI *)'
+    Description: EventBridge schedule in UTC; default is Friday at 10:00 America/Sao_Paulo.
 
 Resources:
   LeadsTable:
@@ -55,6 +66,8 @@ Resources:
             ProjectionType: ALL
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
       SSESpecification:
         SSEEnabled: true
       Tags:
@@ -152,6 +165,8 @@ Resources:
           AttributeType: S
         - AttributeName: confirm_token
           AttributeType: S
+        - AttributeName: unsub_token
+          AttributeType: S
       KeySchema:
         - AttributeName: email
           KeyType: HASH
@@ -162,6 +177,12 @@ Resources:
               KeyType: HASH
           Projection:
             ProjectionType: ALL
+        - IndexName: unsub-token-index
+          KeySchema:
+            - AttributeName: unsub_token
+              KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
       SSESpecification:
@@ -173,6 +194,568 @@ Resources:
           Value: !Ref Environment
         - Key: ManagedBy
           Value: CloudFormation
+
+  LeadNotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${ProjectName}-${Environment}-new-leads'
+      DisplayName: BaXiJen Leads
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  LeadNotificationLeoSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref LeadNotificationTopic
+      Protocol: email
+      Endpoint: leo@baxi.ia.br
+
+  LeadNotificationMarcusSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref LeadNotificationTopic
+      Protocol: email
+      Endpoint: marcus@baxi.ia.br
+
+  LeadNotificationContatoSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref LeadNotificationTopic
+      Protocol: email
+      Endpoint: contato@baxi.ia.br
+
+  LeadNotificationLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${ProjectName}-${Environment}-lead-notifier'
+      RetentionInDays: 30
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  LeadNotificationFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-${Environment}-lead-notifier'
+      Description: Reads new lead stream records and publishes notifications to SNS.
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowLambda
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-${Environment}-lead-notifier-runtime'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: ReadLeadStream
+                Effect: Allow
+                Action:
+                  - dynamodb:DescribeStream
+                  - dynamodb:GetRecords
+                  - dynamodb:GetShardIterator
+                Resource: !GetAtt LeadsTable.StreamArn
+              - Sid: DiscoverLeadStreams
+                Effect: Allow
+                Action: dynamodb:ListStreams
+                Resource: '*'
+              - Sid: PublishLeadNotification
+                Effect: Allow
+                Action: sns:Publish
+                Resource: !Ref LeadNotificationTopic
+              - Sid: WriteFunctionLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${ProjectName}-${Environment}-lead-notifier:*'
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  LeadNotificationFunction:
+    Type: AWS::Lambda::Function
+    DependsOn:
+      - LeadNotificationLogGroup
+    Properties:
+      FunctionName: !Sub '${ProjectName}-${Environment}-lead-notifier'
+      Description: Sends one SNS email notification for every newly inserted lead.
+      Runtime: nodejs22.x
+      Handler: index.handler
+      Architectures:
+        - arm64
+      MemorySize: 128
+      Timeout: 15
+      Role: !GetAtt LeadNotificationFunctionRole.Arn
+      Environment:
+        Variables:
+          TOPIC_ARN: !Ref LeadNotificationTopic
+          ADMIN_URL: https://www.baxijen.com.br/admin/leads
+      Code:
+        ZipFile: |
+          const { SNSClient, PublishCommand } = require('@aws-sdk/client-sns')
+
+          const sns = new SNSClient({})
+
+          function read(attribute) {
+            if (!attribute) return ''
+            if (Object.hasOwn(attribute, 'S')) return attribute.S
+            if (Object.hasOwn(attribute, 'N')) return attribute.N
+            if (Object.hasOwn(attribute, 'BOOL')) return String(attribute.BOOL)
+            return ''
+          }
+
+          function clean(value) {
+            return String(value || '').replace(/[\r\n]+/g, ' ').trim()
+          }
+
+          exports.handler = async event => {
+            let published = 0
+
+            for (const record of event.Records || []) {
+              if (record.eventName !== 'INSERT') continue
+
+              const image = record.dynamodb?.NewImage || {}
+              const lead = {
+                id: clean(read(image.id)),
+                name: clean(read(image.name)),
+                email: clean(read(image.email)),
+                phone: clean(read(image.phone)),
+                company: clean(read(image.company)),
+                objective: clean(read(image.objective)),
+                score: clean(read(image.score)),
+                status: clean(read(image.status)),
+                source: clean(read(image.source)),
+                createdAt: clean(read(image.created_at)),
+              }
+
+              const subjectName = lead.name || lead.email || lead.id || 'sem identificação'
+              const message = [
+                'Um novo lead foi capturado no site da BaXiJen.',
+                '',
+                `Nome: ${lead.name || '-'}`,
+                `Email: ${lead.email || '-'}`,
+                `Telefone: ${lead.phone || '-'}`,
+                `Empresa: ${lead.company || '-'}`,
+                `Objetivo: ${lead.objective || '-'}`,
+                `Score: ${lead.score || '-'}`,
+                `Status: ${lead.status || '-'}`,
+                `Origem: ${lead.source || '-'}`,
+                `Data: ${lead.createdAt || '-'}`,
+                `Lead ID: ${lead.id || '-'}`,
+                '',
+                `Painel: ${process.env.ADMIN_URL}`,
+              ].join('\n')
+
+              const response = await sns.send(new PublishCommand({
+                TopicArn: process.env.TOPIC_ARN,
+                Subject: `Novo lead BaXiJen: ${subjectName}`.slice(0, 100),
+                Message: message,
+              }))
+
+              published += 1
+              console.info('Lead notification published', {
+                leadId: lead.id,
+                messageId: response.MessageId,
+              })
+            }
+
+            return { published }
+          }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  LeadNotificationEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt LeadsTable.StreamArn
+      FunctionName: !Ref LeadNotificationFunction
+      StartingPosition: LATEST
+      Enabled: true
+      BatchSize: 1
+      MaximumBatchingWindowInSeconds: 0
+      MaximumRecordAgeInSeconds: 86400
+      MaximumRetryAttempts: 10
+      BisectBatchOnFunctionError: true
+      FilterCriteria:
+        Filters:
+          - Pattern: '{"eventName":["INSERT"]}'
+
+  NewsletterDigestLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${ProjectName}-${Environment}-newsletter-digest'
+      RetentionInDays: 30
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  NewsletterDigestFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-${Environment}-newsletter-digest'
+      Description: Reads confirmed newsletter subscribers and sends one idempotent weekly SES digest.
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowLambda
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-${Environment}-newsletter-digest-runtime'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: ReadAndClaimSubscribers
+                Effect: Allow
+                Action:
+                  - dynamodb:Scan
+                  - dynamodb:UpdateItem
+                Resource: !GetAtt NewsletterTable.Arn
+              - Sid: SendWeeklyDigest
+                Effect: Allow
+                Action: ses:SendEmail
+                Resource: !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/baxi.ia.br'
+              - Sid: WriteFunctionLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${ProjectName}-${Environment}-newsletter-digest:*'
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  NewsletterDigestFunction:
+    Type: AWS::Lambda::Function
+    DependsOn:
+      - NewsletterDigestLogGroup
+    Properties:
+      FunctionName: !Sub '${ProjectName}-${Environment}-newsletter-digest'
+      Description: Sends a weekly digest only when the site exposes new posts.
+      Runtime: nodejs22.x
+      Handler: index.handler
+      Architectures:
+        - arm64
+      MemorySize: 256
+      Timeout: 600
+      Role: !GetAtt NewsletterDigestFunctionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref NewsletterTable
+          CONTENT_URL: https://www.baxijen.com.br/api/newsletter/weekly-content
+          SITE_URL: https://www.baxijen.com.br
+          FROM_EMAIL: BaXiJen Newsletter <newsletter@baxi.ia.br>
+          MIN_SEND_INTERVAL_MS: '1000'
+      Code:
+        ZipFile: |
+          const { DynamoDBClient, ScanCommand, UpdateItemCommand } = require('@aws-sdk/client-dynamodb')
+          const { SESv2Client, SendEmailCommand } = require('@aws-sdk/client-sesv2')
+
+          const ddb = new DynamoDBClient({})
+          const ses = new SESv2Client({})
+          const siteOrigin = new URL(process.env.SITE_URL).origin
+          const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+          function read(attribute) {
+            if (!attribute) return ''
+            if (Object.hasOwn(attribute, 'S')) return attribute.S
+            return ''
+          }
+
+          function escapeHtml(value) {
+            return String(value || '')
+              .replaceAll('&', '&amp;')
+              .replaceAll('<', '&lt;')
+              .replaceAll('>', '&gt;')
+              .replaceAll('"', '&quot;')
+              .replaceAll("'", '&#039;')
+          }
+
+          function safePost(post) {
+            const url = new URL(String(post.url || ''))
+            if (url.origin !== siteOrigin || !url.pathname.startsWith('/blog/')) {
+              throw new Error('Invalid post URL from weekly content endpoint')
+            }
+            return {
+              title: String(post.title || '').trim().slice(0, 200),
+              description: String(post.description || '').trim().slice(0, 600),
+              url: url.toString(),
+            }
+          }
+
+          async function loadWeeklyContent() {
+            const response = await fetch(process.env.CONTENT_URL, {
+              headers: { accept: 'application/json' },
+              signal: AbortSignal.timeout(15000),
+            })
+            if (!response.ok) throw new Error(`Weekly content returned HTTP ${response.status}`)
+
+            const content = await response.json()
+            if (!content.campaignId || !Array.isArray(content.posts) || content.posts.length === 0) {
+              return null
+            }
+            if (!/^weekly-[a-f0-9]{24}$/.test(content.campaignId)) {
+              throw new Error('Invalid weekly campaign ID')
+            }
+
+            return {
+              campaignId: content.campaignId,
+              posts: content.posts.slice(0, 5).map(safePost),
+            }
+          }
+
+          async function listSubscribers() {
+            const subscribers = []
+            let exclusiveStartKey
+
+            do {
+              const page = await ddb.send(new ScanCommand({
+                TableName: process.env.TABLE_NAME,
+                ExclusiveStartKey: exclusiveStartKey,
+                FilterExpression: '#confirmed = :true AND attribute_not_exists(#unsubscribed_at)',
+                ProjectionExpression: '#email, #name, #unsub_token',
+                ExpressionAttributeNames: {
+                  '#confirmed': 'confirmed',
+                  '#unsubscribed_at': 'unsubscribed_at',
+                  '#email': 'email',
+                  '#name': 'name',
+                  '#unsub_token': 'unsub_token',
+                },
+                ExpressionAttributeValues: { ':true': { BOOL: true } },
+              }))
+              subscribers.push(...(page.Items || []))
+              exclusiveStartKey = page.LastEvaluatedKey
+            } while (exclusiveStartKey)
+
+            return subscribers
+          }
+
+          async function claimCampaign(email, campaignId, now) {
+            try {
+              await ddb.send(new UpdateItemCommand({
+                TableName: process.env.TABLE_NAME,
+                Key: { email: { S: email } },
+                ConditionExpression: '#confirmed = :true AND attribute_not_exists(#unsubscribed_at) AND (attribute_not_exists(#campaign) OR #campaign <> :campaign)',
+                UpdateExpression: 'SET #campaign = :campaign, #status = :pending, #claimed_at = :now',
+                ExpressionAttributeNames: {
+                  '#confirmed': 'confirmed',
+                  '#unsubscribed_at': 'unsubscribed_at',
+                  '#campaign': 'last_campaign_id',
+                  '#status': 'last_campaign_status',
+                  '#claimed_at': 'last_campaign_claimed_at',
+                },
+                ExpressionAttributeValues: {
+                  ':true': { BOOL: true },
+                  ':campaign': { S: campaignId },
+                  ':pending': { S: 'pending' },
+                  ':now': { S: now },
+                },
+              }))
+              return true
+            } catch (error) {
+              if (error?.name === 'ConditionalCheckFailedException') return false
+              throw error
+            }
+          }
+
+          async function setCampaignStatus(email, status, values = {}) {
+            const names = { '#status': 'last_campaign_status' }
+            const attributeValues = { ':status': { S: status } }
+            const setters = ['#status = :status']
+
+            for (const [name, value] of Object.entries(values)) {
+              names[`#${name}`] = name
+              attributeValues[`:${name}`] = { S: String(value) }
+              setters.push(`#${name} = :${name}`)
+            }
+
+            await ddb.send(new UpdateItemCommand({
+              TableName: process.env.TABLE_NAME,
+              Key: { email: { S: email } },
+              UpdateExpression: `SET ${setters.join(', ')}`,
+              ExpressionAttributeNames: names,
+              ExpressionAttributeValues: attributeValues,
+            }))
+          }
+
+          function buildEmail(subscriber, content) {
+            const name = read(subscriber.name).trim()
+            const token = read(subscriber.unsub_token).trim()
+            const unsubscribeUrl = new URL('/api/newsletter', process.env.SITE_URL)
+            unsubscribeUrl.searchParams.set('action', 'unsubscribe')
+            unsubscribeUrl.searchParams.set('token', token)
+
+            const greeting = name ? `Olá, ${name}!` : 'Olá!'
+            const textPosts = content.posts
+              .map((post, index) => `${index + 1}. ${post.title}\n${post.description}\n${post.url}`)
+              .join('\n\n')
+            const htmlPosts = content.posts
+              .map(post => `
+                <article style="margin:0 0 24px">
+                  <h2 style="font-size:20px;margin:0 0 8px"><a href="${escapeHtml(post.url)}" style="color:#174f32">${escapeHtml(post.title)}</a></h2>
+                  <p style="line-height:1.6;margin:0 0 8px;color:#444">${escapeHtml(post.description)}</p>
+                  <a href="${escapeHtml(post.url)}" style="color:#174f32;font-weight:600">Ler artigo</a>
+                </article>`)
+              .join('')
+
+            return {
+              unsubscribeUrl: unsubscribeUrl.toString(),
+              text: `${greeting}\n\nEstes são os novos posts da semana na BaXiJen:\n\n${textPosts}\n\nVocê recebeu este email porque confirmou a newsletter BaXiJen.\nDescadastrar: ${unsubscribeUrl}`,
+              html: `<!doctype html>
+                <html lang="pt-BR"><body style="margin:0;background:#f6f3ed;color:#202020;font-family:Arial,sans-serif">
+                  <div style="max-width:640px;margin:0 auto;padding:32px 20px">
+                    <div style="background:#fff;border:1px solid #e6dfd4;border-radius:16px;padding:32px">
+                      <p style="margin:0 0 16px">${escapeHtml(greeting)}</p>
+                      <h1 style="font-size:26px;margin:0 0 24px">Posts da semana — BaXiJen</h1>
+                      ${htmlPosts}
+                      <hr style="border:0;border-top:1px solid #e6dfd4;margin:32px 0 20px">
+                      <p style="font-size:12px;color:#666;line-height:1.5;margin:0">Você recebeu este email porque confirmou a newsletter BaXiJen. <a href="${escapeHtml(unsubscribeUrl.toString())}" style="color:#666">Descadastrar</a>.</p>
+                    </div>
+                  </div>
+                </body></html>`,
+            }
+          }
+
+          async function sendDigest(subscriber, content) {
+            const email = read(subscriber.email).trim().toLowerCase()
+            const token = read(subscriber.unsub_token).trim()
+            if (!email || !token) throw new Error('Subscriber is missing email or unsubscribe token')
+
+            const body = buildEmail(subscriber, content)
+            const response = await ses.send(new SendEmailCommand({
+              FromEmailAddress: process.env.FROM_EMAIL,
+              Destination: { ToAddresses: [email] },
+              ReplyToAddresses: ['contato@baxi.ia.br'],
+              Content: {
+                Simple: {
+                  Subject: { Data: 'Posts da semana | BaXiJen', Charset: 'UTF-8' },
+                  Body: {
+                    Text: { Data: body.text, Charset: 'UTF-8' },
+                    Html: { Data: body.html, Charset: 'UTF-8' },
+                  },
+                },
+              },
+            }))
+            return response.MessageId || ''
+          }
+
+          exports.handler = async () => {
+            const content = await loadWeeklyContent()
+            if (!content) {
+              console.info('Newsletter digest skipped: no posts in the last seven days')
+              return { campaignId: null, sent: 0, skipped: 0, failed: 0 }
+            }
+
+            const subscribers = await listSubscribers()
+            const interval = Math.max(0, Number(process.env.MIN_SEND_INTERVAL_MS || 1000))
+            const result = { campaignId: content.campaignId, sent: 0, skipped: 0, failed: 0 }
+
+            for (const subscriber of subscribers) {
+              const email = read(subscriber.email).trim().toLowerCase()
+              const token = read(subscriber.unsub_token).trim()
+              if (!email || !token) {
+                result.skipped += 1
+                continue
+              }
+
+              const claimed = await claimCampaign(email, content.campaignId, new Date().toISOString())
+              if (!claimed) {
+                result.skipped += 1
+                continue
+              }
+
+              try {
+                const messageId = await sendDigest(subscriber, content)
+                await setCampaignStatus(email, 'sent', {
+                  last_sent_at: new Date().toISOString(),
+                  last_message_id: messageId,
+                })
+                result.sent += 1
+              } catch (error) {
+                await setCampaignStatus(email, 'failed', {
+                  last_campaign_error: error?.name || 'Error',
+                })
+                result.failed += 1
+              }
+
+              if (interval > 0) await sleep(interval)
+            }
+
+            console.info('Newsletter digest completed', {
+              campaignId: result.campaignId,
+              posts: content.posts.length,
+              subscribers: subscribers.length,
+              sent: result.sent,
+              skipped: result.skipped,
+              failed: result.failed,
+            })
+            return result
+          }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  NewsletterDigestSchedule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${ProjectName}-${Environment}-newsletter-weekly'
+      Description: Invokes the weekly newsletter sender; disabled until SES production access is approved.
+      ScheduleExpression: !Ref NewsletterDigestScheduleExpression
+      State: !Ref NewsletterDigestScheduleState
+      Targets:
+        - Arn: !GetAtt NewsletterDigestFunction.Arn
+          Id: NewsletterDigestFunction
+          RetryPolicy:
+            MaximumEventAgeInSeconds: 3600
+            MaximumRetryAttempts: 2
+
+  NewsletterDigestInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref NewsletterDigestFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt NewsletterDigestSchedule.Arn
 
   AmplifySsrComputeRole:
     Type: AWS::IAM::Role
@@ -232,6 +815,10 @@ Resources:
                 Resource:
                   - !GetAtt NewsletterTable.Arn
                   - !Sub '${NewsletterTable.Arn}/index/*'
+              - Sid: SendNewsletterConfirmation
+                Effect: Allow
+                Action: ses:SendEmail
+                Resource: !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/baxi.ia.br'
       Tags:
         - Key: Project
           Value: !Ref ProjectName
@@ -252,6 +839,22 @@ Outputs:
     Value: !Ref InteractionsTable
   NewsletterTableName:
     Value: !Ref NewsletterTable
+  LeadNotificationTopicArn:
+    Description: SNS topic that delivers new-lead email notifications.
+    Value: !Ref LeadNotificationTopic
+  LeadNotificationFunctionName:
+    Description: Lambda function triggered by new lead stream records.
+    Value: !Ref LeadNotificationFunction
+  LeadsTableStreamArn:
+    Description: DynamoDB Stream consumed by the lead notifier.
+    Value: !GetAtt LeadsTable.StreamArn
   AmplifySsrComputeRoleArn:
     Description: Attach this role under Amplify App settings > IAM roles > Compute role.
     Value: !GetAtt AmplifySsrComputeRole.Arn
+  NewsletterDigestFunctionName:
+    Description: Weekly SES digest Lambda; schedule stays disabled until production access is approved.
+    Value: !Ref NewsletterDigestFunction
+  NewsletterDigestScheduleName:
+    Value: !Ref NewsletterDigestSchedule
+  NewsletterDigestScheduleState:
+    Value: !Ref NewsletterDigestScheduleState

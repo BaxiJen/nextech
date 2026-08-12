@@ -12,6 +12,16 @@ interface Message {
   content: string;
 }
 
+interface ChatApiResponse {
+  content?: string;
+  whatsappLink?: string;
+  error?: string;
+  retryable?: boolean;
+}
+
+const TECHNICAL_FALLBACK =
+  'Desculpe, tive um problema técnico. Pode me chamar no WhatsApp? +55 21 93300-9048';
+
 export function LiveAgent() {
   const [isOpen, setIsOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(true);
@@ -41,30 +51,50 @@ export function LiveAgent() {
     setInput('');
     setIsLoading(true);
 
+    let failureMessage = TECHNICAL_FALLBACK;
+
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          messages: [...messages, userMessage],
-          sessionId,
-        }),
-      });
+      let data: ChatApiResponse | null = null;
 
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
+      // Um erro transitório recebe uma única nova execução SSR. O servidor não
+      // repersiste a mensagem do usuário quando retryAttempt é 1.
+      for (let retryAttempt = 0; retryAttempt < 2; retryAttempt += 1) {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [...messages, userMessage],
+            sessionId,
+            retryAttempt,
+          }),
+        });
 
-      setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
+        const candidate = await response.json() as ChatApiResponse;
+        if (!response.ok || candidate.error) {
+          if (typeof candidate.error === 'string') failureMessage = candidate.error;
+          if (candidate.retryable === true && retryAttempt === 0) continue;
+          throw new Error('chat request failed');
+        }
+
+        data = candidate;
+        break;
+      }
+
+      if (!data || typeof data.content !== 'string' || !data.content.trim()) {
+        throw new Error('invalid chat response');
+      }
+
+      setMessages(prev => [...prev, { role: 'assistant', content: data.content as string }]);
       
       // Se houver whatsappLink, adicionar como mensagem do assistente com link
-      if (data.whatsappLink) {
+      if (typeof data.whatsappLink === 'string') {
         setMessages(prev => [...prev, { 
           role: 'assistant', 
           content: `[Clique aqui para continuar no WhatsApp](${data.whatsappLink})` 
         }]);
       }
     } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Desculpe, tive um problema técnico. Pode me chamar no WhatsApp? +55 21 93300-9048' }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: failureMessage }]);
     } finally {
       setIsLoading(false);
     }

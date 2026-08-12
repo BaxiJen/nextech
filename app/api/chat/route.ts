@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server'
+import { APIConnectionError, APIError } from 'openai'
 import type { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources/chat/completions'
 import { saveChatMessage, upsertLead, calculateLeadScore, logInteraction, linkChatSessionToLead } from '@/lib/dynamodbService'
-import { bedrock, CHAT_MODEL, BEDROCK_REGION, isBedrockConfigured } from '@/lib/ai/bedrock'
+import {
+  bedrock,
+  CHAT_MODEL,
+  BEDROCK_REGION,
+  BEDROCK_REQUEST_TIMEOUT_MS,
+  isBedrockConfigured,
+} from '@/lib/ai/bedrock'
 import { SALES_AGENT_PROMPT, WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '@/lib/ai/agentPrompt'
 import { rateLimit, clientIp } from '@/lib/ai/rateLimit'
 
@@ -9,8 +16,12 @@ import { rateLimit, clientIp } from '@/lib/ai/rateLimit'
 const MAX_MESSAGES = 40
 const MAX_CONTENT_CHARS = 2_000
 const MAX_OUTPUT_TOKENS = 600
+const CHAT_ROUTE_BUDGET_MS = 24_000
+const MIN_FOLLOW_UP_TIMEOUT_MS = 3_000
 
 const FALLBACK_MESSAGE = `Desculpe, tive um problema técnico. Pode me chamar no WhatsApp? ${WHATSAPP_DISPLAY}`
+const RETRYABLE_MESSAGE =
+  'Recebi sua mensagem, mas o assistente está demorando mais que o esperado. Tente enviar novamente para continuarmos.'
 
 interface CaptureLeadInput {
   name: string
@@ -71,12 +82,20 @@ function normalizePhone(raw: string): string | null {
   return null
 }
 
+function isRetryableBedrockError(error: unknown): boolean {
+  if (error instanceof APIConnectionError) return true
+  if (!(error instanceof APIError)) return false
+
+  return error.status === 408 || error.status === 409 || error.status === 429 || error.status >= 500
+}
+
 export async function POST(req: Request) {
   const startedAt = Date.now()
 
   try {
     const body = await req.json()
-    const { messages: rawMessages, sessionId } = body ?? {}
+    const { messages: rawMessages, sessionId, retryAttempt } = body ?? {}
+    const isRetryAttempt = retryAttempt === 1
 
     if (!sessionId || typeof sessionId !== 'string') {
       return NextResponse.json({ error: 'sessionId é obrigatório' }, { status: 400 })
@@ -104,7 +123,7 @@ export async function POST(req: Request) {
 
     // Salvar mensagem do usuário no banco
     const lastMessage = messages[messages.length - 1]
-    if (lastMessage?.role === 'user') {
+    if (lastMessage?.role === 'user' && !isRetryAttempt) {
       // Ainda não temos o lead_id até fazer o upsert; manter null
       await saveChatMessage(sessionId, 'user', String(lastMessage.content))
     }
@@ -114,16 +133,39 @@ export async function POST(req: Request) {
       ...messages,
     ]
 
-    const response = await bedrock.chat.completions.create({
-      model: CHAT_MODEL,
-      tools: [LEAD_CAPTURE_TOOL],
-      tool_choice: 'auto',
-      messages: conversation,
-      // Fluxo de coleta guiada: temperatura baixa mantém o protocolo
-      // de "uma pergunta por mensagem" mais estável.
-      temperature: 0.4,
-      max_tokens: MAX_OUTPUT_TOKENS,
-    })
+    let response
+    try {
+      response = await bedrock.chat.completions.create(
+        {
+          model: CHAT_MODEL,
+          tools: [LEAD_CAPTURE_TOOL],
+          tool_choice: 'auto',
+          messages: conversation,
+          // Fluxo de coleta guiada: temperatura baixa mantém o protocolo
+          // de "uma pergunta por mensagem" mais estável.
+          temperature: 0.4,
+          max_tokens: MAX_OUTPUT_TOKENS,
+        },
+        { timeout: BEDROCK_REQUEST_TIMEOUT_MS, maxRetries: 0 }
+      )
+    } catch (error) {
+      if (isRetryableBedrockError(error)) {
+        console.warn('[chat_transient_error]', {
+          sessionId,
+          model: CHAT_MODEL,
+          region: BEDROCK_REGION,
+          latencyMs: Date.now() - startedAt,
+          errorType: error instanceof Error ? error.name : 'unknown',
+          status: error instanceof APIError ? error.status : undefined,
+          retryAttempt: isRetryAttempt ? 1 : 0,
+        })
+        return NextResponse.json(
+          { error: RETRYABLE_MESSAGE, retryable: true },
+          { status: 503 }
+        )
+      }
+      throw error
+    }
 
     const assistantMessage = response.choices[0].message
     let assistantContent = assistantMessage.content || ''
@@ -195,20 +237,40 @@ export async function POST(req: Request) {
       // Segundo turno: sem devolver o resultado da ferramenta ao modelo,
       // a resposta da rodada com tool_call vem vazia e o visitante vê
       // uma bolha em branco no fim do funil.
-      try {
-        const followUp = await bedrock.chat.completions.create({
-          model: CHAT_MODEL,
-          messages: [
-            ...conversation,
-            assistantMessage as ChatCompletionMessageParam,
-            { role: 'tool', tool_call_id: toolCall.id, content: JSON.stringify(toolResult) },
-          ],
-          temperature: 0.4,
-          max_tokens: MAX_OUTPUT_TOKENS,
+      const followUpTimeoutMs = Math.min(
+        BEDROCK_REQUEST_TIMEOUT_MS,
+        CHAT_ROUTE_BUDGET_MS - (Date.now() - startedAt)
+      )
+
+      if (followUpTimeoutMs >= MIN_FOLLOW_UP_TIMEOUT_MS) {
+        try {
+          const followUp = await bedrock.chat.completions.create(
+            {
+              model: CHAT_MODEL,
+              messages: [
+                ...conversation,
+                assistantMessage as ChatCompletionMessageParam,
+                { role: 'tool', tool_call_id: toolCall.id, content: JSON.stringify(toolResult) },
+              ],
+              temperature: 0.4,
+              max_tokens: MAX_OUTPUT_TOKENS,
+            },
+            { timeout: followUpTimeoutMs, maxRetries: 0 }
+          )
+          assistantContent = followUp.choices[0].message.content || assistantContent
+        } catch (e) {
+          console.warn('[chat_follow_up_fallback]', {
+            sessionId,
+            latencyMs: Date.now() - startedAt,
+            errorType: e instanceof Error ? e.name : 'unknown',
+          })
+        }
+      } else {
+        console.warn('[chat_follow_up_skipped]', {
+          sessionId,
+          latencyMs: Date.now() - startedAt,
+          remainingMs: Math.max(0, followUpTimeoutMs),
         })
-        assistantContent = followUp.choices[0].message.content || assistantContent
-      } catch (e) {
-        console.error('Erro no follow-up pós tool_call:', e)
       }
 
       if (!assistantContent.trim()) {

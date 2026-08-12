@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
 import { BuritiCard } from '@/components/BuritiCard';
+import { FloatingNewsletterCard } from '@/components/blog/FloatingNewsletterCard';
 import { ProcessTimeline } from '@/components/ProcessTimeline';
 import {
   Cpu,
@@ -279,6 +280,8 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      <FloatingNewsletterCard />
     </>
   );
 }

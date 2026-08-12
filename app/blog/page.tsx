@@ -38,6 +38,11 @@ export default function BlogPage() {
           </p>
         </div>
 
+        {/* Newsletter */}
+        <section id="newsletter" className="scroll-mt-24 mb-16 md:mb-20" aria-label="Newsletter semanal">
+          <NewsletterForm />
+        </section>
+
         {/* Posts */}
         {posts.length === 0 ? (
           <div className="text-center py-20">
@@ -58,10 +63,6 @@ export default function BlogPage() {
             ))}
           </div>
         )}
-        {/* Newsletter */}
-        <div className="mt-16 md:mt-20">
-          <NewsletterForm />
-        </div>
       </div>
     </div>
   );

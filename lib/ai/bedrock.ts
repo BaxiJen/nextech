@@ -25,13 +25,18 @@ export const CHAT_MODEL = process.env.BEDROCK_CHAT_MODEL || 'zai.glm-5'
 export const BEDROCK_BASE_URL =
   process.env.BEDROCK_BASE_URL || `https://bedrock-mantle.${BEDROCK_REGION}.api.aws/v1`
 
+// O Amplify SSR encerra a execução em aproximadamente 28 s. Esta margem permite
+// que a rota transforme timeout em resposta JSON antes de a plataforma cortar a
+// conexão. O retry é coordenado pelo cliente em uma nova execução SSR.
+export const BEDROCK_REQUEST_TIMEOUT_MS = 23_000
+
 export const bedrock = new OpenAI({
   apiKey: process.env.BEDROCK_API_KEY || 'placeholder',
   baseURL: BEDROCK_BASE_URL,
-  // Chat de site: melhor falhar rápido e cair no fallback de WhatsApp
-  // do que deixar o visitante esperando.
-  timeout: 25_000,
-  maxRetries: 1,
+  timeout: BEDROCK_REQUEST_TIMEOUT_MS,
+  // Um retry interno começaria após o primeiro timeout e ultrapassaria o teto
+  // do Amplify, como ocorreu na sessão diagnosticada em produção.
+  maxRetries: 0,
 })
 
 export const isBedrockConfigured = () => Boolean(process.env.BEDROCK_API_KEY)

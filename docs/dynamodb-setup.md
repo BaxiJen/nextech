@@ -78,6 +78,47 @@ Não são necessários endpoints ou credenciais do Supabase.
 
 Essa ordem evita publicar o código antes de ele ter tabelas e permissão.
 
+## 5. Notificações de novos leads
+
+A tabela de leads publica `NEW_IMAGE` no DynamoDB Streams. Uma Lambda em
+`sa-east-1` processa somente eventos `INSERT` (um email já existente atualizado
+não gera novo aviso) e publica no tópico SNS `baxijen-prod-new-leads`.
+
+Assinantes:
+
+- `leo@baxi.ia.br`
+- `marcus@baxi.ia.br`
+- `contato@baxi.ia.br`
+
+Após criar ou atualizar a stack, cada endereço recebe um email da AWS com o link
+**Confirm subscription**. O SNS não envia notificações enquanto a assinatura
+estiver `PendingConfirmation`.
+
+O aviso contém somente os dados estruturados do lead, sem a transcrição completa
+do chat: nome, email, telefone, empresa, objetivo, score, status, origem, data,
+ID e link para o painel. A Lambda usa batch de um item e retry automático para
+não adicionar latência nem dependência ao endpoint do chat.
+
+## 6. Confirmação da newsletter por SES
+
+A inscrição é persistida primeiro no DynamoDB e o runtime SSR envia o link de
+confirmação pelo Amazon SES v2 em `sa-east-1`, usando
+`BaXiJen Newsletter <newsletter@baxi.ia.br>`. Reinscrições não geram outro item:
+se ainda estiver pendente, o mesmo token é reenviado; se já estiver confirmado,
+a API retorna sucesso sem enviar novamente.
+
+Pré-requisitos operacionais:
+
+1. A identidade de domínio `baxi.ia.br` deve estar `Verified` no SES.
+2. Os três CNAMEs Easy DKIM devem existir no Cloudflare como `DNS only`.
+3. Para enviar a destinatários arbitrários, a conta SES precisa estar fora do
+   sandbox em `sa-east-1`.
+4. A Compute role recebe somente `ses:SendEmail` na identidade
+   `baxi.ia.br`; não recebe permissões administrativas do SES.
+
+O redirect de confirmação usa sempre o endereço público
+`https://www.baxijen.com.br`, e não o hostname interno `localhost` do Amplify.
+
 ## Segurança e rollback
 
 - A role permite apenas as operações DynamoDB usadas pela aplicação e somente

@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { Container } from './Container';
-import { Button } from './Button';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
@@ -14,6 +13,7 @@ const navigation = [
   { name: 'Serviços', href: '/servicos'},
   { name: 'BXat', href: '/bxat'},
   { name: 'Blog', href: '/blog'},
+  { name: 'Newsletter', href: '/blog#newsletter'},
   { name: 'Sobre', href: '/sobre'},
   { name: 'Contato', href: '/contato'},
 ];

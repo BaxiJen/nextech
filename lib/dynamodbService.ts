@@ -348,11 +348,21 @@ export async function logInteraction(
   }
 }
 
-export async function upsertNewsletterSubscriber(email: string, name?: string): Promise<void> {
+export interface NewsletterSubscriberState {
+  email: string
+  name: string | null
+  confirmToken: string
+  confirmed: boolean
+}
+
+export async function upsertNewsletterSubscriber(
+  email: string,
+  name?: string
+): Promise<NewsletterSubscriberState> {
   const normalizedEmail = normalizeEmail(email)
   const now = new Date().toISOString()
 
-  await dynamodb.send(
+  const result = await dynamodb.send(
     new UpdateCommand({
       TableName: tables.newsletter,
       Key: { email: normalizedEmail },
@@ -380,8 +390,21 @@ export async function upsertNewsletterSubscriber(email: string, name?: string): 
         ':unsub_token': randomUUID(),
         ':created_at': now,
       },
+      ReturnValues: 'ALL_NEW',
     })
   )
+
+  const subscriber = result.Attributes
+  if (!subscriber?.confirm_token) {
+    throw new Error('DynamoDB não retornou o token de confirmação da newsletter')
+  }
+
+  return {
+    email: normalizedEmail,
+    name: typeof subscriber.name === 'string' ? subscriber.name : null,
+    confirmToken: String(subscriber.confirm_token),
+    confirmed: subscriber.confirmed === true,
+  }
 }
 
 export async function confirmNewsletterSubscription(token: string): Promise<boolean> {
@@ -403,14 +426,54 @@ export async function confirmNewsletterSubscription(token: string): Promise<bool
     new UpdateCommand({
       TableName: tables.newsletter,
       Key: { email: subscriber.email },
-      UpdateExpression: 'SET #confirmed = :confirmed, #confirmed_at = :confirmed_at',
+      UpdateExpression:
+        'SET #confirmed = :confirmed, #confirmed_at = :confirmed_at REMOVE #unsubscribed_at',
       ExpressionAttributeNames: {
         '#confirmed': 'confirmed',
         '#confirmed_at': 'confirmed_at',
+        '#unsubscribed_at': 'unsubscribed_at',
       },
       ExpressionAttributeValues: {
         ':confirmed': true,
         ':confirmed_at': new Date().toISOString(),
+      },
+    })
+  )
+  return true
+}
+
+export async function unsubscribeNewsletterSubscription(token: string): Promise<boolean> {
+  const result = await dynamodb.send(
+    new QueryCommand({
+      TableName: tables.newsletter,
+      IndexName: 'unsub-token-index',
+      KeyConditionExpression: '#unsub_token = :unsub_token',
+      ExpressionAttributeNames: { '#unsub_token': 'unsub_token' },
+      ExpressionAttributeValues: { ':unsub_token': token },
+      Limit: 1,
+    })
+  )
+
+  const subscriber = result.Items?.[0]
+  if (!subscriber?.email) return false
+
+  await dynamodb.send(
+    new UpdateCommand({
+      TableName: tables.newsletter,
+      Key: { email: subscriber.email },
+      UpdateExpression:
+        'SET #confirmed = :confirmed, #unsubscribed_at = :unsubscribed_at, ' +
+        '#confirm_token = :confirm_token REMOVE #confirmed_at',
+      ExpressionAttributeNames: {
+        '#confirmed': 'confirmed',
+        '#unsubscribed_at': 'unsubscribed_at',
+        '#confirm_token': 'confirm_token',
+        '#confirmed_at': 'confirmed_at',
+      },
+      ExpressionAttributeValues: {
+        ':confirmed': false,
+        ':unsubscribed_at': new Date().toISOString(),
+        ':confirm_token': randomUUID(),
       },
     })
   )
