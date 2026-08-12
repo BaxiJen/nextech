@@ -1,10 +1,16 @@
-import { OpenAI } from 'openai'
 import { NextResponse } from 'next/server'
+import type { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources/chat/completions'
 import { saveChatMessage, upsertLead, calculateLeadScore, logInteraction } from '@/lib/supabaseService'
+import { bedrock, CHAT_MODEL, BEDROCK_REGION, isBedrockConfigured } from '@/lib/ai/bedrock'
+import { SALES_AGENT_PROMPT, WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '@/lib/ai/agentPrompt'
+import { rateLimit, clientIp } from '@/lib/ai/rateLimit'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'placeholder',
-})
+// Limites de entrada: o histórico chega do cliente, portanto não é confiável.
+const MAX_MESSAGES = 40
+const MAX_CONTENT_CHARS = 2_000
+const MAX_OUTPUT_TOKENS = 600
+
+const FALLBACK_MESSAGE = `Desculpe, tive um problema técnico. Pode me chamar no WhatsApp? ${WHATSAPP_DISPLAY}`
 
 interface CaptureLeadInput {
   name: string
@@ -15,123 +21,136 @@ interface CaptureLeadInput {
 }
 
 // Schema de ferramenta para captura estruturada de lead
-const LEAD_CAPTURE_TOOL = {
+const LEAD_CAPTURE_TOOL: ChatCompletionTool = {
   type: 'function',
   function: {
     name: 'capture_lead',
-    description: 'Captura dados estruturados do cliente quando nome, telefone, email, objetivo e organização estão disponíveis',
+    description:
+      'Captura dados estruturados do cliente quando nome, telefone, email, objetivo e organização estão disponíveis',
     parameters: {
       type: 'object',
       properties: {
-        name: {
-          type: 'string',
-          description: 'Nome completo do cliente',
-        },
-        email: {
-          type: 'string',
-          description: 'Email do cliente',
-        },
-        phone: {
-          type: 'string',
-          description: 'Telefone do cliente (formato BR: DDD + 9 dígitos)',
-        },
-        objective: {
-          type: 'string',
-          description: 'Objetivo ou descrição do projeto',
-        },
-        organization: {
-          type: 'string',
-          description: 'Organização/empresa do cliente (opcional)',
-        },
+        name: { type: 'string', description: 'Nome completo do cliente' },
+        email: { type: 'string', description: 'Email do cliente' },
+        phone: { type: 'string', description: 'Telefone do cliente (formato BR: DDD + 9 dígitos)' },
+        objective: { type: 'string', description: 'Objetivo ou descrição do projeto' },
+        organization: { type: 'string', description: 'Organização/empresa do cliente (opcional)' },
       },
       required: ['name', 'email', 'phone', 'objective'],
     },
   },
-} as const
+}
+
+/** Aceita apenas role/content de user|assistant, com tamanho e quantidade limitados. */
+function sanitizeMessages(raw: unknown): ChatCompletionMessageParam[] {
+  if (!Array.isArray(raw)) return []
+
+  const isValidTurn = (m: unknown): m is { role: 'user' | 'assistant'; content: string } => {
+    if (!m || typeof m !== 'object') return false
+    const { role, content } = m as Record<string, unknown>
+    return (
+      (role === 'user' || role === 'assistant') &&
+      typeof content === 'string' &&
+      content.trim().length > 0
+    )
+  }
+
+  return raw
+    .filter(isValidTurn)
+    .slice(-MAX_MESSAGES)
+    .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_CONTENT_CHARS) }))
+}
+
+const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
+
+/** Normaliza telefone BR para E.164 (+55DDDNNNNNNNNN) quando possível. */
+function normalizePhone(raw: string): string | null {
+  const digits = raw.replace(/\D/g, '')
+  if (digits.length === 10 || digits.length === 11) return `+55${digits}`
+  if ((digits.length === 12 || digits.length === 13) && digits.startsWith('55')) return `+${digits}`
+  return null
+}
 
 export async function POST(req: Request) {
-  try {
-    const { messages, sessionId, email: providedEmail, phone: providedPhone, name: providedName } = await req.json()
+  const startedAt = Date.now()
 
-    if (!sessionId) {
+  try {
+    const body = await req.json()
+    const { messages: rawMessages, sessionId } = body ?? {}
+
+    if (!sessionId || typeof sessionId !== 'string') {
       return NextResponse.json({ error: 'sessionId é obrigatório' }, { status: 400 })
+    }
+
+    if (!isBedrockConfigured()) {
+      console.error('BEDROCK_API_KEY não configurada')
+      return NextResponse.json({ error: FALLBACK_MESSAGE }, { status: 503 })
+    }
+
+    // Endpoint público e sem autenticação (por design, é um chat de site):
+    // o rate limit é a única barreira contra abuso e custo de inferência.
+    const limit = rateLimit(`chat:${clientIp(req)}`)
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: `Muitas mensagens em pouco tempo. Tente novamente em instantes ou chame no WhatsApp ${WHATSAPP_DISPLAY}.` },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfterSeconds) } }
+      )
+    }
+
+    const messages = sanitizeMessages(rawMessages)
+    if (messages.length === 0) {
+      return NextResponse.json({ error: 'Nenhuma mensagem válida recebida' }, { status: 400 })
     }
 
     // Salvar mensagem do usuário no banco
     const lastMessage = messages[messages.length - 1]
     if (lastMessage?.role === 'user') {
       // Ainda não temos o lead_id até fazer o upsert; manter null
-      await saveChatMessage(sessionId, 'user', lastMessage.content)
+      await saveChatMessage(sessionId, 'user', String(lastMessage.content))
     }
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+    const conversation: ChatCompletionMessageParam[] = [
+      { role: 'system', content: SALES_AGENT_PROMPT },
+      ...messages,
+    ]
+
+    const response = await bedrock.chat.completions.create({
+      model: CHAT_MODEL,
       tools: [LEAD_CAPTURE_TOOL],
       tool_choice: 'auto',
-      messages: [
-        {
-          role: 'system',
-          content: `Você é o Agente de Vendas da Nextech, uma consultoria de tecnologia premium.
-          Seu objetivo é converter visitantes em leads de forma ética e profissional.
-          
-          Informações da Nextech:
-          - Serviços: Agentes de WhatsApp com IA, Chatbots Oficiais.
-          - Contato WhatsApp: +55 21 93300-9048.
-          
-          Protocolo de Captura de Leads:
-          1. INÍCIO: Pergunte apenas o NOME completo do cliente.
-          2. CONVERSA: Após obter o nome, converse naturalmente sobre o objetivo/projeto. Faça perguntas relevantes.
-          3. ENCERRAR CONVERSA: Quando sentir que coletou informações suficientes sobre o projeto, diga algo como:
-             "Perfeito! Um [solução] pode trazer muitos benefícios para você. Para finalizar e darmos continuidade, preciso de alguns dados de contato."
-          4. COLETAR DADOS DO FINAL (UMA POR VEZ):
-             - PRIMEIRO: Após "Para finalizar...", peça APENAS o TELEFONE. Nada mais nesta mensagem.
-             - SEGUNDO: Após receber o telefone, peça APENAS o EMAIL. Reconheça o telefone e peça o email. Nada mais.
-             - TERCEIRO: Após receber o email, peça APENAS a ORGANIZAÇÃO/EMPRESA (ou "não tenho"). Reconheça o email e peça a organização. Nada mais.
-             - FINAL: Após receber a organização, chame a ferramenta capture_lead com todos os 5 dados.
-          
-          Orientações importantes:
-          - A conversa deve ser natural e focada no objetivo/problema do cliente.
-          - Apenas o NOME é coletado no início.
-          - Ao chegar no final, peça os dados de contato UMA POR VEZ em mensagens separadas.
-          - Cada pergunta de contato deve ser breve e clara, esperando a resposta do cliente antes de pedir o próximo.
-          - Seja cordial, profissional e empático.
-          - Responda de forma concisa.
-          - NÃO gere link wa.me manualmente; deixe a ferramenta e o sistema fazer isso.`,
-        },
-        ...messages,
-      ],
-      temperature: 0.7,
+      messages: conversation,
+      // Fluxo de coleta guiada: temperatura baixa mantém o protocolo
+      // de "uma pergunta por mensagem" mais estável.
+      temperature: 0.4,
+      max_tokens: MAX_OUTPUT_TOKENS,
     })
 
-    const assistantContent = response.choices[0].message.content || ''
     const assistantMessage = response.choices[0].message
-
-    // Salvar resposta do assistente
-    await saveChatMessage(sessionId, 'assistant', assistantContent)
+    let assistantContent = assistantMessage.content || ''
 
     let whatsappLink: string | null = null
     let leadId: string | null = null
 
-    // Verificar se houve chamada de ferramenta (tool_call)
-    if (assistantMessage.tool_calls && assistantMessage.tool_calls.length > 0) {
-      const toolCall = assistantMessage.tool_calls[0] as any
-      
-      if (toolCall.function?.name === 'capture_lead') {
-        try {
-          const leadData: CaptureLeadInput = JSON.parse(toolCall.function.arguments)
-          
-          // Calcular score baseado na coleta de dados
-          const score = calculateLeadScore(
-            messages.length,
-            !!leadData.objective,
-            !!leadData.phone,
-            0
-          )
+    const toolCall = assistantMessage.tool_calls?.[0]
 
-          // Salvar lead no banco
-          const lead = await upsertLead(leadData.email, {
+    if (toolCall && 'function' in toolCall && toolCall.function?.name === 'capture_lead') {
+      let toolResult: Record<string, unknown> = { success: false, reason: 'unknown' }
+
+      try {
+        const leadData: CaptureLeadInput = JSON.parse(toolCall.function.arguments)
+        const email = String(leadData.email || '').trim().toLowerCase()
+        const phone = normalizePhone(String(leadData.phone || ''))
+
+        if (!isValidEmail(email)) {
+          toolResult = { success: false, reason: 'invalid_email', instruction: 'Peça o email novamente, gentilmente.' }
+        } else if (!phone) {
+          toolResult = { success: false, reason: 'invalid_phone', instruction: 'Peça o telefone com DDD novamente.' }
+        } else {
+          const score = calculateLeadScore(messages.length, !!leadData.objective, true, 0)
+
+          const lead = await upsertLead(email, {
             name: leadData.name,
-            phone: leadData.phone,
+            phone,
             objective: leadData.objective,
             source: 'chat',
             score,
@@ -141,16 +160,16 @@ export async function POST(req: Request) {
 
           if (lead) {
             leadId = lead.id
-            
-            // Registrar interação
+
             await logInteraction(lead.id, 'message', {
               messageCount: messages.length,
               dataCollected: true,
+              model: CHAT_MODEL,
+              region: BEDROCK_REGION,
             })
 
-            // Construir WhatsApp message e link
-            const whatsappText = `Olá, sou ${leadData.name}. Quero falar sobre ${leadData.objective}. Meu email: ${leadData.email}. Telefone: ${leadData.phone}${leadData.organization ? `. Organização: ${leadData.organization}` : ''}.`
-            whatsappLink = `https://wa.me/5521933009048?text=${encodeURIComponent(whatsappText)}`
+            const whatsappText = `Olá, sou ${leadData.name}. Quero falar sobre ${leadData.objective}. Meu email: ${email}. Telefone: ${phone}${leadData.organization ? `. Organização: ${leadData.organization}` : ''}.`
+            whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`
 
             // Vincular histórico da sessão ao lead
             try {
@@ -164,12 +183,60 @@ export async function POST(req: Request) {
             } catch (e) {
               console.warn('Falha ao vincular sessão ao lead:', e)
             }
+
+            toolResult = {
+              success: true,
+              instruction:
+                'Lead registrado. Agradeça pelo nome, confirme que o time entrará em contato e avise que há um botão de WhatsApp abaixo para conversa imediata.',
+            }
+          } else {
+            toolResult = { success: false, reason: 'storage_error' }
           }
-        } catch (e) {
-          console.error('Erro ao processar tool_call:', e)
         }
+      } catch (e) {
+        console.error('Erro ao processar tool_call:', e)
+        toolResult = { success: false, reason: 'parse_error' }
+      }
+
+      // Segundo turno: sem devolver o resultado da ferramenta ao modelo,
+      // a resposta da rodada com tool_call vem vazia e o visitante vê
+      // uma bolha em branco no fim do funil.
+      try {
+        const followUp = await bedrock.chat.completions.create({
+          model: CHAT_MODEL,
+          messages: [
+            ...conversation,
+            assistantMessage as ChatCompletionMessageParam,
+            { role: 'tool', tool_call_id: toolCall.id, content: JSON.stringify(toolResult) },
+          ],
+          temperature: 0.4,
+          max_tokens: MAX_OUTPUT_TOKENS,
+        })
+        assistantContent = followUp.choices[0].message.content || assistantContent
+      } catch (e) {
+        console.error('Erro no follow-up pós tool_call:', e)
+      }
+
+      if (!assistantContent.trim()) {
+        assistantContent = toolResult.success
+          ? 'Perfeito, registrei seus dados! Nosso time vai analisar e entrar em contato em breve. Se preferir falar agora, use o botão do WhatsApp abaixo.'
+          : 'Não consegui registrar seus dados agora. Pode confirmar seu email e telefone, por favor?'
       }
     }
+
+    // Salvar resposta do assistente
+    await saveChatMessage(sessionId, 'assistant', assistantContent, leadId || undefined)
+
+    console.info('[chat]', {
+      sessionId,
+      model: CHAT_MODEL,
+      region: BEDROCK_REGION,
+      latencyMs: Date.now() - startedAt,
+      promptTokens: response.usage?.prompt_tokens,
+      completionTokens: response.usage?.completion_tokens,
+      finishReason: response.choices[0].finish_reason,
+      leadCaptured: Boolean(leadId),
+    })
 
     return NextResponse.json({
       role: 'assistant',
@@ -178,7 +245,7 @@ export async function POST(req: Request) {
       leadId,
     })
   } catch (error) {
-    console.error('Chat API Error:', error)
-    return NextResponse.json({ error: 'Erro ao processar sua solicitação.' }, { status: 500 })
+    console.error('Chat API Error:', { error, latencyMs: Date.now() - startedAt })
+    return NextResponse.json({ error: FALLBACK_MESSAGE }, { status: 500 })
   }
 }
