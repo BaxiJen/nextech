@@ -1,0 +1,257 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  BaXiJen production data layer: DynamoDB tables and least-privilege IAM role
+  for the AWS Amplify Hosting SSR compute runtime.
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: baxijen
+    AllowedPattern: '^[a-z0-9-]+$'
+    Description: Lowercase prefix used in resource names.
+  Environment:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+
+Resources:
+  LeadsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-leads'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: email
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: entity
+          AttributeType: S
+        - AttributeName: created_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: email
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: id-index
+          KeySchema:
+            - AttributeName: id
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: created-at-index
+          KeySchema:
+            - AttributeName: entity
+              KeyType: HASH
+            - AttributeName: created_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  ChatHistoryTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-chat-history'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: session_id
+          AttributeType: S
+        - AttributeName: message_key
+          AttributeType: S
+        - AttributeName: lead_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: session_id
+          KeyType: HASH
+        - AttributeName: message_key
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: lead-id-index
+          KeySchema:
+            - AttributeName: lead_id
+              KeyType: HASH
+            - AttributeName: message_key
+              KeyType: RANGE
+          Projection:
+            ProjectionType: KEYS_ONLY
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  InteractionsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-interactions'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: lead_id
+          AttributeType: S
+        - AttributeName: interaction_key
+          AttributeType: S
+      KeySchema:
+        - AttributeName: lead_id
+          KeyType: HASH
+        - AttributeName: interaction_key
+          KeyType: RANGE
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  NewsletterTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-newsletter'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: email
+          AttributeType: S
+        - AttributeName: confirm_token
+          AttributeType: S
+      KeySchema:
+        - AttributeName: email
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: confirm-token-index
+          KeySchema:
+            - AttributeName: confirm_token
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  AmplifySsrComputeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-${Environment}-amplify-ssr-dynamodb'
+      Description: Least-privilege DynamoDB access for the BaXiJen Amplify SSR runtime.
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowAmplifySsrCompute
+            Effect: Allow
+            Principal:
+              Service: amplify.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-${Environment}-dynamodb-runtime'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: LeadsCrud
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Query
+                  - dynamodb:BatchWriteItem
+                Resource:
+                  - !GetAtt LeadsTable.Arn
+                  - !Sub '${LeadsTable.Arn}/index/*'
+              - Sid: ChatHistoryCrud
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                  - dynamodb:BatchWriteItem
+                Resource:
+                  - !GetAtt ChatHistoryTable.Arn
+                  - !Sub '${ChatHistoryTable.Arn}/index/*'
+              - Sid: InteractionsWriteAndCleanup
+                Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:Query
+                  - dynamodb:BatchWriteItem
+                Resource: !GetAtt InteractionsTable.Arn
+              - Sid: NewsletterCrud
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                Resource:
+                  - !GetAtt NewsletterTable.Arn
+                  - !Sub '${NewsletterTable.Arn}/index/*'
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+Outputs:
+  TablePrefix:
+    Description: Set DYNAMODB_TABLE_PREFIX to this value in Amplify.
+    Value: !Sub '${ProjectName}-${Environment}'
+  LeadsTableName:
+    Value: !Ref LeadsTable
+  ChatHistoryTableName:
+    Value: !Ref ChatHistoryTable
+  InteractionsTableName:
+    Value: !Ref InteractionsTable
+  NewsletterTableName:
+    Value: !Ref NewsletterTable
+  AmplifySsrComputeRoleArn:
+    Description: Attach this role under Amplify App settings > IAM roles > Compute role.
+    Value: !GetAtt AmplifySsrComputeRole.Arn

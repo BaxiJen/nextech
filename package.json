@@ -9,10 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.1108.0",
+    "@aws-sdk/lib-dynamodb": "3.1108.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
-    "@supabase/auth-helpers-nextjs": "^0.15.0",
-    "@supabase/supabase-js": "^2.90.1",
     "@vercel/analytics": "^1.6.1",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",

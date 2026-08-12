@@ -1,24 +1,12 @@
-import { createServerSupabaseClient } from '@/lib/supabaseClient'
 import { NextResponse } from 'next/server'
+import { listLeads } from '@/lib/dynamodbService'
 
-// GET - Listar todos os leads
+// GET - Listar todos os leads, ordenados do mais recente para o mais antigo.
 export async function GET() {
   try {
-    const supabase = createServerSupabaseClient()
-
-    const { data, error } = await supabase
-      .from('leads')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    if (error) throw error
-
-    return NextResponse.json(data)
+    return NextResponse.json(await listLeads())
   } catch (error) {
     console.error('Erro ao listar leads:', error)
-    return NextResponse.json(
-      { error: 'Erro ao listar leads' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Erro ao listar leads' }, { status: 500 })
   }
 }

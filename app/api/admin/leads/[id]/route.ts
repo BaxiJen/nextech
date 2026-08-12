@@ -1,5 +1,18 @@
-import { createServerSupabaseClient } from '@/lib/supabaseClient'
 import { NextResponse, NextRequest } from 'next/server'
+import {
+  deleteLeadById,
+  LeadNotFoundError,
+  updateLeadById,
+} from '@/lib/dynamodbService'
+import type { Lead } from '@/lib/types'
+
+const VALID_STATUSES: Lead['status'][] = [
+  'new',
+  'contacted',
+  'qualified',
+  'converted',
+  'lost',
+]
 
 export async function PATCH(
   req: NextRequest,
@@ -7,53 +20,37 @@ export async function PATCH(
 ) {
   try {
     const { id } = await context.params
-    const body = await req.json()
+    const body = (await req.json()) as { status?: unknown }
 
-    const supabase = createServerSupabaseClient()
+    if (typeof body.status !== 'string' || !VALID_STATUSES.includes(body.status as Lead['status'])) {
+      return NextResponse.json({ error: 'Status inválido' }, { status: 400 })
+    }
 
-    const { data, error } = await supabase
-      .from('leads')
-      .update({
-        ...body,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', id)
-      .select()
-      .single()
-
-    if (error) throw error
-
-    return NextResponse.json(data)
-  } catch (error) {
-    console.error('Erro ao atualizar lead:', error)
     return NextResponse.json(
-      { error: 'Erro ao atualizar lead' },
-      { status: 500 }
+      await updateLeadById(id, { status: body.status as Lead['status'] })
     )
+  } catch (error) {
+    if (error instanceof LeadNotFoundError) {
+      return NextResponse.json({ error: 'Lead não encontrado' }, { status: 404 })
+    }
+    console.error('Erro ao atualizar lead:', error)
+    return NextResponse.json({ error: 'Erro ao atualizar lead' }, { status: 500 })
   }
 }
 
 export async function DELETE(
-  req: NextRequest,
+  _req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await context.params
-    const supabase = createServerSupabaseClient()
-
-    const { error } = await supabase
-      .from('leads')
-      .delete()
-      .eq('id', id)
-
-    if (error) throw error
-
+    const deleted = await deleteLeadById(id)
+    if (!deleted) {
+      return NextResponse.json({ error: 'Lead não encontrado' }, { status: 404 })
+    }
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Erro ao deletar lead:', error)
-    return NextResponse.json(
-      { error: 'Erro ao deletar lead' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Erro ao deletar lead' }, { status: 500 })
   }
 }

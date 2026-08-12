@@ -16,7 +16,10 @@ frontend:
         # GLM 5 configurado neste deploy.
         - env | grep -e '^BEDROCK_API_KEY=' -e '^BEDROCK_BASE_URL=' >> .env.production || true
         - printf 'BEDROCK_REGION=sa-east-1\nBEDROCK_CHAT_MODEL=zai.glm-5\n' >> .env.production
-        - env | grep -e SUPABASE_SERVICE_KEY >> .env.production || true
+        # DynamoDB usa credenciais temporárias da SSR Compute role; não há access key.
+        - printf 'DYNAMODB_REGION=sa-east-1\nDYNAMODB_TABLE_PREFIX=baxijen-prod\nCHAT_RETENTION_DAYS=180\n' >> .env.production
+        # Credenciais do painel são definidas no console do Amplify.
+        - env | grep -e '^ADMIN_USERNAME=' -e '^ADMIN_PASSWORD=' >> .env.production || true
         - env | grep -e NEXT_PUBLIC_ >> .env.production || true
         - npm run build
   artifacts:

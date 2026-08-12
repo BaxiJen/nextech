@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from '@/lib/supabaseClient';
+import { upsertLead } from '@/lib/dynamodbService';
 import { NextResponse } from 'next/server';
 
 // Google Sheets webhook URL (will be set via environment variable)
@@ -32,24 +32,21 @@ export async function POST(request: Request) {
       );
     }
 
-    // 1. Save to Supabase
-    const supabase = createServerSupabaseClient();
+    // 1. Save to DynamoDB
+    const lead = await upsertLead(email, {
+      name: nome,
+      objective: `${source} (${test_id}) — ${extra.cargo || extra.empresa || ''}`,
+      source: 'form',
+      phone: extra.telefone || extra.whatsapp || undefined,
+      company: extra.orgao || extra.empresa || undefined,
+      notes: JSON.stringify({ source, test_id, ...extra }),
+      score: 0,
+      status: 'new',
+    });
 
-    const { error: dbError } = await supabase
-      .from('leads')
-      .upsert({
-        name: nome,
-        email,
-        objective: `${source} (${test_id}) — ${extra.cargo || extra.empresa || ''}`,
-        source: 'form',
-        phone: extra.telefone || extra.whatsapp || null,
-        company: extra.orgao || extra.empresa || null,
-        notes: JSON.stringify({ source, test_id, ...extra }),
-      }, { onConflict: 'email' });
-
-    if (dbError) {
-      console.error('Supabase error:', dbError);
-      // Continue — don't block on DB error
+    if (!lead) {
+      console.error('DynamoDB error: lead não foi persistido');
+      // Continue — don't block the Google Sheets fallback.
     }
 
     // 2. Forward to Google Sheets (via GET query string — Apps Script compatible)
@@ -72,7 +69,7 @@ export async function POST(request: Request) {
         await fetch(`${GOOGLE_SHEETS_WEBHOOK_URL}?${params.toString()}`);
       } catch (sheetsError) {
         console.error('Google Sheets webhook error:', sheetsError);
-        // Don't block — lead is saved in Supabase
+        // Don't block — lead is saved in DynamoDB
       }
     }
 

@@ -1,19 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createServerSupabaseClient } from '@/lib/supabaseClient'
 import { Lead } from '@/lib/types'
 import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 import {
   Search,
-  Filter,
   Download,
   Trash2,
   Eye,
   Mail,
   Phone,
-  Calendar,
   Target,
   TrendingUp,
 } from 'lucide-react'

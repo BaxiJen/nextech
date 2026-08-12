@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources/chat/completions'
-import { saveChatMessage, upsertLead, calculateLeadScore, logInteraction } from '@/lib/supabaseService'
+import { saveChatMessage, upsertLead, calculateLeadScore, logInteraction, linkChatSessionToLead } from '@/lib/dynamodbService'
 import { bedrock, CHAT_MODEL, BEDROCK_REGION, isBedrockConfigured } from '@/lib/ai/bedrock'
 import { SALES_AGENT_PROMPT, WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '@/lib/ai/agentPrompt'
 import { rateLimit, clientIp } from '@/lib/ai/rateLimit'
@@ -173,13 +173,7 @@ export async function POST(req: Request) {
 
             // Vincular histórico da sessão ao lead
             try {
-              const { createServerSupabaseClient } = await import('@/lib/supabaseClient')
-              const supabase = createServerSupabaseClient()
-              await supabase
-                .from('chat_history')
-                .update({ lead_id: lead.id })
-                .eq('session_id', sessionId)
-                .is('lead_id', null)
+              await linkChatSessionToLead(sessionId, lead.id)
             } catch (e) {
               console.warn('Falha ao vincular sessão ao lead:', e)
             }

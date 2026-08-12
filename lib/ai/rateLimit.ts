@@ -3,7 +3,7 @@
  *
  * Limitação conhecida: o estado vive no processo. Funciona no deploy atual
  * (container único / standalone). Com múltiplas instâncias ou serverless,
- * trocar por Redis/Upstash ou uma tabela no Supabase.
+ * trocar por Redis/ElastiCache ou uma tabela dedicada no DynamoDB.
  */
 type Bucket = { hits: number[] }
 
