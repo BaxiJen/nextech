@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1f3a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099cc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="60" y="60" fill="#00d4ff" font-family="Inter, -apple-system, sans-serif" font-size="28" font-weight="700" letter-spacing="2">BaXiJen</text>
+  <text x="60" y="100" fill="#e2e8f0" font-family="Inter, -apple-system, sans-serif" font-size="32" font-weight="600">Model Routing em Produção</text>
+  <text x="60" y="140" fill="#94a3b8" font-family="Inter, -apple-system, sans-serif" font-size="18">Como escolher o modelo certo e cortar até 85% do custo de IA</text>
+
+  <!-- Input requests (left side) -->
+  <g transform="translate(60, 220)">
+    <text x="0" y="0" fill="#64748b" font-family="Inter, sans-serif" font-size="14" font-weight="600">REQUISIÇÕES</text>
+    <rect x="0" y="15" width="120" height="28" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="60" y="33" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Query 1</text>
+    <rect x="0" y="50" width="120" height="28" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="60" y="68" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Query 2</text>
+    <rect x="0" y="85" width="120" height="28" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="60" y="103" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Query 3</text>
+    <rect x="0" y="120" width="120" height="28" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="60" y="138" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Query N</text>
+    <text x="60" y="170" fill="#475569" font-family="Inter, sans-serif" font-size="24" text-anchor="middle">⋮</text>
+  </g>
+
+  <!-- Arrows from input to router -->
+  <g stroke="#334155" stroke-width="1.5" fill="none">
+    <path d="M 180 253 L 280 253" stroke-dasharray="4 3"/>
+    <path d="M 180 288 L 280 253" stroke-dasharray="4 3"/>
+    <path d="M 180 323 L 280 253" stroke-dasharray="4 3"/>
+    <path d="M 180 358 L 280 253" stroke-dasharray="4 3"/>
+  </g>
+
+  <!-- Router (center) -->
+  <g transform="translate(280, 200)">
+    <rect x="0" y="0" width="180" height="110" rx="12" fill="#0f2942" stroke="url(#cyanGrad)" stroke-width="2.5" filter="url(#glow)"/>
+    <text x="90" y="35" fill="#00d4ff" font-family="Inter, sans-serif" font-size="16" font-weight="700" text-anchor="middle">ROUTER</text>
+    <text x="90" y="58" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Classifica por</text>
+    <text x="90" y="73" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">complexidade</text>
+    <circle cx="35" cy="92" r="4" fill="#22c55e"/>
+    <circle cx="55" cy="92" r="4" fill="#fbbf24"/>
+    <circle cx="75" cy="92" r="4" fill="#ef4444"/>
+    <text x="120" y="96" fill="#64748b" font-family="Inter, sans-serif" font-size="10">3 níveis</text>
+  </g>
+
+  <!-- Arrows from router to models -->
+  <g fill="none" stroke-width="2">
+    <path d="M 460 230 L 580 180" stroke="#22c55e" stroke-dasharray="5 3"/>
+    <path d="M 460 255 L 580 280" stroke="#fbbf24" stroke-dasharray="5 3"/>
+    <path d="M 460 290 L 580 380" stroke="#ef4444" stroke-dasharray="5 3"/>
+  </g>
+
+  <!-- Tier 1: SLM Local (green) -->
+  <g transform="translate(580, 150)">
+    <rect x="0" y="0" width="280" height="90" rx="10" fill="#0f1a14" stroke="#22c55e" stroke-width="2"/>
+    <rect x="0" y="0" width="280" height="28" rx="10" fill="#16a34a" opacity="0.15"/>
+    <text x="140" y="20" fill="#22c55e" font-family="Inter, sans-serif" font-size="14" font-weight="700" text-anchor="middle">SLM LOCAL (on-prem)</text>
+    <text x="140" y="48" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">70-80% do tráfego</text>
+    <text x="140" y="66" fill="#64748b" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Classificação · Sumarização · Extração</text>
+    <text x="140" y="82" fill="#22c55e" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle">$0.24/M tokens</text>
+  </g>
+
+  <!-- Tier 2: Mid-tier (yellow) -->
+  <g transform="translate(580, 250)">
+    <rect x="0" y="0" width="280" height="90" rx="10" fill="#1a1605" stroke="#fbbf24" stroke-width="2"/>
+    <rect x="0" y="0" width="280" height="28" rx="10" fill="#f59e0b" opacity="0.15"/>
+    <text x="140" y="20" fill="#fbbf24" font-family="Inter, sans-serif" font-size="14" font-weight="700" text-anchor="middle">MID-TIER (nuvem privada)</text>
+    <text x="140" y="48" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">15-20% do tráfego</text>
+    <text x="140" y="66" fill="#64748b" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Raciocínio intermediário · Análise</text>
+    <text x="140" y="82" fill="#fbbf24" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle">$1.00/M tokens</text>
+  </g>
+
+  <!-- Tier 3: Frontier (red) -->
+  <g transform="translate(580, 350)">
+    <rect x="0" y="0" width="280" height="90" rx="10" fill="#1a0a0a" stroke="#ef4444" stroke-width="2"/>
+    <rect x="0" y="0" width="280" height="28" rx="10" fill="#dc2626" opacity="0.15"/>
+    <text x="140" y="20" fill="#ef4444" font-family="Inter, sans-serif" font-size="14" font-weight="700" text-anchor="middle">FRONTIER (nuvem pública)</text>
+    <text x="140" y="48" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">5-10% do tráfego</text>
+    <text x="140" y="66" fill="#64748b" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Planejamento · Geração criativa</text>
+    <text x="140" y="82" fill="#ef4444" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle">$5-8/M tokens</text>
+  </g>
+
+  <!-- Cost comparison bar (bottom) -->
+  <g transform="translate(60, 490)">
+    <text x="0" y="0" fill="#64748b" font-family="Inter, sans-serif" font-size="13" font-weight="600">ECONOMIA DE CUSTO</text>
+    
+    <!-- Without routing bar -->
+    <text x="0" y="25" fill="#94a3b8" font-family="Inter, sans-serif" font-size="12">Sem routing</text>
+    <rect x="100" y="13" width="700" height="20" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <rect x="100" y="13" width="700" height="20" rx="4" fill="url(#redGrad)" opacity="0.8"/>
+    <text x="810" y="28" fill="#ef4444" font-family="Inter, sans-serif" font-size="12" font-weight="600">$5.000/mês</text>
+
+    <!-- With routing bar -->
+    <text x="0" y="60" fill="#94a3b8" font-family="Inter, sans-serif" font-size="12">Com routing</text>
+    <rect x="100" y="48" width="120" height="20" rx="4" fill="url(#greenGrad)" opacity="0.8"/>
+    <text x="230" y="63" fill="#22c55e" font-family="Inter, sans-serif" font-size="12" font-weight="600">$820/mês (↓85%)</text>
+  </g>
+
+  <!-- RouteLLM badge -->
+  <g transform="translate(900, 490)">
+    <rect x="0" y="0" width="240" height="60" rx="8" fill="#0f2942" stroke="#00d4ff" stroke-width="1" opacity="0.9"/>
+    <text x="120" y="22" fill="#00d4ff" font-family="Inter, sans-serif" font-size="13" font-weight="700" text-anchor="middle">RouteLLM (ICLR 2025)</text>
+    <text x="120" y="40" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">85% economia · 95% qualidade</text>
+    <text x="120" y="54" fill="#64748b" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">14% das queries → modelo forte</text>
+  </g>
+
+  <!-- Decorative grid lines -->
+  <g stroke="#1e293b" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/>
+  </g>
+</svg>
