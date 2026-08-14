@@ -1,8 +1,13 @@
 # CLAUDE.md — BaXiJen Site
 
 `AGENTS.md` is the canonical project documentation: stack, chat/AI, DynamoDB data
-layer, lead notifications, newsletter, and safety rules. Read it before changing
-anything. This file only carries what you need before the first command runs.
+layer, lead notifications, contact form, newsletter, tests, and safety rules.
+Read it before changing anything. This file only carries what you need before the
+first command runs.
+
+Its **Open items** section lists known gaps that are documented but not being
+worked on — check there before reporting something as new, and before starting
+work that might already be described.
 
 ## AWS CLI access
 

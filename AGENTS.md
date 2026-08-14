@@ -43,9 +43,23 @@ Do not read a successful login from the cache directory alone: files holding onl
 
 Abandoned attempts stay alive as `aws sso login` processes holding stale registrations. Clear them with `pkill -f "aws sso login"` before retrying.
 
-## Production release — 2026-08-12
+## Production release — 2026-08-14
 
-Commit `34ff718` (`feat: publica newsletter semanal e resiliencia do chat`) is deployed on `main`. Amplify job #8 for commit `34ff718769127071fb3a22119a3c9f0018196596` finished with `SUCCEED` at 2026-08-12 16:37:33 -03. The production blog, weekly-content endpoint, newsletter UI, and chat were smoke-tested after deployment.
+Commit `1b06f65` (`fix: rota de contato própria, fim do rebaixamento de lead e suíte de testes`) is deployed on `main`. Amplify job #11 finished with `SUCCEED` at 2026-08-14 20:19 -03. It is the first release gated by `npm run test:run`.
+
+Verified against production after the deploy:
+
+- `/sbpc-cadastro` and `/api/cadastro-sbpc` answer 404; they answered 200 before.
+- `/contato` answers 200; `/api/contato` rejects an unknown `assunto` and an invalid email with 400.
+- A submission with `teste-contato-20260814t232105@example.invalid` persisted with the phone normalised to `+5521999998888`, `objective` holding the readable subject label, and `notes` in plain text rather than a JSON blob.
+- The stream fired: `lead-notifier` logged `Lead notification published` with lead ID `ea48deb2-9f1f-4c9e-bad0-f08ad7a2028f` and SNS message ID `11a5e836-bc06-580b-947c-8acf1925aac7`.
+- Demotion regression, exercised end to end: the record was set to `score 75` / `qualified` to stand in for a chat-qualified lead, then the form was submitted again with the same address. `score` stayed 75, `status` stayed `qualified`, and `objective` kept the chat's value. Only `notes` advanced to the newer message. The old code would have written `score 0` / `new`.
+- Both submissions survived as `form_submit` rows in `baxijen-prod-interactions`, confirming that `notes` holding only the latest message does not lose history.
+- The synthetic lead and its two interactions were deleted; a consistent read returned no item and `baxijen-prod-interactions` scanned back to 0.
+
+### Previous release — 2026-08-12
+
+Commit `34ff718` (`feat: publica newsletter semanal e resiliencia do chat`), Amplify job #8, `SUCCEED` at 2026-08-12 16:37:33 -03. The production blog, weekly-content endpoint, newsletter UI, and chat were smoke-tested after deployment.
 
 Validation completed before release:
 
@@ -186,6 +200,69 @@ Note for future work: `next/font` will fail the build if `Newsreader` is given
 fixed `weight` values together with `style: ['normal', 'italic']`. Google Fonts
 returns `.woff2` URLs for that combination that answer 404. The font is
 variable, so `app/layout.tsx` requests the whole axis range instead.
+
+## Open items
+
+Found during the 2026-08-14 audit and deliberately not fixed in that release.
+Nothing here is in progress.
+
+### Needs a CloudFormation stack update
+
+- **A returning lead produces no notification.** `LeadNotificationFunction` skips
+  every record whose `eventName` is not `INSERT`, so a person already in
+  `baxijen-prod-leads` who fills the contact form updates the row in silence.
+  Combined with the demotion fix, the most engaged visitor is the one most
+  likely to go unnoticed. Diffing old against new needs `StreamViewType`
+  changed to `NEW_AND_OLD_IMAGES`, which replaces the stream and forces the
+  event source mapping to be repointed — worth planning rather than improvising.
+- **The notification email omits the message.** The SNS body carries name,
+  email, phone, company, objective, score, status, source, date and lead ID,
+  but not `notes`, which is where the visitor's own text lives. The
+  "no transcripts in notification emails" rule was written for chat history; a
+  contact-form message is not a transcript, and the Lambda can tell them apart
+  through `source`.
+
+### Application, no infrastructure involved
+
+- **No security headers.** `next.config.ts` has no `headers()` block: no CSP,
+  HSTS, `X-Frame-Options` or `Referrer-Policy`. `dangerouslyAllowSVG` is on.
+- **`@vercel/analytics` is dead weight.** `app/layout.tsx` mounts `<Analytics />`,
+  which requests `/_vercel/insights/script.js` — a path that does not exist
+  outside Vercel. It runs on every page and reports nowhere.
+- **`images.unoptimized` is `true`,** which disables the Next image optimiser on
+  a visually heavy site.
+- **The rate limiter is per-instance.** `lib/ai/rateLimit.ts` keeps its window in
+  process memory and its comment assumes a single container. The platform is
+  `WEB_COMPUTE`, which is Lambda-backed, so the real ceiling is the configured
+  limit per execution environment, not per site. A shared store would be needed
+  for a global limit.
+- **Dead secrets in the local `.env`.** `OPENAI_API_KEY`, `NEXT_PUBLIC_SUPABASE_*`
+  and `SUPABASE_SERVICE_KEY` predate the DynamoDB migration. The file is
+  correctly gitignored and untracked, but the keys should be rotated and removed.
+- **18 pre-existing ESLint errors** in `components/three/Particles.tsx`,
+  `app/sobre/SobreContent.tsx`, `app/sibem/SibemContent.tsx`,
+  `components/CTAExplosion.tsx`, `components/TypeWriter.tsx` and `lib/types.ts`.
+  None are in code touched by the 2026-08-14 release.
+- **The admin panel has one shared credential** and no audit trail, so a lead
+  status change cannot be attributed to a person.
+
+### Product, not engineering
+
+- **No funnel instrumentation.** On 2026-08-14 the two chat sessions on record
+  had both stopped at the same step — after the visitor gave volume and context,
+  before the agent asked for an email — which is why `capture_lead` never fired.
+  Reading that required going through `baxijen-prod-chat-history` message by
+  message. There is no per-step drop-off metric.
+- **`baxijen-prod-leads` held no real lead** between the 2026-08-12 launch and
+  the 2026-08-14 audit. The capture path is sound; the constraint is traffic and
+  conversion.
+
+### Housekeeping
+
+- `teste@gmail.com` (lead `a7ed8e68-af8b-4cf2-9e4e-c11ca5f47be0`, created
+  2026-08-14T22:40:17Z) is a manual test of the pre-release contact form. It did
+  notify — SNS message ID `a655ec61-e83c-5126-9b17-8e9873af7eea`. Left in place
+  pending a decision; it is the only row in the table.
 
 ## Safety / workflow
 
