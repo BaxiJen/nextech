@@ -6,8 +6,42 @@
 - Production: `https://www.baxijen.com.br`.
 - Hosting: AWS Amplify Hosting, app `baxijen-site`, app ID `d3e9h6jnm553nw`, region `us-east-1`, production branch `main`.
 - AWS account: `381492202560` (`Baxijen`). Application infrastructure and Bedrock are in `sa-east-1`; Amplify remains in `us-east-1`.
-- Restricted local AWS profile: `baxijen` (IAM Identity Center permission set `KiroBaxijenOperator`). Renew with `~/.local/bin/aws sso login --profile baxijen`.
+- Restricted local AWS profile: `baxijen` (IAM Identity Center permission set `KiroBaxijenOperator`). See [AWS CLI access](#aws-cli-access-sso) for how to renew the session from this host.
 - Never commit `.env` or print Amplify environment variables; Amplify `GetApp`/`ListApps` responses can include secret values.
+
+## AWS CLI access (SSO)
+
+- Profile `baxijen` -> account `381492202560`, permission set `KiroBaxijenOperator`, default region `sa-east-1`.
+- SSO session `baxijen`: start URL `https://d-9a67704b39.awsapps.com/start`, SSO region `us-east-2`. The session region differs from the resource region on purpose.
+- There is no `default` profile. Every command needs `--profile baxijen`, or `export AWS_PROFILE=baxijen` once per shell.
+
+### Logging in over SSH
+
+This host is normally reached over SSH (Termius), so the default login flow does not work. Use the device-code grant:
+
+```bash
+aws sso login --profile baxijen --use-device-code --no-browser
+```
+
+Open the printed URL in the browser on the *local* machine, confirm the code matches the terminal, and approve. The CLI polls AWS and finishes on its own.
+
+Why the other variants fail:
+
+- Bare `aws sso login` reads the non-existent `default` profile and fails with `Missing the following required SSO configuration values: sso_start_url, sso_region`.
+- The default authorization-code grant opens a listener on `127.0.0.1:<random>` on this host and points the browser at that address. Over SSH the browser resolves `127.0.0.1` against the local machine, the callback never reaches the CLI, and the code expires unused.
+- `--no-browser` alone only disables auto-opening the URL; it keeps the localhost callback, so it does not fix the SSH case. It is useful only combined with `--use-device-code`.
+
+### Verifying the session
+
+```bash
+aws sts get-caller-identity --profile baxijen
+```
+
+The token cache is `~/.aws/sso/cache/1f09405a494ccea2144b4dbd93d150869834703c.json` (SHA-1 of the session name `baxijen`). A live session means that file holds an `accessToken` whose `expiresAt` is in the future.
+
+Do not read a successful login from the cache directory alone: files holding only `clientId`, `clientSecret`, and `expiresAt` are OIDC client registrations, which are written even when the login never completes and expire ~90 days out. `kiro-auth-token.json` belongs to Kiro and is unrelated to this profile.
+
+Abandoned attempts stay alive as `aws sso login` processes holding stale registrations. Clear them with `pkill -f "aws sso login"` before retrying.
 
 ## Production release — 2026-08-12
 
@@ -65,7 +99,9 @@ CloudFormation retains email subscriptions for:
 - `marcus@baxi.ia.br`
 - `contato@baxi.ia.br`
 
-Marcus confirmed the controlled SNS subscription and receipt. Synthetic lead `notification-test-20260812t163230@example.invalid` produced Lambda log lead ID `notification-test-20260812t163230` and SNS message ID `d68a1a61-652c-5cbd-8ba3-7897a9b1bdcc`; it was conditionally deleted and a consistent final read returned no item. Leo and contato remain versioned for later confirmation and must not be removed unless project direction changes.
+All three subscriptions are confirmed as of 2026-08-14. Verified through `cloudformation describe-stack-resources`: each `AWS::SNS::Subscription` carries a real subscription ARN as its `PhysicalResourceId`, which CloudFormation only writes after the recipient confirms. A pending subscription would read `PendingConfirmation` there instead. That check is the way to audit confirmation status without `sns:ListSubscriptionsByTopic`, which the `KiroBaxijenOperator` permission set does not grant.
+
+Synthetic lead `notification-test-20260812t163230@example.invalid` produced Lambda log lead ID `notification-test-20260812t163230` and SNS message ID `d68a1a61-652c-5cbd-8ba3-7897a9b1bdcc`; it was conditionally deleted and a consistent final read returned no item. That invocation on 2026-08-12 19:32:46Z is still the only entry in `/aws/lambda/baxijen-prod-lead-notifier` — the pipeline has never fired for a real lead.
 
 ## Newsletter
 
@@ -105,12 +141,60 @@ Controlled production validation completed with `marcus@baxi.ia.br`:
 
 After those checks, reviewed change set `enable-newsletter-digest-20260812t2026` was executed. Stack `baxijen-prod-data` returned `UPDATE_COMPLETE`; parameter/output `NewsletterDigestScheduleState=ENABLED`. EventBridge rule `baxijen-prod-newsletter-weekly` is directly verified `ENABLED` with `cron(0 13 ? * FRI *)` (Friday 13:00 UTC). The schedule must remain CloudFormation-managed.
 
+## Contact form
+
+`/contato` posts to `/api/contato`. That route validates the payload, rate-limits
+per client IP (5 requests / 15 min), upserts the lead into `baxijen-prod-leads`
+and records the submission as a `form_submit` interaction.
+
+It replaced `/api/leads/fake-door`, which was the endpoint of a finished A/B test.
+The contact form had been reusing it under `test_id: 'D'`, which forced it to
+carry fields no longer collected and a Google Sheets fallback whose environment
+variable never reached the SSR runtime. Both are gone, along with the SBPC event
+landing page, its route, and the three Apps Script files under `scripts/`.
+
+Two invariants the route exists to protect:
+
+- **A failed write is never reported as success.** If `upsertLead` returns null
+  the route answers 502 and the form renders the message. The removed SBPC route
+  did the opposite — it answered `success: true` while dropping the record.
+- **A form submission never demotes a lead.** `score`, `status` and `objective`
+  go through `upsertLead`'s `initialOnly` argument, which writes with
+  `if_not_exists`. Someone who reached `qualified` through the chat and later
+  fills the form stays `qualified`.
+
+The chat route follows the same rule: it recalculates `score` on every capture
+because that is a computed signal, but `status` is initial-only and the upgrade
+to `qualified` goes through `promoteLeadToQualified`, whose
+`ConditionExpression` only fires while the lead is still `new`. That is what
+keeps a `converted` lead from silently reverting when the visitor chats again.
+
+## Tests
+
+Vitest, `npm test` to watch and `npm run test:run` for a single pass. The suite
+lives in `tests/` and runs in the `node` environment — no DOM, no network, and
+the AWS SDK is always mocked. `amplify.yml` runs `npm run test:run` before
+`npm run build`, so a red suite fails the deploy.
+
+Covered: lead field validation and phone normalization, chat history
+sanitization, retryable-error classification, the sliding-window rate limiter,
+`upsertLead` expression building (including the `initialOnly` regression),
+`promoteLeadToQualified` conditional semantics, `calculateLeadScore`, the
+contact and newsletter routes, admin Basic auth, and the weekly digest window.
+
+Note for future work: `next/font` will fail the build if `Newsreader` is given
+fixed `weight` values together with `style: ['normal', 'italic']`. Google Fonts
+returns `.woff2` URLs for that combination that answer 404. The font is
+variable, so `app/layout.tsx` requests the whole axis range instead.
+
 ## Safety / workflow
 
 - Prefer CloudFormation over ad-hoc infrastructure changes.
 - DynamoDB tables have `DeletionPolicy: Retain`; deleting the stack does not delete table data.
 - Use synthetic `example.invalid` addresses for tests and remove test records afterward.
 - Never include full chat transcripts in notification emails.
+- Never answer a write failure with a success payload; the visitor must be able to tell that nothing was saved.
+- Automated capture may update computed signals such as `score`, but must not overwrite `status` — that is human state, set in the panel.
 - Weekly digest must send at most once per campaign and must send nothing when there are no new posts.
 - Keep DynamoDB, SES, Lambda, SNS, and Bedrock in `sa-east-1`; keep Amplify in `us-east-1`.
 - Do not alter the existing DMARC quarantine policy or proxy DKIM records through Cloudflare.

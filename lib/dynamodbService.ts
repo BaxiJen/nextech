@@ -105,8 +105,20 @@ export async function saveChatMessage(
  * Cria ou atualiza um lead usando o email normalizado como chave primária.
  * UpdateItem + if_not_exists torna o ID e created_at atômicos mesmo se duas
  * capturas do mesmo email ocorrerem simultaneamente.
+ *
+ * `data` sobrescreve sempre. `initialOnly` grava apenas quando o campo ainda
+ * não existe, via if_not_exists — é o que impede uma nova captura de rebaixar
+ * um lead já trabalhado. Um visitante que conversou no chat até `qualified`
+ * com score 75 e depois preenche o formulário de contato precisa continuar
+ * `qualified`, e não voltar para `new` com score 0.
+ *
+ * Um campo presente nos dois objetos é tratado como sobrescrita: `data` vence.
  */
-export async function upsertLead(email: string, data: LeadMutation): Promise<Lead | null> {
+export async function upsertLead(
+  email: string,
+  data: LeadMutation,
+  initialOnly: LeadMutation = {}
+): Promise<Lead | null> {
   try {
     const normalizedEmail = normalizeEmail(email)
     const now = new Date().toISOString()
@@ -137,6 +149,15 @@ export async function upsertLead(email: string, data: LeadMutation): Promise<Lea
       setters.push(`#${field} = :${field}`)
     }
 
+    for (const field of LEAD_MUTABLE_FIELDS) {
+      if (data[field] !== undefined) continue
+      const value = initialOnly[field]
+      if (value === undefined) continue
+      names[`#${field}`] = field
+      values[`:${field}`] = value
+      setters.push(`#${field} = if_not_exists(#${field}, :${field})`)
+    }
+
     const result = await dynamodb.send(
       new UpdateCommand({
         TableName: tables.leads,
@@ -152,6 +173,38 @@ export async function upsertLead(email: string, data: LeadMutation): Promise<Lea
   } catch (error) {
     console.error('Erro ao fazer upsert de lead no DynamoDB:', error)
     return null
+  }
+}
+
+/**
+ * Promove um lead de `new` para `qualified`.
+ *
+ * A condição existe para proteger decisão humana: `contacted`, `converted` e
+ * `lost` são definidos a mão no painel e não podem ser revertidos porque o
+ * visitante voltou a conversar. Condição reprovada não é erro — significa que
+ * o lead já está num estado mais avançado, e o retorno `false` diz isso.
+ */
+export async function promoteLeadToQualified(email: string): Promise<boolean> {
+  try {
+    await dynamodb.send(
+      new UpdateCommand({
+        TableName: tables.leads,
+        Key: { email: normalizeEmail(email) },
+        UpdateExpression: 'SET #status = :qualified, #updated_at = :now',
+        ConditionExpression: '#status = :new',
+        ExpressionAttributeNames: { '#status': 'status', '#updated_at': 'updated_at' },
+        ExpressionAttributeValues: {
+          ':qualified': 'qualified',
+          ':new': 'new',
+          ':now': new Date().toISOString(),
+        },
+      })
+    )
+    return true
+  } catch (error) {
+    if ((error as { name?: string })?.name === 'ConditionalCheckFailedException') return false
+    console.error('Erro ao promover lead no DynamoDB:', error)
+    return false
   }
 }
 

@@ -21,6 +21,9 @@ frontend:
         # Credenciais do painel são definidas no console do Amplify.
         - env | grep -e '^ADMIN_USERNAME=' -e '^ADMIN_PASSWORD=' >> .env.production || true
         - env | grep -e NEXT_PUBLIC_ >> .env.production || true
+        # Testes antes do build: uma regressão em validação de formulário ou
+        # no upsert de lead reprova o deploy em vez de chegar em produção.
+        - npm run test:run
         - npm run build
   artifacts:
     baseDirectory: .next

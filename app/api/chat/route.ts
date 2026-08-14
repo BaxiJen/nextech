@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server'
-import { APIConnectionError, APIError } from 'openai'
+import { APIError } from 'openai'
 import type { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources/chat/completions'
-import { saveChatMessage, upsertLead, calculateLeadScore, logInteraction, linkChatSessionToLead } from '@/lib/dynamodbService'
+import {
+  saveChatMessage,
+  upsertLead,
+  calculateLeadScore,
+  logInteraction,
+  linkChatSessionToLead,
+  promoteLeadToQualified,
+} from '@/lib/dynamodbService'
 import {
   bedrock,
   CHAT_MODEL,
@@ -11,10 +18,9 @@ import {
 } from '@/lib/ai/bedrock'
 import { SALES_AGENT_PROMPT, WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '@/lib/ai/agentPrompt'
 import { rateLimit, clientIp } from '@/lib/ai/rateLimit'
+import { isRetryableBedrockError, sanitizeMessages } from '@/lib/ai/chatHelpers'
+import { isValidEmail, normalizePhone } from '@/lib/leads/fields'
 
-// Limites de entrada: o histórico chega do cliente, portanto não é confiável.
-const MAX_MESSAGES = 40
-const MAX_CONTENT_CHARS = 2_000
 const MAX_OUTPUT_TOKENS = 600
 const CHAT_ROUTE_BUDGET_MS = 24_000
 const MIN_FOLLOW_UP_TIMEOUT_MS = 3_000
@@ -50,43 +56,6 @@ const LEAD_CAPTURE_TOOL: ChatCompletionTool = {
       required: ['name', 'email', 'phone', 'objective'],
     },
   },
-}
-
-/** Aceita apenas role/content de user|assistant, com tamanho e quantidade limitados. */
-function sanitizeMessages(raw: unknown): ChatCompletionMessageParam[] {
-  if (!Array.isArray(raw)) return []
-
-  const isValidTurn = (m: unknown): m is { role: 'user' | 'assistant'; content: string } => {
-    if (!m || typeof m !== 'object') return false
-    const { role, content } = m as Record<string, unknown>
-    return (
-      (role === 'user' || role === 'assistant') &&
-      typeof content === 'string' &&
-      content.trim().length > 0
-    )
-  }
-
-  return raw
-    .filter(isValidTurn)
-    .slice(-MAX_MESSAGES)
-    .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_CONTENT_CHARS) }))
-}
-
-const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
-
-/** Normaliza telefone BR para E.164 (+55DDDNNNNNNNNN) quando possível. */
-function normalizePhone(raw: string): string | null {
-  const digits = raw.replace(/\D/g, '')
-  if (digits.length === 10 || digits.length === 11) return `+55${digits}`
-  if ((digits.length === 12 || digits.length === 13) && digits.startsWith('55')) return `+${digits}`
-  return null
-}
-
-function isRetryableBedrockError(error: unknown): boolean {
-  if (error instanceof APIConnectionError) return true
-  if (!(error instanceof APIError)) return false
-
-  return error.status === 408 || error.status === 409 || error.status === 429 || error.status >= 500
 }
 
 export async function POST(req: Request) {
@@ -190,18 +159,26 @@ export async function POST(req: Request) {
         } else {
           const score = calculateLeadScore(messages.length, !!leadData.objective, true, 0)
 
-          const lead = await upsertLead(email, {
-            name: leadData.name,
-            phone,
-            objective: leadData.objective,
-            source: 'chat',
-            score,
-            status: score >= 60 ? 'qualified' : 'new',
-            company: leadData.organization || undefined,
-          })
+          const lead = await upsertLead(
+            email,
+            {
+              name: leadData.name,
+              phone,
+              objective: leadData.objective,
+              source: 'chat',
+              // Score é sinal calculado: recalcular a cada captura é correto.
+              score,
+              company: leadData.organization || undefined,
+            },
+            // Status é estado de trabalho: só definido na criação. A promoção
+            // para `qualified` vem abaixo, condicionada a ainda estar em `new`.
+            { status: 'new' }
+          )
 
           if (lead) {
             leadId = lead.id
+
+            if (score >= 60) await promoteLeadToQualified(email)
 
             await logInteraction(lead.id, 'message', {
               messageCount: messages.length,

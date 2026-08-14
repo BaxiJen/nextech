@@ -5,16 +5,9 @@ import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
 import { Mail, Shield, Cpu, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ASSUNTOS } from '@/lib/contato/assuntos';
 
-const assuntos = [
-  { value: '', label: 'Selecione o assunto...' },
-  { value: 'agente-ia', label: 'Quero um agente de IA para minha empresa' },
-  { value: 'bxat', label: 'Quero conhecer o BXat' },
-  { value: 'soberania', label: 'Soberania de dados e infraestrutura' },
-  { value: 'consultoria', label: 'Consultoria em IA / Diagnóstico' },
-  { value: 'parceria', label: 'Parceria ou integração' },
-  { value: 'outro', label: 'Outro' },
-];
+const OPCOES_ASSUNTO = [{ value: '', label: 'Selecione o assunto...' }, ...ASSUNTOS];
 
 export function ContatoContent() {
   const [formData, setFormData] = useState({
@@ -27,30 +20,30 @@ export function ContatoContent() {
     mensagem: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
+    setErrorMessage('');
 
     try {
-      const res = await fetch('/api/leads/fake-door', {
+      const res = await fetch('/api/contato', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: formData.nome,
-          email: formData.email,
-          source: 'contato',
-          test_id: 'D',
-          empresa: formData.empresa,
-          cargo: formData.cargo,
-          telefone: formData.telefone,
-          dor: `${formData.assunto} — ${formData.mensagem}`,
-        }),
+        body: JSON.stringify(formData),
       });
 
-      if (!res.ok) throw new Error('Erro ao enviar');
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error || 'Não conseguimos enviar sua mensagem.');
+      }
+
       setStatus('success');
-    } catch {
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Não conseguimos enviar sua mensagem.'
+      );
       setStatus('error');
     }
   };
@@ -178,7 +171,7 @@ export function ContatoContent() {
                       onChange={e => setFormData(s => ({ ...s, assunto: e.target.value }))}
                       className="w-full rounded-xl border border-primary/20 bg-background px-4 py-3 text-foreground focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
                     >
-                      {assuntos.map(a => (
+                      {OPCOES_ASSUNTO.map(a => (
                         <option key={a.value} value={a.value}>{a.label}</option>
                       ))}
                     </select>
@@ -195,6 +188,15 @@ export function ContatoContent() {
                       placeholder="Ex: Precisamos de um agente que atenda clientes no WhatsApp e consulte nosso ERP..."
                     />
                   </div>
+
+                  {status === 'error' && errorMessage && (
+                    <p
+                      role="alert"
+                      className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                    >
+                      {errorMessage}
+                    </p>
+                  )}
 
                   <Button
                     type="submit"

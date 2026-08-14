@@ -18,10 +18,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Newsreader é fonte variável (eixos opsz 6..72 e wght 200..800). Fixar pesos
+// junto com itálico faz o Google Fonts devolver URLs de .woff2 que respondem
+// 404, e o build quebra em `next/font`. Usando a faixa variável inteira o
+// carregamento volta a funcionar e ainda cobre o peso 700 do `font-bold`, que
+// antes era sintetizado por não existir na lista fixa.
 const newsreader = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
 });
 
