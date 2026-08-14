@@ -113,7 +113,21 @@ CloudFormation retains email subscriptions for:
 - `marcus@baxi.ia.br`
 - `contato@baxi.ia.br`
 
-All three subscriptions are confirmed as of 2026-08-14. Verified through `cloudformation describe-stack-resources`: each `AWS::SNS::Subscription` carries a real subscription ARN as its `PhysicalResourceId`, which CloudFormation only writes after the recipient confirms. A pending subscription would read `PendingConfirmation` there instead. That check is the way to audit confirmation status without `sns:ListSubscriptionsByTopic`, which the `KiroBaxijenOperator` permission set does not grant.
+**Audit with `sns:ListSubscriptionsByTopic`, not with CloudFormation.** The
+permission set grants that call since 2026-08-15.
+
+The CloudFormation `PhysicalResourceId` of an `AWS::SNS::Subscription` holds a
+real subscription ARN once the recipient confirms, and the literal string
+`PendingConfirmation` before that. It answers "was this ever confirmed" and
+nothing else. Every SNS notification email carries an unsubscribe link, and
+clicking it deletes the subscription in SNS without touching the stack, which
+goes on reporting a resource that no longer exists.
+
+That is not hypothetical. On 2026-08-15 the stack listed three confirmed
+subscriptions while SNS held two: `leo@baxi.ia.br` had been unsubscribed out of
+band and was receiving nothing. The earlier note in this file claiming all three
+were confirmed was written from the CloudFormation view and was wrong by the
+time it was written.
 
 Synthetic lead `notification-test-20260812t163230@example.invalid` produced Lambda log lead ID `notification-test-20260812t163230` and SNS message ID `d68a1a61-652c-5cbd-8ba3-7897a9b1bdcc`; it was conditionally deleted and a consistent final read returned no item. That invocation on 2026-08-12 19:32:46Z is still the only entry in `/aws/lambda/baxijen-prod-lead-notifier` — the pipeline has never fired for a real lead.
 
@@ -201,26 +215,56 @@ fixed `weight` values together with `style: ['normal', 'italic']`. Google Fonts
 returns `.woff2` URLs for that combination that answer 404. The font is
 variable, so `app/layout.tsx` requests the whole axis range instead.
 
+## Contact-form notification
+
+`/api/contato` publishes to `baxijen-prod-new-leads` itself, through
+`lib/notifications/newLead.ts`. `LeadNotificationFunction` skips records whose
+`source` is `form` so the same submission is not announced twice; it still
+handles chat captures, without transcripts.
+
+The stream-driven Lambda could not do this job. It only sees `INSERT`, so a
+person already in the table who fills the form again produced no notice at all,
+and the stream image has no request context — the visitor's own message lives in
+`notes`, which the Lambda deliberately does not send. Publishing from the route
+solves both: it holds the message, and it knows whether the lead already existed
+by comparing `created_at` with `updated_at`, which `upsertLead` only makes equal
+at creation.
+
+The alternative was `StreamViewType: NEW_AND_OLD_IMAGES`, so the Lambda could
+diff a form resubmission against a panel status change. That replaces the
+stream, changes its ARN and forces the event source mapping to be repointed,
+with a window of dropped events. Rejected for that reason.
+
+Two details that are easy to get wrong:
+
+- The module reads the environment on every call rather than at module scope.
+  In the SSR runtime the import can happen before `.env.production` applies, and
+  a top-level constant would freeze the missing value for the life of the
+  container.
+- The SNS `Subject` is reduced to ASCII. SNS rejects the whole `Publish` call if
+  it carries an accent, so a lead named "João" would have failed to notify. The
+  full name still goes in the body.
+
+Verified in production on 2026-08-15 after stack update `contato-sns-v2-235453`:
+a first submission logged `returning: false` with SNS message
+`5b440419-90ea-5c86-a673-66e03d882b47`, a second from the same address logged
+`returning: true` with `251e7296-5ff6-583b-b298-106ff2941ffa`, and
+`lead-notifier` was invoked by the stream without publishing anything.
+
 ## Open items
 
 Found during the 2026-08-14 audit and deliberately not fixed in that release.
 Nothing here is in progress.
 
-### Needs a CloudFormation stack update
+### Needs attention
 
-- **A returning lead produces no notification.** `LeadNotificationFunction` skips
-  every record whose `eventName` is not `INSERT`, so a person already in
-  `baxijen-prod-leads` who fills the contact form updates the row in silence.
-  Combined with the demotion fix, the most engaged visitor is the one most
-  likely to go unnoticed. Diffing old against new needs `StreamViewType`
-  changed to `NEW_AND_OLD_IMAGES`, which replaces the stream and forces the
-  event source mapping to be repointed — worth planning rather than improvising.
-- **The notification email omits the message.** The SNS body carries name,
-  email, phone, company, objective, score, status, source, date and lead ID,
-  but not `notes`, which is where the visitor's own text lives. The
-  "no transcripts in notification emails" rule was written for chat history; a
-  contact-form message is not a transcript, and the Lambda can tell them apart
-  through `source`.
+- **`leo@baxi.ia.br` is unsubscribed from `baxijen-prod-new-leads`.** Found
+  2026-08-15. The stack still declares the subscription, so a plain stack update
+  will not recreate it — CloudFormation believes the resource exists. Restoring
+  it means either renaming the logical ID to force a create, or subscribing out
+  of band and accepting the drift. Left as is pending a decision: the
+  unsubscribe may well have been deliberate, and re-subscribing someone who
+  opted out is not a call to make on their behalf.
 
 ### Application, no infrastructure involved
 

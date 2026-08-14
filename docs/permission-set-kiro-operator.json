@@ -1,0 +1,249 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Identity",
+            "Effect": "Allow",
+            "Action": [
+                "sts:GetCallerIdentity"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "BaxijenDynamoData",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeContinuousBackups",
+                "dynamodb:DescribeTable",
+                "dynamodb:DescribeTimeToLive",
+                "dynamodb:GetItem",
+                "dynamodb:ListTagsOfResource",
+                "dynamodb:PutItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:sa-east-1:381492202560:table/baxijen-prod-*",
+                "arn:aws:dynamodb:sa-east-1:381492202560:table/baxijen-prod-*/index/*"
+            ]
+        },
+        {
+            "Sid": "DynamoDiscovery",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:ListTables"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AmplifyOperator",
+            "Effect": "Allow",
+            "Action": [
+                "amplify:GetApp",
+                "amplify:GetBranch",
+                "amplify:GetJob",
+                "amplify:ListApps",
+                "amplify:ListBranches",
+                "amplify:ListDomainAssociations",
+                "amplify:ListJobs",
+                "amplify:StartJob",
+                "amplify:StopJob",
+                "amplify:UpdateApp",
+                "amplify:UpdateBranch"
+            ],
+            "Resource": [
+                "arn:aws:amplify:us-east-1:381492202560:apps/*",
+                "arn:aws:amplify:us-east-1:381492202560:apps/*/branches/*"
+            ]
+        },
+        {
+            "Sid": "CloudFormationStackRead",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:DescribeStackDriftDetectionStatus",
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DescribeStackResource",
+                "cloudformation:DescribeStackResources",
+                "cloudformation:DescribeStacks",
+                "cloudformation:DetectStackDrift",
+                "cloudformation:GetTemplate",
+                "cloudformation:ListStackResources"
+            ],
+            "Resource": "arn:aws:cloudformation:sa-east-1:381492202560:stack/baxijen-prod-data/*"
+        },
+        {
+            "Sid": "CloudFormationDiscovery",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:ListStacks",
+                "cloudformation:ValidateTemplate"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ManageDataStackChangeSets",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:CreateChangeSet",
+                "cloudformation:DescribeChangeSet",
+                "cloudformation:ExecuteChangeSet",
+                "cloudformation:DeleteChangeSet",
+                "cloudformation:ContinueUpdateRollback"
+            ],
+            "Resource": [
+                "arn:aws:cloudformation:sa-east-1:381492202560:stack/baxijen-prod-data/*",
+                "arn:aws:cloudformation:sa-east-1:381492202560:changeSet/*/*"
+            ]
+        },
+        {
+            "Sid": "AmplifyLogsRead",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams",
+                "logs:FilterLogEvents",
+                "logs:GetLogEvents",
+                "logs:GetQueryResults",
+                "logs:StartQuery",
+                "logs:StopQuery"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ProjectRolesRead",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies",
+                "iam:ListRoleTags"
+            ],
+            "Resource": "arn:aws:iam::381492202560:role/baxijen-prod-*"
+        },
+        {
+            "Sid": "UpdateStackManagedRoles",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PutRolePolicy",
+                "iam:DeleteRolePolicy",
+                "iam:UpdateRole",
+                "iam:UpdateRoleDescription",
+                "iam:TagRole",
+                "iam:UntagRole"
+            ],
+            "Resource": "arn:aws:iam::381492202560:role/baxijen-prod-*"
+        },
+        {
+            "Sid": "PassProjectRolesToAwsServices",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": "arn:aws:iam::381492202560:role/baxijen-prod-*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": [
+                        "lambda.amazonaws.com",
+                        "amplify.amazonaws.com"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "UpdateStackManagedLambdas",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:GetFunction",
+                "lambda:GetFunctionConfiguration",
+                "lambda:GetPolicy",
+                "lambda:ListVersionsByFunction",
+                "lambda:ListTags",
+                "lambda:TagResource",
+                "lambda:UntagResource",
+                "lambda:UpdateFunctionCode",
+                "lambda:UpdateFunctionConfiguration"
+            ],
+            "Resource": "arn:aws:lambda:sa-east-1:381492202560:function:baxijen-prod-*"
+        },
+        {
+            "Sid": "ReadLeadNotifierEventSource",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:ListEventSourceMappings",
+                "lambda:GetEventSourceMapping"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ArnLike": {
+                    "lambda:FunctionArn": "arn:aws:lambda:sa-east-1:381492202560:function:baxijen-prod-*"
+                }
+            }
+        },
+        {
+            "Sid": "ReadLeadNotificationTopic",
+            "Effect": "Allow",
+            "Action": [
+                "sns:GetTopicAttributes",
+                "sns:ListSubscriptionsByTopic"
+            ],
+            "Resource": "arn:aws:sns:sa-east-1:381492202560:baxijen-prod-new-leads"
+        },
+        {
+            "Sid": "ReadDynamoStreams",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetShardIterator",
+                "dynamodb:GetRecords"
+            ],
+            "Resource": "arn:aws:dynamodb:sa-east-1:381492202560:table/baxijen-prod-*/stream/*"
+        },
+        {
+            "Sid": "DiscoverDynamoStreams",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:ListStreams"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ReadBaxijenSesIdentity",
+            "Effect": "Allow",
+            "Action": [
+                "ses:GetEmailIdentity"
+            ],
+            "Resource": "arn:aws:ses:sa-east-1:381492202560:identity/baxi.ia.br"
+        },
+        {
+            "Sid": "ReadAndRequestSesProductionAccess",
+            "Effect": "Allow",
+            "Action": [
+                "ses:GetAccount",
+                "ses:PutAccountDetails"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "TestNewsletterDigestLambda",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": "arn:aws:lambda:sa-east-1:381492202560:function:baxijen-prod-newsletter-digest"
+        },
+        {
+            "Sid": "ManageNewsletterWeeklyRule",
+            "Effect": "Allow",
+            "Action": [
+                "events:DescribeRule",
+                "events:PutRule"
+            ],
+            "Resource": "arn:aws:events:sa-east-1:381492202560:rule/baxijen-prod-newsletter-weekly"
+        }
+    ]
+}
