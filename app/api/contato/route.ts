@@ -3,6 +3,7 @@ import { assuntoLabel, isAssuntoValido } from '@/lib/contato/assuntos'
 import { isValidEmail, normalizePhone, trimTo } from '@/lib/leads/fields'
 import { logInteraction, upsertLead } from '@/lib/dynamodbService'
 import { clientIp, rateLimit } from '@/lib/ai/rateLimit'
+import { publishContactNotification } from '@/lib/notifications/newLead'
 
 const MAX_NOME_CHARS = 120
 const MAX_CAMPO_CHARS = 160
@@ -94,7 +95,32 @@ export async function POST(request: Request) {
       console.warn('[contato] falha ao registrar interaction:', error)
     }
 
-    console.info('[contato]', { leadId: lead.id, assunto })
+    // `upsertLead` grava created_at com if_not_exists e updated_at com o mesmo
+    // instante, então os dois só coincidem na criação. É o sinal mais barato
+    // para saber se quem escreveu já era conhecido.
+    const returning = lead.created_at !== lead.updated_at
+
+    // O Lambda do stream ignora `source` form justamente para que este aviso
+    // seja o único — ele é o que carrega a mensagem e reconhece o retorno.
+    let notificationId: string | undefined
+    try {
+      notificationId = await publishContactNotification({
+        leadId: lead.id,
+        name: nome,
+        email,
+        subject: label,
+        message: mensagem,
+        phone,
+        company: empresa || undefined,
+        role: cargo || undefined,
+        returning,
+      })
+    } catch (error) {
+      // O lead está salvo; perder o aviso não pode virar erro para o visitante.
+      console.error('[contato] falha ao publicar notificação:', error)
+    }
+
+    console.info('[contato]', { leadId: lead.id, assunto, returning, notificationId })
 
     return NextResponse.json({ success: true, message: 'Contato registrado com sucesso!' })
   } catch (error) {

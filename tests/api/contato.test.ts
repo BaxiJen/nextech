@@ -1,11 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const { upsertLead, logInteraction } = vi.hoisted(() => ({
+const { upsertLead, logInteraction, publishContactNotification } = vi.hoisted(() => ({
   upsertLead: vi.fn(),
   logInteraction: vi.fn(),
+  publishContactNotification: vi.fn(),
 }))
 
 vi.mock('@/lib/dynamodbService', () => ({ upsertLead, logInteraction }))
+vi.mock('@/lib/notifications/newLead', () => ({ publishContactNotification }))
 
 const { POST } = await import('@/app/api/contato/route')
 
@@ -31,11 +33,22 @@ function postar(body: unknown, ip = `198.51.100.${ipSeq++}`) {
   )
 }
 
+// created_at igual a updated_at é como `upsertLead` marca um lead recém-criado.
+const AGORA = '2026-08-14T23:00:00.000Z'
+const ANTES = '2026-08-01T10:00:00.000Z'
+
 beforeEach(() => {
   upsertLead.mockReset()
   logInteraction.mockReset()
-  upsertLead.mockResolvedValue({ id: 'lead-1', email: 'marcus@baxi.ia.br' })
+  publishContactNotification.mockReset()
+  upsertLead.mockResolvedValue({
+    id: 'lead-1',
+    email: 'marcus@baxi.ia.br',
+    created_at: AGORA,
+    updated_at: AGORA,
+  })
   logInteraction.mockResolvedValue(true)
+  publishContactNotification.mockResolvedValue('sns-msg-1')
 })
 
 describe('validação', () => {
@@ -179,6 +192,61 @@ describe('falhas', () => {
     const res = await postar(VALIDO)
 
     expect(res.status).toBe(200)
+  })
+})
+
+describe('notificação', () => {
+  it('publica o aviso com a mensagem que a pessoa escreveu', async () => {
+    // O Lambda do stream não tem acesso a esse texto; por isso a rota publica.
+    await postar(VALIDO)
+
+    expect(publishContactNotification).toHaveBeenCalledWith(
+      expect.objectContaining({
+        leadId: 'lead-1',
+        email: 'marcus@baxi.ia.br',
+        subject: 'Quero um agente de IA para minha empresa',
+        message: expect.stringContaining('consulte o ERP'),
+      })
+    )
+  })
+
+  it('marca como novo quando created_at e updated_at coincidem', async () => {
+    await postar(VALIDO)
+
+    expect(publishContactNotification.mock.calls[0][0].returning).toBe(false)
+  })
+
+  it('marca como retorno quando o lead já existia', async () => {
+    // É o caso que o Lambda perdia por completo: MODIFY não vira notificação.
+    upsertLead.mockResolvedValueOnce({
+      id: 'lead-1',
+      email: 'marcus@baxi.ia.br',
+      created_at: ANTES,
+      updated_at: AGORA,
+    })
+
+    await postar(VALIDO)
+
+    expect(publishContactNotification.mock.calls[0][0].returning).toBe(true)
+  })
+
+  it('não publica quando o lead não foi persistido', async () => {
+    upsertLead.mockResolvedValueOnce(null)
+
+    await postar(VALIDO)
+
+    expect(publishContactNotification).not.toHaveBeenCalled()
+  })
+
+  it('mantém o 200 se a publicação falhar', async () => {
+    // O lead está salvo; perder o aviso não é erro do visitante.
+    const erro = vi.spyOn(console, 'error').mockImplementation(() => {})
+    publishContactNotification.mockRejectedValueOnce(new Error('AuthorizationError'))
+
+    const res = await postar(VALIDO)
+
+    expect(res.status).toBe(200)
+    expect(erro).toHaveBeenCalled()
   })
 })
 

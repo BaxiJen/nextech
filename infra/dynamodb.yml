@@ -334,6 +334,12 @@ Resources:
               if (record.eventName !== 'INSERT') continue
 
               const image = record.dynamodb?.NewImage || {}
+
+              // Contatos pelo formulário são notificados pela própria rota
+              // /api/contato, com a mensagem e o aviso de retorno. Publicar
+              // aqui também geraria dois emails para o mesmo envio.
+              if (read(image.source) === 'form') continue
+
               const lead = {
                 id: clean(read(image.id)),
                 name: clean(read(image.name)),
@@ -819,6 +825,13 @@ Resources:
                 Effect: Allow
                 Action: ses:SendEmail
                 Resource: !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/baxi.ia.br'
+              # A rota /api/contato publica o próprio aviso: ela conhece a
+              # mensagem escrita pelo visitante e sabe se o lead já existia,
+              # duas coisas que o stream do DynamoDB não entrega.
+              - Sid: PublishContactNotification
+                Effect: Allow
+                Action: sns:Publish
+                Resource: !Ref LeadNotificationTopic
       Tags:
         - Key: Project
           Value: !Ref ProjectName
@@ -840,7 +853,7 @@ Outputs:
   NewsletterTableName:
     Value: !Ref NewsletterTable
   LeadNotificationTopicArn:
-    Description: SNS topic that delivers new-lead email notifications.
+    Description: SNS topic that delivers new-lead email notifications. The value is what the SSR runtime needs in LEAD_NOTIFICATION_TOPIC_ARN.
     Value: !Ref LeadNotificationTopic
   LeadNotificationFunctionName:
     Description: Lambda function triggered by new lead stream records.

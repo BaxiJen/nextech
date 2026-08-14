@@ -18,6 +18,9 @@ frontend:
         - printf 'BEDROCK_REGION=sa-east-1\nBEDROCK_CHAT_MODEL=zai.glm-5\n' >> .env.production
         # DynamoDB usa credenciais temporárias da SSR Compute role; não há access key.
         - printf 'DYNAMODB_REGION=sa-east-1\nDYNAMODB_TABLE_PREFIX=baxijen-prod\nCHAT_RETENTION_DAYS=180\n' >> .env.production
+        # Tópico do aviso de novo contato. Sai do output LeadNotificationTopicArn
+        # da stack baxijen-prod-data; não é segredo e por isso fica versionado.
+        - printf 'LEAD_NOTIFICATION_TOPIC_ARN=arn:aws:sns:sa-east-1:381492202560:baxijen-prod-new-leads\n' >> .env.production
         # Credenciais do painel são definidas no console do Amplify.
         - env | grep -e '^ADMIN_USERNAME=' -e '^ADMIN_PASSWORD=' >> .env.production || true
         - env | grep -e NEXT_PUBLIC_ >> .env.production || true
