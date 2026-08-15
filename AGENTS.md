@@ -328,7 +328,10 @@ The stack must go first, and the secret before the code:
 
 1. Execute the changeset that creates the three tables and widens the compute
    role. Nothing in production reads them yet.
-2. Set `ADMIN_AUTH_SECRET` in Amplify.
+2. Set `ADMIN_AUTH_SECRET` in Amplify **and make sure `amplify.yml` greps it
+   into `.env.production`**. A console variable alone never reaches the SSR
+   runtime — that build step is the only bridge, and forgetting it ships a
+   panel that answers 503 with a correctly configured console.
 3. Push. If either step above is missing the panel answers 503 and the public
    site is untouched — the failure mode is a locked door, not an open one.
 

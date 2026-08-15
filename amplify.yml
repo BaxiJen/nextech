@@ -21,8 +21,12 @@ frontend:
         # Tópico do aviso de novo contato. Sai do output LeadNotificationTopicArn
         # da stack baxijen-prod-data; não é segredo e por isso fica versionado.
         - printf 'LEAD_NOTIFICATION_TOPIC_ARN=arn:aws:sns:sa-east-1:381492202560:baxijen-prod-new-leads\n' >> .env.production
-        # Credenciais do painel são definidas no console do Amplify.
-        - env | grep -e '^ADMIN_USERNAME=' -e '^ADMIN_PASSWORD=' >> .env.production || true
+        # Segredo do painel, definido no console do Amplify. Sem ele no
+        # .env.production o proxy falha fechado e o painel responde 503 —
+        # variável de console sozinha não chega ao runtime SSR.
+        # ADMIN_FROM_EMAIL e ADMIN_SESSION_DAYS são opcionais: sem eles o
+        # código usa contato@baxi.ia.br e sessão de 7 dias.
+        - env | grep -e '^ADMIN_AUTH_SECRET=' -e '^ADMIN_FROM_EMAIL=' -e '^ADMIN_SESSION_DAYS=' >> .env.production || true
         - env | grep -e NEXT_PUBLIC_ >> .env.production || true
         # Testes antes do build: uma regressão em validação de formulário ou
         # no upsert de lead reprova o deploy em vez de chegar em produção.
