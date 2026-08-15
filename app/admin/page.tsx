@@ -140,7 +140,7 @@ export default function VisaoGeralPage() {
       <div className="max-w-6xl">
         <div className="mb-8">
           <h1 className="mb-2 text-3xl font-bold">Visão geral</h1>
-          <p className="text-muted-foreground">Leads, pipeline e newsletter — o que já é gravado hoje.</p>
+          <p className="text-muted-foreground">Leads, pipeline e newsletter.</p>
         </div>
 
         {erro && (
@@ -219,9 +219,7 @@ export default function VisaoGeralPage() {
             <h2 className="mb-4 font-semibold">Atividade recente</h2>
 
             {atividade.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
-                Nada registrado ainda. Toda mudança de status passa a aparecer aqui, com autor.
-              </p>
+              <p className="text-sm text-muted-foreground">Nenhuma alteração ainda.</p>
             ) : (
               <ul className="space-y-3">
                 {atividade.map(evento => (
@@ -244,10 +242,7 @@ export default function VisaoGeralPage() {
           </div>
 
           {!funil || funil.etapas[0]?.sessoes === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              Nenhuma conversa registrada na janela. As etapas passam a aparecer aqui conforme o
-              chat for usado — o registro começou nesta versão, então conversas antigas não contam.
-            </p>
+            <p className="text-sm text-muted-foreground">Nenhuma conversa nesta janela.</p>
           ) : (
             <>
               <div className="space-y-3">
@@ -285,10 +280,6 @@ export default function VisaoGeralPage() {
           )}
         </section>
 
-        <p className="mt-8 text-xs text-muted-foreground">
-          Campanhas ainda não aparecem aqui: não existe tabela de campanha nem registro de envio do
-          digest fora do log do Lambda. É o próximo passo.
-        </p>
       </div>
     </Container>
   )

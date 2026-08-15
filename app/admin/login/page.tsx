@@ -92,8 +92,8 @@ function Formulario() {
       <h1 className="mb-2 text-2xl font-bold">Painel BaXiJen</h1>
       <p className="mb-8 text-sm text-muted-foreground">
         {passo === 'email'
-          ? 'Digite seu email de trabalho. Enviamos um código de 6 dígitos.'
-          : `Código enviado para ${email}. Ele vale por 10 minutos.`}
+          ? 'Digite seu email para receber um código de acesso.'
+          : `Código enviado para ${email}.`}
       </p>
 
       {passo === 'email' ? (
@@ -176,10 +176,6 @@ function Formulario() {
 
       {!erro && aviso && <p className="mt-4 text-xs text-muted-foreground">{aviso}</p>}
 
-      <p className="mt-8 text-xs text-muted-foreground">
-        O acesso é restrito a uma lista fechada. Pedidos de outros endereços recebem esta mesma
-        resposta e nenhum email.
-      </p>
     </div>
   )
 }
