@@ -36,4 +36,7 @@ export const tables = {
   chatHistory: `${tablePrefix}-chat-history`,
   interactions: `${tablePrefix}-interactions`,
   newsletter: `${tablePrefix}-newsletter`,
+  adminAuthCodes: `${tablePrefix}-admin-auth-codes`,
+  adminSessions: `${tablePrefix}-admin-sessions`,
+  adminAuditLog: `${tablePrefix}-admin-audit-log`,
 } as const

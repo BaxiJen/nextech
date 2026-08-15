@@ -6,6 +6,7 @@ import {
   GetCommand,
   PutCommand,
   QueryCommand,
+  ScanCommand,
   UpdateCommand,
   type QueryCommandInput,
   type QueryCommandOutput,
@@ -539,4 +540,47 @@ export async function getLeadByEmail(email: string): Promise<Lead | null> {
     new GetCommand({ TableName: tables.leads, Key: { email: normalizeEmail(email) } })
   )
   return result.Item ? toLead(result.Item as DynamoItem) : null
+}
+
+export interface NewsletterCounts {
+  total: number
+  confirmed: number
+  pending: number
+  unsubscribed: number
+}
+
+/**
+ * Contagem para a visão geral do painel. É um Scan, e é aceitável: a tabela
+ * tem dezenas de linhas e a leitura acontece quando alguém abre o painel, não
+ * a cada visita do site. Se a lista crescer para milhares, troque por um
+ * contador incremental — não por um Scan mais esperto.
+ */
+export async function countNewsletterSubscribers(): Promise<NewsletterCounts> {
+  const counts: NewsletterCounts = { total: 0, confirmed: 0, pending: 0, unsubscribed: 0 }
+  let startKey: Record<string, unknown> | undefined
+
+  do {
+    const result = await dynamodb.send(
+      new ScanCommand({
+        TableName: tables.newsletter,
+        ProjectionExpression: '#confirmed, #unsubscribed_at',
+        ExpressionAttributeNames: {
+          '#confirmed': 'confirmed',
+          '#unsubscribed_at': 'unsubscribed_at',
+        },
+        ExclusiveStartKey: startKey,
+      })
+    )
+
+    for (const item of result.Items ?? []) {
+      counts.total += 1
+      if (item.confirmed === true) counts.confirmed += 1
+      else if (item.unsubscribed_at) counts.unsubscribed += 1
+      else counts.pending += 1
+    }
+
+    startKey = result.LastEvaluatedKey
+  } while (startKey)
+
+  return counts
 }

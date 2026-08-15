@@ -1,9 +1,12 @@
 import { NextResponse, NextRequest } from 'next/server'
 import {
   deleteLeadById,
+  getLeadById,
   LeadNotFoundError,
   updateLeadById,
 } from '@/lib/dynamodbService'
+import { recordAuditEvent } from '@/lib/admin/audit'
+import { requireSession } from '@/lib/auth/requireSession'
 import type { Lead } from '@/lib/types'
 
 const VALID_STATUSES: Lead['status'][] = [
@@ -18,6 +21,9 @@ export async function PATCH(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+  const auth = await requireSession(req)
+  if ('response' in auth) return auth.response
+
   try {
     const { id } = await context.params
     const body = (await req.json()) as { status?: unknown }
@@ -26,9 +32,36 @@ export async function PATCH(
       return NextResponse.json({ error: 'Status inválido' }, { status: 400 })
     }
 
-    return NextResponse.json(
-      await updateLeadById(id, { status: body.status as Lead['status'] })
-    )
+    const anterior = await getLeadById(id)
+    if (!anterior) return NextResponse.json({ error: 'Lead não encontrado' }, { status: 404 })
+
+    const lead = await updateLeadById(id, { status: body.status as Lead['status'] })
+
+    if (anterior.status !== lead.status) {
+      // A mudança já aconteceu no banco. Se a auditoria falhar, o log do
+      // CloudWatch guarda o suficiente para reconstruir a linha — mentir sobre
+      // a atualização seria pior do que ficar com um registro fora da trilha.
+      await recordAuditEvent({
+        entityType: 'lead',
+        entityId: id,
+        actor: auth.session,
+        action: 'lead.status',
+        field: 'status',
+        before: anterior.status,
+        after: lead.status,
+        label: lead.name || lead.email,
+      }).catch(error =>
+        console.error('[audit] falha ao registrar mudança de status', {
+          leadId: id,
+          actor: auth.session.email,
+          before: anterior.status,
+          after: lead.status,
+          error,
+        })
+      )
+    }
+
+    return NextResponse.json(lead)
   } catch (error) {
     if (error instanceof LeadNotFoundError) {
       return NextResponse.json({ error: 'Lead não encontrado' }, { status: 404 })
@@ -39,15 +72,38 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+  const auth = await requireSession(req)
+  if ('response' in auth) return auth.response
+
   try {
     const { id } = await context.params
+
+    // Lido antes: depois da exclusão não há mais de quem falar na trilha.
+    const anterior = await getLeadById(id)
+
     const deleted = await deleteLeadById(id)
     if (!deleted) {
       return NextResponse.json({ error: 'Lead não encontrado' }, { status: 404 })
     }
+
+    await recordAuditEvent({
+      entityType: 'lead',
+      entityId: id,
+      actor: auth.session,
+      action: 'lead.delete',
+      before: anterior ? `${anterior.name || 'sem nome'} <${anterior.email}>` : undefined,
+      label: anterior?.name || anterior?.email || id,
+    }).catch(error =>
+      console.error('[audit] falha ao registrar exclusão', {
+        leadId: id,
+        actor: auth.session.email,
+        error,
+      })
+    )
+
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Erro ao deletar lead:', error)

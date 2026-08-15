@@ -15,6 +15,43 @@ import {
   TrendingUp,
 } from 'lucide-react'
 
+interface EventoAuditoria {
+  at: string
+  actor_name: string
+  action: string
+  before?: string
+  after?: string
+}
+
+const ROTULO_STATUS: Record<string, string> = {
+  new: 'Novo',
+  contacted: 'Contatado',
+  qualified: 'Qualificado',
+  converted: 'Convertido',
+  lost: 'Perdido',
+}
+
+/**
+ * A sessão pode ter sido revogada ou vencido entre uma ação e outra. Sem isso,
+ * a tela mostraria "erro ao carregar" para uma pessoa que só precisa entrar de
+ * novo.
+ */
+function sessaoExpirada(response: Response): boolean {
+  if (response.status !== 401) return false
+  window.location.href = `/admin/login?next=${encodeURIComponent(window.location.pathname)}`
+  return true
+}
+
+function descreveEvento(evento: EventoAuditoria): string {
+  if (evento.action === 'lead.status') {
+    const de = ROTULO_STATUS[evento.before || ''] || evento.before
+    const para = ROTULO_STATUS[evento.after || ''] || evento.after
+    return `${evento.actor_name} moveu de ${de} para ${para}`
+  }
+  if (evento.action === 'lead.delete') return `${evento.actor_name} excluiu`
+  return `${evento.actor_name}: ${evento.action}`
+}
+
 export default function LeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [filteredLeads, setFilteredLeads] = useState<Lead[]>([])
@@ -24,6 +61,8 @@ export default function LeadsPage() {
   const [sortBy, setSortBy] = useState<'recent' | 'score'>('recent')
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [historico, setHistorico] = useState<EventoAuditoria[]>([])
+  const [carregandoHistorico, setCarregandoHistorico] = useState(false)
 
   // Fetch leads
   useEffect(() => {
@@ -66,6 +105,7 @@ export default function LeadsPage() {
     try {
       setLoading(true)
       const response = await fetch('/api/admin/leads')
+      if (sessaoExpirada(response)) return
       if (!response.ok) throw new Error('Falha ao carregar leads')
       const data = await response.json()
       setLeads(data || [])
@@ -84,6 +124,7 @@ export default function LeadsPage() {
       const response = await fetch(`/api/admin/leads/${id}`, {
         method: 'DELETE',
       })
+      if (sessaoExpirada(response)) return
       if (!response.ok) throw new Error('Falha ao deletar lead')
       setLeads(leads.filter(l => l.id !== id))
       setShowModal(false)
@@ -100,14 +141,38 @@ export default function LeadsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
       })
+      if (sessaoExpirada(response)) return
       if (!response.ok) throw new Error('Falha ao atualizar lead')
       const updated = await response.json()
       setLeads(leads.map(l => (l.id === id ? updated : l)))
-      if (selectedLead?.id === id) setSelectedLead(updated)
+      if (selectedLead?.id === id) {
+        setSelectedLead(updated)
+        carregarHistorico(id)
+      }
     } catch (error) {
       console.error('Erro ao atualizar lead:', error)
       alert('Erro ao atualizar lead')
     }
+  }
+
+  async function carregarHistorico(id: string) {
+    setCarregandoHistorico(true)
+    try {
+      const response = await fetch(`/api/admin/leads/${id}/auditoria`)
+      if (sessaoExpirada(response) || !response.ok) return
+      setHistorico(await response.json())
+    } catch (error) {
+      console.error('Erro ao carregar histórico:', error)
+    } finally {
+      setCarregandoHistorico(false)
+    }
+  }
+
+  function abrirLead(lead: Lead) {
+    setSelectedLead(lead)
+    setShowModal(true)
+    setHistorico([])
+    carregarHistorico(lead.id)
   }
 
   async function exportCSV() {
@@ -314,10 +379,7 @@ export default function LeadsPage() {
                       <td className="px-6 py-4 text-sm">
                         <div className="flex gap-2">
                           <button
-                            onClick={() => {
-                              setSelectedLead(lead)
-                              setShowModal(true)
-                            }}
+                            onClick={() => abrirLead(lead)}
                             className="p-2 hover:bg-muted rounded transition-colors"
                             title="Visualizar"
                           >
@@ -417,6 +479,28 @@ export default function LeadsPage() {
                     <label className="text-xs text-muted-foreground">Notas</label>
                     <p className="text-sm">{selectedLead.notes}</p>
                   </div>
+                )}
+              </div>
+
+              <div className="border-t pt-3">
+                <label className="text-xs text-muted-foreground">Histórico</label>
+                {carregandoHistorico ? (
+                  <p className="text-sm text-muted-foreground">Carregando...</p>
+                ) : historico.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    Nenhuma alteração registrada neste lead.
+                  </p>
+                ) : (
+                  <ul className="mt-1 max-h-40 space-y-2 overflow-y-auto">
+                    {historico.map(evento => (
+                      <li key={evento.at} className="text-sm">
+                        <p>{descreveEvento(evento)}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(evento.at).toLocaleString('pt-BR')}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
 

@@ -208,7 +208,9 @@ Covered: lead field validation and phone normalization, chat history
 sanitization, retryable-error classification, the sliding-window rate limiter,
 `upsertLead` expression building (including the `initialOnly` regression),
 `promoteLeadToQualified` conditional semantics, `calculateLeadScore`, the
-contact and newsletter routes, admin Basic auth, and the weekly digest window.
+contact and newsletter routes, the weekly digest window, and the whole panel
+access path: allowlist, code issue and consumption, session lifecycle, the
+proxy gate and the audit trail on lead mutations.
 
 Note for future work: `next/font` will fail the build if `Newsreader` is given
 fixed `weight` values together with `style: ['normal', 'italic']`. Google Fonts
@@ -251,6 +253,85 @@ a first submission logged `returning: false` with SNS message
 `returning: true` with `251e7296-5ff6-583b-b298-106ff2941ffa`, and
 `lead-notifier` was invoked by the stream without publishing anything.
 
+## Panel access — code by email, sessions, audit trail
+
+Built 2026-08-15, replacing the single shared `ADMIN_USERNAME`/`ADMIN_PASSWORD`
+Basic auth. Four people have access: `leo@`, `marcus@`, `luiz@` and
+`lala@baxi.ia.br`.
+
+The allowlist lives in `lib/auth/allowlist.ts`, not in an environment variable,
+so adding or removing someone goes through commit and review. Removing an email
+also revokes live sessions: `readSession` re-checks the list on every read.
+
+**Code of six digits, not a magic link.** The email opens on the phone while the
+panel is on the desktop, and corporate scanners (Safe Links, antivirus) prefetch
+links and burn single-use tokens before the person clicks. Neither failure mode
+exists with a typed code.
+
+**Three tables**, all in `infra/dynamodb.yml`:
+
+| Table | Key | TTL | Holds |
+|---|---|---|---|
+| `admin-auth-codes` | `email` | `expires_at` | HMAC of the code, `attempts`, `issued_at` |
+| `admin-sessions` | `token_hash` | `expires_at` | email, name, `last_seen_at`, user agent |
+| `admin-audit-log` | `entity` + `occurred_at` | none | actor, action, before, after |
+
+Neither table ever holds the secret itself — the code and the session token are
+stored as HMAC-SHA256 under `ADMIN_AUTH_SECRET`. A read of either table is not
+enough to get in. The audit table has no `DeleteItem` or `UpdateItem` in the
+compute role's policy: whoever can edit their own audit trail has none.
+
+Four decisions worth keeping:
+
+- **Verification and consumption are the same conditional write.** `consumeCode`
+  issues a `DeleteItem` conditioned on hash, expiry and attempt count. Reading
+  first and deleting after would leave a window where the same code works twice.
+- **`expires_at` is compared in code, not delegated to the TTL.** DynamoDB only
+  promises to delete within 48 hours; using it as the clock would keep dead
+  codes and sessions alive for days.
+- **The session is a row, not a JWT.** Deleting the row cuts access
+  immediately; a JWT only stops working when it expires. That costs one
+  `GetItem` per admin request, which at four users is nothing.
+- **The response to an unknown email is identical** to the response to a member,
+  and nothing is written or sent. Any difference — body, status or a much
+  faster reply — turns the login form into an oracle for who has access. The
+  non-member path sleeps 250 ms to narrow, not erase, the timing gap.
+
+`proxy.ts` gates `/admin/:path*` and `/api/admin/:path*`, letting only
+`/admin/login` through. It still fails closed: no secret, or a DynamoDB error
+while reading the session, answers 503 rather than falling open. Every admin
+route also calls `requireSession` on its own, so a future route created outside
+the matcher does not become public by accident.
+
+Mutations record who did what. A lead moving from `new` to `qualified` writes
+actor, both values and the timestamp; the panel shows it in the lead modal and
+in "atividade recente". If the audit write fails, the mutation is **not** rolled
+back and the response stays 200 — the change did happen, and the details go to
+CloudWatch under `[audit]` so the row can be reconstructed. Reporting failure
+for a write that succeeded is the same lie as the reverse, which is why it is
+worth stating.
+
+### Environment variables
+
+| Variable | Required | Default |
+|---|---|---|
+| `ADMIN_AUTH_SECRET` | yes, ≥ 32 chars | none — panel answers 503 without it |
+| `ADMIN_FROM_EMAIL` | no | `BaXiJen <contato@baxi.ia.br>` |
+| `ADMIN_SESSION_DAYS` | no | `7` |
+
+`ADMIN_USERNAME` and `ADMIN_PASSWORD` are no longer read by anything and should
+be deleted from Amplify after the deploy.
+
+### Deploy order
+
+The stack must go first, and the secret before the code:
+
+1. Execute the changeset that creates the three tables and widens the compute
+   role. Nothing in production reads them yet.
+2. Set `ADMIN_AUTH_SECRET` in Amplify.
+3. Push. If either step above is missing the panel answers 503 and the public
+   site is untouched — the failure mode is a locked door, not an open one.
+
 ## Open items
 
 Found during the 2026-08-14 audit and deliberately not fixed in that release.
@@ -287,8 +368,8 @@ Nothing here is in progress.
   `app/sobre/SobreContent.tsx`, `app/sibem/SibemContent.tsx`,
   `components/CTAExplosion.tsx`, `components/TypeWriter.tsx` and `lib/types.ts`.
   None are in code touched by the 2026-08-14 release.
-- **The admin panel has one shared credential** and no audit trail, so a lead
-  status change cannot be attributed to a person.
+- **The funnel is still uninstrumented.** The panel now shows who changed what
+  in the lead pipeline, but nothing records where a chat conversation stops.
 
 ### Product, not engineering
 

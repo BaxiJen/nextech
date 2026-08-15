@@ -1,56 +1,60 @@
-import { timingSafeEqual } from 'node:crypto'
 import { NextRequest, NextResponse } from 'next/server'
+import { SESSION_COOKIE, readSession } from '@/lib/auth/session'
+import { hasAuthSecret } from '@/lib/auth/secret'
 
-function safeEqual(received: string, expected: string): boolean {
-  const left = Buffer.from(received)
-  const right = Buffer.from(expected)
-  return left.length === right.length && timingSafeEqual(left, right)
+/** Única página do painel que não exige sessão — é onde ela nasce. */
+const LOGIN_PATH = '/admin/login'
+
+function semCache(response: NextResponse): NextResponse {
+  response.headers.set('Cache-Control', 'no-store')
+  return response
 }
 
-function unauthorized(message = 'Autenticação necessária') {
-  return new NextResponse(message, {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="BaXiJen Admin", charset="UTF-8"',
-      'Cache-Control': 'no-store',
-    },
-  })
+function indisponivel(): NextResponse {
+  console.error('ADMIN_AUTH_SECRET não configurado')
+  return semCache(new NextResponse('Painel administrativo indisponível', { status: 503 }))
 }
 
 /**
  * Protege dados pessoais e operações destrutivas do painel. Falha fechado: se
- * as credenciais não estiverem configuradas, nenhuma rota admin fica pública.
+ * o segredo não estiver configurado, nenhuma rota admin fica pública.
+ *
+ * A sessão é lida do DynamoDB a cada requisição, não decodificada de um token
+ * assinado. Custa uma leitura e paga por si: apagar a linha da tabela corta o
+ * acesso na hora, coisa que um JWT só faria quando expirasse.
  */
-export function proxy(request: NextRequest) {
-  const expectedUsername = process.env.ADMIN_USERNAME
-  const expectedPassword = process.env.ADMIN_PASSWORD
+export async function proxy(request: NextRequest): Promise<NextResponse> {
+  const { pathname } = request.nextUrl
+  const isApi = pathname.startsWith('/api/')
 
-  if (!expectedUsername || !expectedPassword) {
-    console.error('ADMIN_USERNAME/ADMIN_PASSWORD não configurados')
-    return new NextResponse('Painel administrativo indisponível', {
-      status: 503,
-      headers: { 'Cache-Control': 'no-store' },
-    })
-  }
+  if (pathname === LOGIN_PATH) return NextResponse.next()
 
-  const authorization = request.headers.get('authorization')
-  if (!authorization?.startsWith('Basic ')) return unauthorized()
+  if (!hasAuthSecret()) return indisponivel()
 
+  let session = null
   try {
-    const decoded = Buffer.from(authorization.slice(6), 'base64').toString('utf8')
-    const separator = decoded.indexOf(':')
-    if (separator < 0) return unauthorized()
-
-    const username = decoded.slice(0, separator)
-    const password = decoded.slice(separator + 1)
-    if (!safeEqual(username, expectedUsername) || !safeEqual(password, expectedPassword)) {
-      return unauthorized('Credenciais inválidas')
-    }
-  } catch {
-    return unauthorized()
+    session = await readSession(request.cookies.get(SESSION_COOKIE)?.value)
+  } catch (error) {
+    // Falha de infraestrutura não pode virar porta aberta.
+    console.error('[auth] falha ao ler a sessão', error)
+    return semCache(
+      isApi
+        ? NextResponse.json({ error: 'Erro ao validar a sessão' }, { status: 503 })
+        : new NextResponse('Painel administrativo indisponível', { status: 503 })
+    )
   }
 
-  return NextResponse.next()
+  if (session) return NextResponse.next()
+
+  // A API responde 401 para o fetch tratar; a página manda a pessoa para o
+  // login, guardando para onde ela queria ir.
+  if (isApi) {
+    return semCache(NextResponse.json({ error: 'Sessão expirada ou ausente' }, { status: 401 }))
+  }
+
+  const login = new URL(LOGIN_PATH, request.url)
+  login.searchParams.set('next', pathname + request.nextUrl.search)
+  return semCache(NextResponse.redirect(login))
 }
 
 export const config = {

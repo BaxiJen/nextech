@@ -1,103 +1,121 @@
 import { NextRequest } from 'next/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { proxy } from '@/proxy'
 
-const USUARIO = 'admin'
-const SENHA = 'senha-longa-e-unica-para-teste'
+const { readSession } = vi.hoisted(() => ({ readSession: vi.fn() }))
 
-function pedido(authorization?: string) {
+vi.mock('@/lib/auth/session', async importActual => {
+  const real = await importActual<typeof import('@/lib/auth/session')>()
+  return { ...real, readSession }
+})
+
+const { proxy, config } = await import('@/proxy')
+const { SESSION_COOKIE } = await import('@/lib/auth/session')
+
+const SEGREDO = 'x'.repeat(48)
+const SESSAO = { email: 'leo@baxi.ia.br', name: 'Leo', createdAt: '2026-08-15T00:00:00.000Z', expiresAt: 9_999_999_999 }
+
+function pedido(pathname: string, cookie?: string) {
   const headers = new Headers()
-  if (authorization) headers.set('authorization', authorization)
-  return new NextRequest('https://www.baxijen.com.br/admin/leads', { headers })
-}
-
-function basic(usuario: string, senha: string) {
-  return `Basic ${Buffer.from(`${usuario}:${senha}`).toString('base64')}`
+  if (cookie) headers.set('cookie', `${SESSION_COOKIE}=${cookie}`)
+  return new NextRequest(`https://www.baxijen.com.br${pathname}`, { headers })
 }
 
 beforeEach(() => {
-  vi.stubEnv('ADMIN_USERNAME', USUARIO)
-  vi.stubEnv('ADMIN_PASSWORD', SENHA)
+  vi.stubEnv('ADMIN_AUTH_SECRET', SEGREDO)
+  readSession.mockReset()
+  readSession.mockResolvedValue(null)
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 
 afterEach(() => {
   vi.unstubAllEnvs()
+  vi.restoreAllMocks()
 })
 
 describe('falha fechado', () => {
-  it('responde 503 quando as credenciais não estão configuradas', async () => {
+  it('responde 503 quando o segredo não está configurado', async () => {
     // Sem isso, um deploy sem variáveis publicaria dados pessoais de leads.
-    vi.stubEnv('ADMIN_USERNAME', '')
-    vi.stubEnv('ADMIN_PASSWORD', '')
+    vi.stubEnv('ADMIN_AUTH_SECRET', '')
 
-    const res = proxy(pedido(basic(USUARIO, SENHA)))
+    const res = await proxy(pedido('/admin/leads'))
 
     expect(res.status).toBe(503)
     expect(res.headers.get('Cache-Control')).toBe('no-store')
   })
 
-  it('responde 503 mesmo se só a senha faltar', () => {
-    vi.stubEnv('ADMIN_PASSWORD', '')
+  it('recusa segredo curto demais para ser levado a sério', async () => {
+    vi.stubEnv('ADMIN_AUTH_SECRET', 'curto')
 
-    expect(proxy(pedido(basic(USUARIO, SENHA))).status).toBe(503)
+    expect((await proxy(pedido('/admin/leads'))).status).toBe(503)
+  })
+
+  it('responde 503, e não 200, quando a leitura da sessão falha', async () => {
+    // Indisponibilidade do DynamoDB não pode virar porta aberta.
+    readSession.mockRejectedValue(new Error('DynamoDB fora do ar'))
+
+    expect((await proxy(pedido('/admin/leads'))).status).toBe(503)
+    expect((await proxy(pedido('/api/admin/leads'))).status).toBe(503)
   })
 })
 
-describe('autenticação', () => {
-  it('exige credencial e anuncia o desafio Basic', () => {
-    const res = proxy(pedido())
+describe('sem sessão', () => {
+  it('manda a página para o login guardando o destino', async () => {
+    const res = await proxy(pedido('/admin/leads'))
+
+    expect(res.status).toBe(307)
+    const destino = new URL(res.headers.get('location') as string)
+    expect(destino.pathname).toBe('/admin/login')
+    expect(destino.searchParams.get('next')).toBe('/admin/leads')
+  })
+
+  it('responde 401 na API, para o fetch tratar sem seguir redirecionamento', async () => {
+    const res = await proxy(pedido('/api/admin/leads'))
 
     expect(res.status).toBe(401)
-    expect(res.headers.get('WWW-Authenticate')).toContain('Basic')
+    expect(res.headers.get('content-type')).toContain('application/json')
   })
 
-  it('rejeita esquema que não seja Basic', () => {
-    expect(proxy(pedido('Bearer um-token-qualquer')).status).toBe(401)
+  it('não vaza dado em cache intermediário', async () => {
+    expect((await proxy(pedido('/api/admin/leads'))).headers.get('Cache-Control')).toBe('no-store')
   })
+})
 
-  it('rejeita credencial sem separador de dois-pontos', () => {
-    const semSeparador = `Basic ${Buffer.from('adminsemsenha').toString('base64')}`
+describe('com sessão', () => {
+  it('deixa passar', async () => {
+    readSession.mockResolvedValue(SESSAO)
 
-    expect(proxy(pedido(semSeparador)).status).toBe(401)
-  })
-
-  it('rejeita usuário errado', () => {
-    expect(proxy(pedido(basic('outro', SENHA))).status).toBe(401)
-  })
-
-  it('rejeita senha errada', () => {
-    expect(proxy(pedido(basic(USUARIO, 'senha-errada'))).status).toBe(401)
-  })
-
-  it('rejeita senha de tamanho diferente sem estourar na comparação', () => {
-    // timingSafeEqual lança se os buffers têm tamanhos diferentes; o guard de
-    // length precisa vir antes.
-    expect(() => proxy(pedido(basic(USUARIO, 'x')))).not.toThrow()
-    expect(proxy(pedido(basic(USUARIO, 'x'))).status).toBe(401)
-  })
-
-  it('deixa passar a credencial correta', () => {
-    const res = proxy(pedido(basic(USUARIO, SENHA)))
+    const res = await proxy(pedido('/admin/leads', 'token-qualquer'))
 
     expect(res.status).not.toBe(401)
-    expect(res.status).not.toBe(503)
     expect(res.headers.get('x-middleware-next')).toBe('1')
   })
 
-  it('aceita senha que contém dois-pontos', () => {
-    // O split usa o primeiro `:`, então a senha pode conter outros.
-    const senha = 'a:b:c:senha-com-dois-pontos'
-    vi.stubEnv('ADMIN_PASSWORD', senha)
+  it('valida o token que veio no cookie', async () => {
+    readSession.mockResolvedValue(SESSAO)
 
-    expect(proxy(pedido(basic(USUARIO, senha))).headers.get('x-middleware-next')).toBe('1')
+    await proxy(pedido('/admin/leads', 'token-abc'))
+
+    expect(readSession).toHaveBeenCalledWith('token-abc')
+  })
+})
+
+describe('página de login', () => {
+  it('passa sem sessão, senão o login redirecionaria para si mesmo', async () => {
+    const res = await proxy(pedido('/admin/login'))
+
+    expect(res.headers.get('x-middleware-next')).toBe('1')
+    expect(readSession).not.toHaveBeenCalled()
+  })
+
+  it('carrega mesmo sem o segredo, para mostrar o erro na tela', async () => {
+    vi.stubEnv('ADMIN_AUTH_SECRET', '')
+
+    expect((await proxy(pedido('/admin/login'))).headers.get('x-middleware-next')).toBe('1')
   })
 })
 
 describe('matcher', () => {
-  it('cobre o painel e as rotas administrativas', async () => {
-    const { config } = await import('@/proxy')
-
+  it('cobre o painel e as rotas administrativas', () => {
     expect(config.matcher).toContain('/admin/:path*')
     expect(config.matcher).toContain('/api/admin/:path*')
   })

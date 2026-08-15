@@ -195,6 +195,127 @@ Resources:
         - Key: ManagedBy
           Value: CloudFormation
 
+  # Códigos de acesso de uso único do painel. Guardamos apenas o hash: uma
+  # leitura desta tabela não é suficiente para entrar. O TTL do DynamoDB é
+  # rede de segurança, não o relógio da expiração — a verificação compara
+  # expires_at explicitamente, porque o TTL pode demorar até 48h para apagar.
+  AdminAuthCodesTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-admin-auth-codes'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: email
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  # Sessão como registro, não JWT: apagar a linha corta o acesso na hora.
+  # A chave é o hash do token do cookie, pelo mesmo motivo da tabela acima.
+  AdminSessionsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-admin-sessions'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: token_hash
+          AttributeType: S
+        - AttributeName: email
+          AttributeType: S
+        - AttributeName: created_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: token_hash
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: email-index
+          KeySchema:
+            - AttributeName: email
+              KeyType: HASH
+            - AttributeName: created_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  # Trilha de auditoria. Sem TTL: o valor do registro é justamente ser antigo.
+  # entity = 'lead#<id>' para o histórico de um lead; o GSI responde "o que
+  # aconteceu no painel esta semana" sem varrer a tabela.
+  AdminAuditLogTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-admin-audit-log'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: entity
+          AttributeType: S
+        - AttributeName: occurred_at
+          AttributeType: S
+        - AttributeName: entity_type
+          AttributeType: S
+      KeySchema:
+        - AttributeName: entity
+          KeyType: HASH
+        - AttributeName: occurred_at
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: entity-type-index
+          KeySchema:
+            - AttributeName: entity_type
+              KeyType: HASH
+            - AttributeName: occurred_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
   LeadNotificationTopic:
     Type: AWS::SNS::Topic
     Properties:
@@ -818,10 +939,43 @@ Resources:
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
                   - dynamodb:Query
+                  # Scan só para a contagem da visão geral do painel.
+                  - dynamodb:Scan
                 Resource:
                   - !GetAtt NewsletterTable.Arn
                   - !Sub '${NewsletterTable.Arn}/index/*'
-              - Sid: SendNewsletterConfirmation
+              - Sid: AdminAuthCodesCrud
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource: !GetAtt AdminAuthCodesTable.Arn
+              - Sid: AdminSessionsCrud
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Query
+                Resource:
+                  - !GetAtt AdminSessionsTable.Arn
+                  - !Sub '${AdminSessionsTable.Arn}/index/*'
+              # Sem DeleteItem e sem UpdateItem: a trilha só cresce. Quem edita
+              # a própria auditoria não tem auditoria.
+              - Sid: AdminAuditLogAppendAndRead
+                Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:Query
+                Resource:
+                  - !GetAtt AdminAuditLogTable.Arn
+                  - !Sub '${AdminAuditLogTable.Arn}/index/*'
+              # Vale para a confirmação da newsletter e para o código de acesso
+              # do painel: a identidade verificada no SES é o domínio inteiro.
+              - Sid: SendTransactionalEmail
                 Effect: Allow
                 Action: ses:SendEmail
                 Resource: !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/baxi.ia.br'
@@ -852,6 +1006,12 @@ Outputs:
     Value: !Ref InteractionsTable
   NewsletterTableName:
     Value: !Ref NewsletterTable
+  AdminAuthCodesTableName:
+    Value: !Ref AdminAuthCodesTable
+  AdminSessionsTableName:
+    Value: !Ref AdminSessionsTable
+  AdminAuditLogTableName:
+    Value: !Ref AdminAuditLogTable
   LeadNotificationTopicArn:
     Description: SNS topic that delivers new-lead email notifications. The value is what the SSR runtime needs in LEAD_NOTIFICATION_TOPIC_ARN.
     Value: !Ref LeadNotificationTopic
