@@ -4,10 +4,12 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'marcus',
     name: 'Marcus Ramalho',
-    headline: 'Software Developer & Data Scientist',
+    headline: 'Software Engineer & AI Architect',
     role: 'founder',
     roleLabel: 'CTO',
     skills: [
+      'Engenharia de Software',
+      'AI Architect',
       'Desenvolvimento Web End-to-End',
       'Engenharia de Dados',
       'Machine Learning & IA',
