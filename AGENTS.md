@@ -377,6 +377,35 @@ the conversations **failed to reach**, which is what the panel shows in red.
 Note the counts start at deploy time. Conversations older than this release
 have no events and will never appear in the funnel.
 
+## Campaign history
+
+Built 2026-08-15. Until then a digest send existed only as a line in the Lambda
+log and as `last_campaign_*` attributes on each subscriber — enough to know
+whether *one person* got it, useless for asking what was sent last week.
+
+`baxijen-prod-campaigns` is keyed by the `campaignId` that
+`/api/newsletter/weekly-content` already derives from the posts of the week
+(`weekly-<sha256 prefix>`). Reusing that id is what makes the table safe under
+retry: a second run of the same week updates the same row instead of creating a
+second campaign.
+
+`NewsletterDigestFunction` opens the row before the first send and closes it
+after the last one. Two details:
+
+- `started_at` is written with `if_not_exists`, so a retry continues the
+  campaign rather than restarting its clock.
+- The counters use `ADD`, not `SET`. If the week runs twice — EventBridge
+  retries up to twice — each new send adds to the total instead of overwriting
+  it with the second run's own count.
+
+A send that throws mid-way closes the row as `failed` and re-throws. Without
+that the campaign would sit at `running` forever, and the panel would show a
+send in progress that has not existed since Friday.
+
+The panel reads it at `/admin/campanhas`: subject, when, sent, skipped, failed,
+subscribers and the posts included. There is no open or click rate — that needs
+an SES configuration set with an event destination, which does not exist.
+
 ## Open items
 
 Found during the 2026-08-14 audit and deliberately not fixed in that release.
@@ -413,9 +442,10 @@ Nothing here is in progress.
   `app/sobre/SobreContent.tsx`, `app/sibem/SibemContent.tsx`,
   `components/CTAExplosion.tsx`, `components/TypeWriter.tsx` and `lib/types.ts`.
   None are in code touched by the 2026-08-14 release.
-- **Campaigns do not exist as data.** There is no campaign entity and no record
-  of a digest send outside the Lambda log, so the panel cannot show either. It
-  is the last item of the four agreed on 2026-08-14.
+- **No delivery telemetry.** The panel reports what the digest *attempted*:
+  SES accepting a message is not the same as a person receiving it. Bounces,
+  complaints and opens would need an SES configuration set with an event
+  destination.
 
 ### Product, not engineering
 

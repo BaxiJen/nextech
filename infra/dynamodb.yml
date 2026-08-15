@@ -367,6 +367,48 @@ Resources:
         - Key: ManagedBy
           Value: CloudFormation
 
+  # Histórico de campanha. Uma linha por campanha, chaveada pelo id
+  # determinístico que a rota de conteúdo semanal deriva dos posts — reenviar a
+  # mesma semana atualiza a linha existente em vez de criar uma segunda.
+  CampaignsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-campaigns'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: campaign_id
+          AttributeType: S
+        - AttributeName: type
+          AttributeType: S
+        - AttributeName: started_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: campaign_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: type-index
+          KeySchema:
+            - AttributeName: type
+              KeyType: HASH
+            - AttributeName: started_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
   LeadNotificationTopic:
     Type: AWS::SNS::Topic
     Properties:
@@ -621,6 +663,10 @@ Resources:
                   - dynamodb:Scan
                   - dynamodb:UpdateItem
                 Resource: !GetAtt NewsletterTable.Arn
+              - Sid: RecordCampaign
+                Effect: Allow
+                Action: dynamodb:UpdateItem
+                Resource: !GetAtt CampaignsTable.Arn
               - Sid: SendWeeklyDigest
                 Effect: Allow
                 Action: ses:SendEmail
@@ -656,6 +702,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref NewsletterTable
+          CAMPAIGNS_TABLE: !Ref CampaignsTable
           CONTENT_URL: https://www.baxijen.com.br/api/newsletter/weekly-content
           SITE_URL: https://www.baxijen.com.br
           FROM_EMAIL: BaXiJen Newsletter <newsletter@baxi.ia.br>
@@ -668,6 +715,7 @@ Resources:
           const ddb = new DynamoDBClient({})
           const ses = new SESv2Client({})
           const siteOrigin = new URL(process.env.SITE_URL).origin
+          const SUBJECT = 'Posts da semana | BaXiJen'
           const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
           function read(attribute) {
@@ -842,7 +890,7 @@ Resources:
               ReplyToAddresses: ['contato@baxi.ia.br'],
               Content: {
                 Simple: {
-                  Subject: { Data: 'Posts da semana | BaXiJen', Charset: 'UTF-8' },
+                  Subject: { Data: SUBJECT, Charset: 'UTF-8' },
                   Body: {
                     Text: { Data: body.text, Charset: 'UTF-8' },
                     Html: { Data: body.html, Charset: 'UTF-8' },
@@ -853,6 +901,69 @@ Resources:
             return response.MessageId || ''
           }
 
+          // Abre (ou reabre) a linha da campanha. started_at só é escrito uma vez:
+          // uma nova tentativa da mesma semana continua a mesma campanha, não
+          // inaugura outra.
+          async function openCampaign(content) {
+            await ddb.send(new UpdateItemCommand({
+              TableName: process.env.CAMPAIGNS_TABLE,
+              Key: { campaign_id: { S: content.campaignId } },
+              UpdateExpression: 'SET #type = :type, #subject = :subject, #posts = :posts, #status = :running, #started_at = if_not_exists(#started_at, :now), #updated_at = :now',
+              ExpressionAttributeNames: {
+                '#type': 'type',
+                '#subject': 'subject',
+                '#posts': 'posts',
+                '#status': 'status',
+                '#started_at': 'started_at',
+                '#updated_at': 'updated_at',
+              },
+              ExpressionAttributeValues: {
+                ':type': { S: 'newsletter_digest' },
+                ':subject': { S: SUBJECT },
+                ':posts': { L: content.posts.map(post => ({ M: {
+                  title: { S: post.title },
+                  url: { S: post.url },
+                } })) },
+                ':running': { S: 'running' },
+                ':now': { S: new Date().toISOString() },
+              },
+            }))
+          }
+
+          // Contadores usam ADD: se a semana rodar duas vezes, cada envio novo
+          // soma ao total em vez de sobrescrevê-lo.
+          async function closeCampaign(campaignId, status, result, subscribers, errorName) {
+            const names = {
+              '#status': 'status',
+              '#finished_at': 'finished_at',
+              '#updated_at': 'updated_at',
+              '#subscribers': 'subscribers',
+            }
+            const values = {
+              ':status': { S: status },
+              ':now': { S: new Date().toISOString() },
+              ':subscribers': { N: String(subscribers) },
+              ':sent': { N: String(result.sent) },
+              ':skipped': { N: String(result.skipped) },
+              ':failed': { N: String(result.failed) },
+            }
+            let setters = '#status = :status, #finished_at = :now, #updated_at = :now, #subscribers = :subscribers'
+
+            if (errorName) {
+              names['#error'] = 'error'
+              values[':error'] = { S: String(errorName).slice(0, 200) }
+              setters += ', #error = :error'
+            }
+
+            await ddb.send(new UpdateItemCommand({
+              TableName: process.env.CAMPAIGNS_TABLE,
+              Key: { campaign_id: { S: campaignId } },
+              UpdateExpression: `SET ${setters} ADD sent :sent, skipped :skipped, failed :failed`,
+              ExpressionAttributeNames: names,
+              ExpressionAttributeValues: values,
+            }))
+          }
+
           exports.handler = async () => {
             const content = await loadWeeklyContent()
             if (!content) {
@@ -860,31 +971,34 @@ Resources:
               return { campaignId: null, sent: 0, skipped: 0, failed: 0 }
             }
 
+            await openCampaign(content)
+
             const subscribers = await listSubscribers()
             const interval = Math.max(0, Number(process.env.MIN_SEND_INTERVAL_MS || 1000))
             const result = { campaignId: content.campaignId, sent: 0, skipped: 0, failed: 0 }
 
-            for (const subscriber of subscribers) {
-              const email = read(subscriber.email).trim().toLowerCase()
-              const token = read(subscriber.unsub_token).trim()
-              if (!email || !token) {
-                result.skipped += 1
-                continue
-              }
+            try {
+              for (const subscriber of subscribers) {
+                const email = read(subscriber.email).trim().toLowerCase()
+                const token = read(subscriber.unsub_token).trim()
+                if (!email || !token) {
+                  result.skipped += 1
+                  continue
+                }
 
-              const claimed = await claimCampaign(email, content.campaignId, new Date().toISOString())
-              if (!claimed) {
-                result.skipped += 1
-                continue
-              }
+                const claimed = await claimCampaign(email, content.campaignId, new Date().toISOString())
+                if (!claimed) {
+                  result.skipped += 1
+                  continue
+                }
 
-              try {
-                const messageId = await sendDigest(subscriber, content)
-                await setCampaignStatus(email, 'sent', {
-                  last_sent_at: new Date().toISOString(),
-                  last_message_id: messageId,
-                })
-                result.sent += 1
+                try {
+                  const messageId = await sendDigest(subscriber, content)
+                  await setCampaignStatus(email, 'sent', {
+                    last_sent_at: new Date().toISOString(),
+                    last_message_id: messageId,
+                  })
+                  result.sent += 1
               } catch (error) {
                 await setCampaignStatus(email, 'failed', {
                   last_campaign_error: error?.name || 'Error',
@@ -894,6 +1008,15 @@ Resources:
 
               if (interval > 0) await sleep(interval)
             }
+            } catch (error) {
+              // Fecha a linha antes de propagar: uma campanha que morre no meio
+              // precisa aparecer no painel como falha, não ficar em 'running'
+              // para sempre.
+              await closeCampaign(content.campaignId, 'failed', result, subscribers.length, error?.name || 'Error')
+              throw error
+            }
+
+            await closeCampaign(content.campaignId, 'completed', result, subscribers.length)
 
             console.info('Newsletter digest completed', {
               campaignId: result.campaignId,
@@ -995,6 +1118,14 @@ Resources:
                 Resource:
                   - !GetAtt NewsletterTable.Arn
                   - !Sub '${NewsletterTable.Arn}/index/*'
+              - Sid: CampaignsRead
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                Resource:
+                  - !GetAtt CampaignsTable.Arn
+                  - !Sub '${CampaignsTable.Arn}/index/*'
               - Sid: FunnelEventsWriteAndRead
                 Effect: Allow
                 Action:
@@ -1067,6 +1198,8 @@ Outputs:
     Value: !Ref NewsletterTable
   FunnelEventsTableName:
     Value: !Ref FunnelEventsTable
+  CampaignsTableName:
+    Value: !Ref CampaignsTable
   AdminAuthCodesTableName:
     Value: !Ref AdminAuthCodesTable
   AdminSessionsTableName:

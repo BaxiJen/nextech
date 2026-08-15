@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { LayoutDashboard, LogOut, Users } from 'lucide-react'
+import { LayoutDashboard, LogOut, Send, Users } from 'lucide-react'
 import { Container } from '@/components/Container'
 
 interface Identidade {
@@ -14,6 +14,7 @@ interface Identidade {
 const LINKS = [
   { href: '/admin', label: 'Visão geral', icon: LayoutDashboard },
   { href: '/admin/leads', label: 'Leads', icon: Users },
+  { href: '/admin/campanhas', label: 'Campanhas', icon: Send },
 ]
 
 export function AdminHeader() {
