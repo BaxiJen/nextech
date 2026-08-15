@@ -232,7 +232,7 @@ export default function LeadsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Gestão de Leads</h1>
-          <p className="text-muted-foreground">Visualize e gerencie todos os leads capturados pelo chatbot</p>
+          <p className="text-muted-foreground">Visualize e gerencie os leads capturados.</p>
         </div>
 
         {/* Stats */}
