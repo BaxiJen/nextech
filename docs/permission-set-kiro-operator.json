@@ -32,6 +32,19 @@
             ]
         },
         {
+            "Sid": "CreateStackManagedTables",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:CreateTable",
+                "dynamodb:UpdateTable",
+                "dynamodb:UpdateTimeToLive",
+                "dynamodb:UpdateContinuousBackups",
+                "dynamodb:TagResource",
+                "dynamodb:UntagResource"
+            ],
+            "Resource": "arn:aws:dynamodb:sa-east-1:381492202560:table/baxijen-prod-*"
+        },
+        {
             "Sid": "DynamoDiscovery",
             "Effect": "Allow",
             "Action": [
