@@ -20,6 +20,7 @@ import { SALES_AGENT_PROMPT, WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '@/lib/ai/
 import { rateLimit, clientIp } from '@/lib/ai/rateLimit'
 import { isRetryableBedrockError, sanitizeMessages } from '@/lib/ai/chatHelpers'
 import { isValidEmail, normalizePhone } from '@/lib/leads/fields'
+import { recordFunnelProgress } from '@/lib/funnel/track'
 
 const MAX_OUTPUT_TOKENS = 600
 const CHAT_ROUTE_BUDGET_MS = 24_000
@@ -260,6 +261,15 @@ export async function POST(req: Request) {
     // Salvar resposta do assistente
     await saveChatMessage(sessionId, 'assistant', assistantContent, leadId || undefined)
 
+    // Instrumentação do funil: descobre onde a conversa parou sem custo de
+    // inferência e sem tocar no que o visitante vê. Nunca lança.
+    const etapasNovas = await recordFunnelProgress({
+      sessionId,
+      messages: messages.map(m => ({ role: String(m.role), content: String(m.content ?? '') })),
+      assistantContent,
+      leadCaptured: Boolean(leadId),
+    })
+
     console.info('[chat]', {
       sessionId,
       model: CHAT_MODEL,
@@ -269,6 +279,7 @@ export async function POST(req: Request) {
       completionTokens: response.usage?.completion_tokens,
       finishReason: response.choices[0].finish_reason,
       leadCaptured: Boolean(leadId),
+      etapasNovas,
     })
 
     return NextResponse.json({

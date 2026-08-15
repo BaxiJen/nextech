@@ -316,6 +316,57 @@ Resources:
         - Key: ManagedBy
           Value: CloudFormation
 
+  # Etapas do funil do chat. Uma linha por (sessão, etapa), escrita uma vez só
+  # por condição — assim contar linhas no índice é contar sessões, sem
+  # deduplicar depois. Retenção casada com a do histórico de chat: o evento só
+  # é útil enquanto a conversa que ele descreve ainda existe.
+  FunnelEventsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-${Environment}-funnel-events'
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: true
+      AttributeDefinitions:
+        - AttributeName: session_id
+          AttributeType: S
+        - AttributeName: step
+          AttributeType: S
+        - AttributeName: occurred_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: session_id
+          KeyType: HASH
+        - AttributeName: step
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        # Sete valores possíveis de partição é pouca cardinalidade, e seria
+        # problema em volume alto. Neste volume não é, e a alternativa —
+        # varrer a tabela para contar — seria pior.
+        - IndexName: step-index
+          KeySchema:
+            - AttributeName: step
+              KeyType: HASH
+            - AttributeName: occurred_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: KEYS_ONLY
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
   LeadNotificationTopic:
     Type: AWS::SNS::Topic
     Properties:
@@ -944,6 +995,14 @@ Resources:
                 Resource:
                   - !GetAtt NewsletterTable.Arn
                   - !Sub '${NewsletterTable.Arn}/index/*'
+              - Sid: FunnelEventsWriteAndRead
+                Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:Query
+                Resource:
+                  - !GetAtt FunnelEventsTable.Arn
+                  - !Sub '${FunnelEventsTable.Arn}/index/*'
               - Sid: AdminAuthCodesCrud
                 Effect: Allow
                 Action:
@@ -1006,6 +1065,8 @@ Outputs:
     Value: !Ref InteractionsTable
   NewsletterTableName:
     Value: !Ref NewsletterTable
+  FunnelEventsTableName:
+    Value: !Ref FunnelEventsTable
   AdminAuthCodesTableName:
     Value: !Ref AdminAuthCodesTable
   AdminSessionsTableName:

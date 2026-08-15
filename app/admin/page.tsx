@@ -17,6 +17,21 @@ interface Resumo {
   geradoEm: string
 }
 
+interface EtapaFunil {
+  step: string
+  label: string
+  sessoes: number
+  percentualDoTopo: number
+  perdaNaEtapa: number
+  percentualPerdido: number
+}
+
+interface Funil {
+  dias: number
+  etapas: EtapaFunil[]
+  gargalo: EtapaFunil | null
+}
+
 interface EventoAuditoria {
   at: string
   actor_name: string
@@ -87,6 +102,7 @@ function descreveEvento(evento: EventoAuditoria): string {
 export default function VisaoGeralPage() {
   const [resumo, setResumo] = useState<Resumo | null>(null)
   const [atividade, setAtividade] = useState<EventoAuditoria[]>([])
+  const [funil, setFunil] = useState<Funil | null>(null)
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
 
@@ -94,10 +110,12 @@ export default function VisaoGeralPage() {
     Promise.all([
       fetch('/api/admin/resumo').then(r => (r.ok ? r.json() : Promise.reject(new Error('resumo')))),
       fetch('/api/admin/atividade').then(r => (r.ok ? r.json() : [])),
+      fetch('/api/admin/funil?dias=30').then(r => (r.ok ? r.json() : null)),
     ])
-      .then(([dadosResumo, dadosAtividade]) => {
+      .then(([dadosResumo, dadosAtividade, dadosFunil]) => {
         setResumo(dadosResumo)
         setAtividade(Array.isArray(dadosAtividade) ? dadosAtividade : [])
+        setFunil(dadosFunil)
       })
       .catch(() => setErro('Não foi possível carregar os números agora.'))
       .finally(() => setCarregando(false))
@@ -219,9 +237,57 @@ export default function VisaoGeralPage() {
           </section>
         </div>
 
+        <section className="mt-6 rounded-lg border p-5">
+          <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="font-semibold">Funil do chat</h2>
+            <span className="text-xs text-muted-foreground">últimos {funil?.dias ?? 30} dias</span>
+          </div>
+
+          {!funil || funil.etapas[0]?.sessoes === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              Nenhuma conversa registrada na janela. As etapas passam a aparecer aqui conforme o
+              chat for usado — o registro começou nesta versão, então conversas antigas não contam.
+            </p>
+          ) : (
+            <>
+              <div className="space-y-3">
+                {funil.etapas.map((etapa, i) => (
+                  <div key={etapa.step}>
+                    <div className="mb-1 flex justify-between text-sm">
+                      <span>{etapa.label}</span>
+                      <span className="text-muted-foreground">
+                        {etapa.sessoes}
+                        {i > 0 && etapa.perdaNaEtapa > 0 && (
+                          <span className="ml-2 text-red-500">−{etapa.percentualPerdido}%</span>
+                        )}
+                      </span>
+                    </div>
+                    <div className="h-2 overflow-hidden rounded-full bg-muted">
+                      <div
+                        className={`h-full ${
+                          funil.gargalo?.step === etapa.step ? 'bg-red-500' : 'bg-primary'
+                        }`}
+                        style={{ width: `${etapa.percentualDoTopo}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {funil.gargalo && (
+                <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-3 text-sm">
+                  Maior queda em <strong>{funil.gargalo.label}</strong>: {funil.gargalo.perdaNaEtapa}{' '}
+                  {funil.gargalo.perdaNaEtapa === 1 ? 'conversa parou' : 'conversas pararam'} antes
+                  desta etapa ({funil.gargalo.percentualPerdido}% de quem chegou na anterior).
+                </p>
+              )}
+            </>
+          )}
+        </section>
+
         <p className="mt-8 text-xs text-muted-foreground">
-          Campanhas e funil do chat ainda não aparecem aqui porque esse dado não é gravado em lugar
-          nenhum hoje — só existe log de Lambda. É o próximo passo depois desta entrega.
+          Campanhas ainda não aparecem aqui: não existe tabela de campanha nem registro de envio do
+          digest fora do log do Lambda. É o próximo passo.
         </p>
       </div>
     </Container>

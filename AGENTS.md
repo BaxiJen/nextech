@@ -335,6 +335,48 @@ The stack must go first, and the secret before the code:
 3. Push. If either step above is missing the panel answers 503 and the public
    site is untouched — the failure mode is a locked door, not an open one.
 
+## Chat funnel instrumentation
+
+Built 2026-08-15. Answers the question that took a message-by-message read to
+answer before: where the conversation stops.
+
+`baxijen-prod-funnel-events` holds one row per `(session_id, step)`, written
+with `attribute_not_exists(session_id)`. That condition is the whole design:
+because a pair can only be inserted once, counting rows per step in the
+`step-index` GSI *is* counting sessions, with no dedup pass and no risk of a
+retry inflating a number. TTL matches `CHAT_RETENTION_DAYS` — the event is only
+useful while the conversation it describes still exists.
+
+Seven steps, in `lib/funnel/steps.ts`: `conversa_iniciada`, `objetivo_descrito`,
+`diagnostico_respondido`, `dados_pedidos`, `telefone_informado`,
+`email_informado`, `lead_capturado`.
+
+**Derivation is deterministic and server-side.** `reachedSteps` looks at the
+sanitized history plus the reply just generated — no extra model call, no
+inference cost, nothing the visitor notices. Phone and email reuse
+`normalizePhone` and `isValidEmail`, so "12.000 atendimentos" does not count as
+a phone number; that false positive would inflate precisely the step worth
+measuring.
+
+**One step is a heuristic and it is worth knowing which.** `dados_pedidos`
+matches the phrases `SALES_AGENT_PROMPT` tells the agent to use when it asks for
+contact details. If that prompt changes vocabulary, the tests in
+`tests/funnel/steps.test.ts` fail — which is the reason they pin the exact
+sentences.
+
+`recordFunnelProgress` never throws. Instrumentation that takes down the route
+it observes is worse than no instrumentation, so a failure is logged under
+`[funil]` and the conversation continues. It reads the session's existing steps
+first and writes only the new ones; the conditional write still guards against
+two concurrent turns of the same session.
+
+`/api/admin/funil?dias=30` counts each step over a window and reports the
+largest drop between consecutive steps. The bottleneck is labelled by the step
+the conversations **failed to reach**, which is what the panel shows in red.
+
+Note the counts start at deploy time. Conversations older than this release
+have no events and will never appear in the funnel.
+
 ## Open items
 
 Found during the 2026-08-14 audit and deliberately not fixed in that release.
@@ -371,8 +413,9 @@ Nothing here is in progress.
   `app/sobre/SobreContent.tsx`, `app/sibem/SibemContent.tsx`,
   `components/CTAExplosion.tsx`, `components/TypeWriter.tsx` and `lib/types.ts`.
   None are in code touched by the 2026-08-14 release.
-- **The funnel is still uninstrumented.** The panel now shows who changed what
-  in the lead pipeline, but nothing records where a chat conversation stops.
+- **Campaigns do not exist as data.** There is no campaign entity and no record
+  of a digest send outside the Lambda log, so the panel cannot show either. It
+  is the last item of the four agreed on 2026-08-14.
 
 ### Product, not engineering
 
