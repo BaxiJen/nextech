@@ -233,6 +233,14 @@
             "Resource": "arn:aws:ses:sa-east-1:381492202560:identity/baxi.ia.br"
         },
         {
+            "Sid": "SendFromBaxijenSesIdentity",
+            "Effect": "Allow",
+            "Action": [
+                "ses:SendEmail"
+            ],
+            "Resource": "arn:aws:ses:sa-east-1:381492202560:identity/baxi.ia.br"
+        },
+        {
             "Sid": "ReadAndRequestSesProductionAccess",
             "Effect": "Allow",
             "Action": [
