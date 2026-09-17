@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#0d2137"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#0099cc"/>
+    </linearGradient>
+    <linearGradient id="warn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff4757"/>
+      <stop offset="100%" stop-color="#ff6b7a"/>
+    </linearGradient>
+    <linearGradient id="ok" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2ed573"/>
+      <stop offset="100%" stop-color="#1abc9c"/>
+    </linearGradient>
+    <linearGradient id="transfer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffaa00"/>
+      <stop offset="100%" stop-color="#ff8800"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="90" x2="1200" y2="90" stroke="#00d4ff" stroke-width="1"/>
+    <line x1="0" y1="180" x2="1200" y2="180" stroke="#00d4ff" stroke-width="1"/>
+    <line x1="0" y1="270" x2="1200" y2="270" stroke="#00d4ff" stroke-width="1"/>
+    <line x1="0" y1="360" x2="1200" y2="360" stroke="#00d4ff" stroke-width="1"/>
+    <line x1="0" y1="450" x2="1200" y2="450" stroke="#00d4ff" stroke-width="1"/>
+    <line x1="0" y1="540" x2="1200" y2="540" stroke="#00d4ff" stroke-width="1"/>
+  </g>
+
+  <!-- BaXiJen logo mark top-left -->
+  <g transform="translate(60, 50)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="url(#accent)"/>
+    <text x="20" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#0a1628">BX</text>
+  </g>
+  <text x="112" y="80" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#00d4ff">BaXiJen</text>
+
+  <!-- Title -->
+  <text x="60" y="145" font-family="Inter, sans-serif" font-size="34" font-weight="800" fill="#ffffff" letter-spacing="-0.5">
+    IA em Ambientes Air-Gapped:
+  </text>
+  <text x="60" y="185" font-family="Inter, sans-serif" font-size="34" font-weight="800" fill="#00d4ff" letter-spacing="-0.5">
+    Rodando LLMs Onde a Internet Não Chega
+  </text>
+
+  <!-- Subtitle -->
+  <text x="60" y="222" font-family="Inter, sans-serif" font-size="15" font-weight="400" fill="#8899aa">
+    Sem registro remoto. Sem chave de API. Sem saída. Deploy de LLM em perímetro isolado.
+  </text>
+
+  <!-- ============ LEFT BOX: connected environment ============ -->
+  <g transform="translate(60, 265)">
+    <rect x="0" y="0" width="310" height="240" rx="14" fill="#0d2137" stroke="#1e3a5f" stroke-width="2"/>
+    <text x="155" y="32" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#00d4ff">REDE CONECTADA</text>
+
+    <!-- Step 1: download -->
+    <g transform="translate(30, 55)">
+      <circle cx="14" cy="14" r="14" fill="none" stroke="#00d4ff" stroke-width="2"/>
+      <text x="14" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#00d4ff">1</text>
+      <text x="40" y="12" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Download dos pesos</text>
+      <text x="40" y="28" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">fonte verificada + hash</text>
+    </g>
+
+    <!-- Step 2: validation -->
+    <g transform="translate(30, 110)">
+      <circle cx="14" cy="14" r="14" fill="none" stroke="#00d4ff" stroke-width="2"/>
+      <text x="14" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#00d4ff">2</text>
+      <text x="40" y="12" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Validação no golden set</text>
+      <text x="40" y="28" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">avaliação antes do empacote</text>
+    </g>
+
+    <!-- Step 3: pack -->
+    <g transform="translate(30, 165)">
+      <circle cx="14" cy="14" r="14" fill="none" stroke="#00d4ff" stroke-width="2"/>
+      <text x="14" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#00d4ff">3</text>
+      <text x="40" y="12" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Bundle assinado</text>
+      <text x="40" y="28" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">imagens + dependências pinadas</text>
+    </g>
+  </g>
+
+  <!-- ============ MIDDLE: controlled transfer channel ============ -->
+  <g transform="translate(395, 265)">
+    <rect x="0" y="0" width="170" height="240" rx="14" fill="#13284a" stroke="#ffaa00" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="85" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#ffaa00">CANAL APROVADO</text>
+
+    <!-- USB / physical media icon -->
+    <g transform="translate(42, 55)">
+      <rect x="14" y="30" width="56" height="34" rx="6" fill="#ffaa00" opacity="0.9"/>
+      <rect x="22" y="0" width="12" height="12" rx="2" fill="#ffaa00" opacity="0.9"/>
+      <rect x="50" y="0" width="12" height="12" rx="2" fill="#ffaa00" opacity="0.9"/>
+      <rect x="22" y="0" width="12" height="32" fill="#ffaa00" opacity="0.9"/>
+      <rect x="50" y="0" width="12" height="32" fill="#ffaa00" opacity="0.9"/>
+      <text x="42" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#ffcc66">mídia física</text>
+      <text x="42" y="94" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#ffcc66">verificada</text>
+    </g>
+
+    <!-- Data diode arrow -->
+    <g transform="translate(15, 185)">
+      <line x1="10" y1="20" x2="140" y2="20" stroke="#ff8800" stroke-width="3"/>
+      <polygon points="140,20 128,12 128,28" fill="#ff8800"/>
+      <text x="75" y="48" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#ffcc66">data diode: só entra</text>
+    </g>
+  </g>
+
+  <!-- ============ RIGHT BOX: air-gapped environment ============ -->
+  <g transform="translate(590, 265)">
+    <rect x="0" y="0" width="550" height="240" rx="14" fill="#0a1f14" stroke="#2ed573" stroke-width="2"/>
+    <text x="275" y="32" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#2ed573">AMBIENTE ISOLADO (AIR-GAPPED)</text>
+
+    <!-- GPU serving -->
+    <g transform="translate(35, 60)">
+      <rect x="0" y="0" width="230" height="80" rx="10" fill="#0d2137" stroke="#2ed573" stroke-width="2"/>
+      <text x="115" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#2ed573">GPU servindo o modelo</text>
+      <text x="115" y="45" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">model store local, 100% offline</text>
+      <text x="115" y="63" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">vLLM / NIM sem NGC_API_KEY</text>
+    </g>
+
+    <!-- Local guardrails -->
+    <g transform="translate(285, 60)">
+      <rect x="0" y="0" width="230" height="80" rx="10" fill="#0d2137" stroke="#2ed573" stroke-width="2"/>
+      <text x="115" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#2ed573">Guardrails locais</text>
+      <text x="115" y="45" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">classificadores + políticas</text>
+      <text x="115" y="63" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8899aa">nada de API externa</text>
+    </g>
+
+    <!-- Zero badges -->
+    <g transform="translate(35, 160)">
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="none" stroke="#2ed573" stroke-width="1.5"/>
+      <text x="80" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2ed573">✕ chave de API</text>
+    </g>
+    <g transform="translate(210, 160)">
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="none" stroke="#2ed573" stroke-width="1.5"/>
+      <text x="80" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2ed573">✕ conexão externa</text>
+    </g>
+    <g transform="translate(385, 160)">
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="none" stroke="#2ed573" stroke-width="1.5"/>
+      <text x="80" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2ed573">✕ telemetria saindo</text>
+    </g>
+  </g>
+
+  <!-- Footer tagline -->
+  <text x="600" y="570" text-anchor="middle" font-family="Inter, sans-serif" font-size="17" font-weight="600" fill="#8899aa">
+    Quem controla o perímetro controla a IA.
+  </text>
+  <text x="600" y="598" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#4a5a6a">
+    Marcus Ramalho · CTO BaXiJen · baxijen.com.br/blog
+  </text>
+</svg>
