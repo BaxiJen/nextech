@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { assuntoLabel, isAssuntoValido } from '@/lib/contato/assuntos'
+import { normalizarOrigem } from '@/lib/contato/origem'
 import { isValidEmail, normalizePhone, trimTo } from '@/lib/leads/fields'
 import { logInteraction, upsertLead } from '@/lib/dynamodbService'
 import { clientIp, rateLimit } from '@/lib/ai/rateLimit'
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
     const telefone = trimTo(body?.telefone, MAX_CAMPO_CHARS)
     const mensagem = trimTo(body?.mensagem, MAX_MENSAGEM_CHARS)
     const assunto = body?.assunto
+    const origem = normalizarOrigem(body?.origem)
 
     if (!nome) {
       return NextResponse.json({ error: 'Informe seu nome.' }, { status: 400 })
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
         source: 'form',
         phone,
         company: empresa || undefined,
-        notes: `[${label}]${cargo ? ` (${cargo})` : ''} ${mensagem}`,
+        notes: `[${label}]${origem ? ` [origem: ${origem}]` : ''}${cargo ? ` (${cargo})` : ''} ${mensagem}`,
       },
       {
         // Só valem na criação: um lead que já veio do chat qualificado não
@@ -89,6 +91,7 @@ export async function POST(request: Request) {
         assuntoLabel: label,
         cargo: cargo || undefined,
         empresa: empresa || undefined,
+        origem,
         mensagem,
       })
     } catch (error) {
@@ -113,6 +116,7 @@ export async function POST(request: Request) {
         phone,
         company: empresa || undefined,
         role: cargo || undefined,
+        origin: origem,
         returning,
       })
     } catch (error) {
@@ -120,7 +124,7 @@ export async function POST(request: Request) {
       console.error('[contato] falha ao publicar notificação:', error)
     }
 
-    console.info('[contato]', { leadId: lead.id, assunto, returning, notificationId })
+    console.info('[contato]', { leadId: lead.id, assunto, origem, returning, notificationId })
 
     return NextResponse.json({ success: true, message: 'Contato registrado com sucesso!' })
   } catch (error) {

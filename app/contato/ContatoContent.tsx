@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
 import { Mail, Shield, Cpu, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { ASSUNTOS } from '@/lib/contato/assuntos';
+import { ASSUNTOS, isAssuntoValido } from '@/lib/contato/assuntos';
+import { normalizarOrigem } from '@/lib/contato/origem';
+import { track } from '@/lib/analytics';
 
 const OPCOES_ASSUNTO = [{ value: '', label: 'Selecione o assunto...' }, ...ASSUNTOS];
 
@@ -19,8 +21,18 @@ export function ContatoContent() {
     assunto: '',
     mensagem: '',
   });
+  const [origem, setOrigem] = useState<string | undefined>();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Chamadas do site linkam para /contato?assunto=...&origem=.... Lido no
+  // client para a página continuar estática; a rota valida a origem de novo.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const assunto = params.get('assunto');
+    if (isAssuntoValido(assunto)) setFormData(s => ({ ...s, assunto }));
+    setOrigem(normalizarOrigem(params.get('origem')));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +43,7 @@ export function ContatoContent() {
       const res = await fetch('/api/contato', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(origem ? { ...formData, origem } : formData),
       });
 
       if (!res.ok) {
@@ -39,6 +51,7 @@ export function ContatoContent() {
         throw new Error(body?.error || 'Não conseguimos enviar sua mensagem.');
       }
 
+      if (origem) track('lead_workspace_bxat', { origem, assunto: formData.assunto });
       setStatus('success');
     } catch (error) {
       setErrorMessage(

@@ -250,6 +250,32 @@ describe('notificação', () => {
   })
 })
 
+describe('origem', () => {
+  it('leva a origem da chamada ao lead, à interaction e ao aviso', async () => {
+    await postar({ ...VALIDO, assunto: 'workspace-bxat', origem: 'blog-qwen3090' })
+
+    expect(upsertLead.mock.calls[0][1].notes).toContain('[origem: blog-qwen3090]')
+    expect(upsertLead.mock.calls[0][2].objective).toBe('Quero um workspace próprio no BXat')
+    expect(logInteraction).toHaveBeenCalledWith(
+      'lead-1',
+      'form_submit',
+      expect.objectContaining({ origem: 'blog-qwen3090' })
+    )
+    expect(publishContactNotification.mock.calls[0][0].origin).toBe('blog-qwen3090')
+  })
+
+  it.each(['https://exemplo.invalid/x', 'blog qwen', 'a'.repeat(61), 42])(
+    'descarta origem fora do formato (%s) sem reprovar o envio',
+    async (origem) => {
+      const res = await postar({ ...VALIDO, origem })
+
+      expect(res.status).toBe(200)
+      expect(upsertLead.mock.calls[0][1].notes).not.toContain('origem')
+      expect(publishContactNotification.mock.calls[0][0].origin).toBeUndefined()
+    }
+  )
+})
+
 describe('rate limit', () => {
   it('bloqueia a partir da sexta tentativa do mesmo IP', async () => {
     const ip = '203.0.113.99'

@@ -42,6 +42,8 @@ export interface ContactNotification {
   phone?: string
   company?: string
   role?: string
+  /** Chamada do site que trouxe a pessoa, quando veio por uma. */
+  origin?: string
   returning: boolean
 }
 
@@ -80,6 +82,7 @@ function body(input: ContactNotification): string {
     `Empresa: ${oneLine(input.company) || '-'}`,
     `Cargo: ${oneLine(input.role) || '-'}`,
     `Assunto: ${oneLine(input.subject) || '-'}`,
+    ...(input.origin ? [`Origem: ${oneLine(input.origin)}`] : []),
     '',
     'Mensagem:',
     input.message.trim().slice(0, MAX_MESSAGE_CHARS) || '-',
