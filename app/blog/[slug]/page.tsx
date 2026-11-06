@@ -7,6 +7,8 @@ import { getPostBySlug, getPostSlugs } from "@/lib/blog";
 import { BlogMarkdown } from "@/components/blog/BlogMarkdown";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { NewsletterForm } from "@/components/blog/NewsletterForm";
+import { AuthorBox } from "@/components/blog/AuthorBox";
+import { WorkspaceCta } from "@/components/blog/WorkspaceCta";
 
 export async function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
@@ -145,6 +147,8 @@ export default async function BlogPostPage({
         {/* Content */}
         <BlogMarkdown post={post} />
 
+        <AuthorBox author={post.author} authorRole={post.authorRole} />
+
         {/* Share buttons */}
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-border pt-6">
           <span className="text-sm text-muted-foreground">Compartilhar:</span>
@@ -155,21 +159,25 @@ export default async function BlogPostPage({
         <hr className="my-12 border-border" />
 
         {/* Footer CTA — Buriti style */}
-        <div className="rounded-2xl p-8 md:p-10 buriti-card">
-          <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>
-            Quer construir IA soberana?
-          </h3>
-          <p className="text-muted-foreground mb-6 leading-relaxed">
-            Fale com a BaXiJen e descubra como agentes autônomos podem
-            transformar sua operação.
-          </p>
-          <Link
-            href="/contato"
-            className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
-          >
-            Fale conosco
-          </Link>
-        </div>
+        {post.cta === "workspace-bxat" ? (
+          <WorkspaceCta origem={post.ctaOrigem || "blog"} />
+        ) : (
+          <div className="rounded-2xl p-8 md:p-10 buriti-card">
+            <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>
+              Quer construir IA soberana?
+            </h3>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              Fale com a BaXiJen e descubra como agentes autônomos podem
+              transformar sua operação.
+            </p>
+            <Link
+              href="/contato"
+              className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
+            >
+              Fale conosco
+            </Link>
+          </div>
+        )}
 
         {/* Newsletter */}
         <div className="mt-12">

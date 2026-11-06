@@ -6,6 +6,8 @@ author: "Leonardo Camilo"
 authorRole: "CEO & Tech Lead, BaXiJen"
 tags: ["IA local", "Qwen", "LLM", "inferência", "RTX 3090", "agentes de IA", "reasoning", "quantização", "custo de inferência", "llama.cpp", "BaXiJen", "IABrasileira"]
 featured: true
+cta: "workspace-bxat"
+ctaOrigem: "blog-qwen3090"
 image: "/blog/qwen-27b-3090-producao-cover.svg"
 imageAlt: "Teste de produção do Qwen3.8-27B numa RTX 3090: números de desempenho, custo e a causa-raiz das falhas de reasoning"
 ---

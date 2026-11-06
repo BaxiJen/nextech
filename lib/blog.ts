@@ -16,6 +16,10 @@ export interface BlogPost {
   imageAlt?: string;
   featured?: boolean;
   readTime?: string;
+  /** Chamada no fim do post; sem ela vale o bloco padrão de contato. */
+  cta?: "workspace-bxat";
+  /** Vai no `origem` do /contato para o lead e o GA4 saberem de onde veio. */
+  ctaOrigem?: string;
   content: string;
 }
 
@@ -49,6 +53,8 @@ export function getPostBySlug(slug: string): BlogPost | null {
     imageAlt: data.imageAlt ?? "",
     featured: data.featured ?? false,
     readTime: data.readTime ?? estimateReadTime(content),
+    cta: data.cta === "workspace-bxat" ? "workspace-bxat" : undefined,
+    ctaOrigem: typeof data.ctaOrigem === "string" ? data.ctaOrigem : undefined,
     content,
   };
 }

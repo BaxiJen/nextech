@@ -99,3 +99,9 @@ export const teamMembers: TeamMember[] = [
     photo: '/barbedo.jpg'
   }
 ]
+
+/** Autor do blog pelo nome que está no frontmatter (`author`). */
+export function findTeamMemberByName(name: string): TeamMember | undefined {
+  const alvo = name.trim().toLowerCase()
+  return teamMembers.find((m) => m.name.toLowerCase() === alvo)
+}
