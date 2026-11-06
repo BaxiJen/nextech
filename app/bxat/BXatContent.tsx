@@ -4,9 +4,10 @@ import React from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
 import { BuritiCard } from '@/components/BuritiCard';
-import { Bot, Brain, Cpu, Eye, MessageSquare, Shield, Zap, BarChart, Users, Globe, Headphones, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { Bot, Brain, Cpu, Eye, MessageSquare, Shield, Zap, BarChart, Users, Globe, Headphones, ArrowRight, CheckCircle2, Sparkles, Plug, Lock, Server } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { track } from '@/lib/analytics';
 
 const capabilities = [
   { icon: Brain, title: 'Compreensão Total', description: 'Entende o contexto do seu negócio, histórico de conversas e intenção do cliente como nenhum bot consegue.' },
@@ -22,6 +23,17 @@ const useCases = [
   { title: 'Suporte ao Cliente', description: 'Resolve dúvidas, acompanha pedidos e escalona problemas complexos, reduzindo o volume de tickets de suporte.', icon: Headphones },
   { title: 'Onboarding & Treinamento', description: 'Orienta novos clientes e funcionários de forma personalizada. Ninguém fica perdido.', icon: Users },
   { title: 'Gestão & Relatórios', description: 'Centraliza informações de múltiplos sistemas e gera insights acionáveis para decisões rápidas.', icon: Globe },
+];
+
+// Só o que o plano institucional entrega hoje (baxi.ia.br/docs/workspaces).
+// Preço, cliente ou número novo aqui precisa de confirmação antes.
+const workspaceItems = [
+  { icon: Bot, title: 'Agentes dedicados', description: 'Desenhados com a BaXiJen para os fluxos do time: um agente de marketing que consulta o Analytics e a loja, um de operação que trabalha dentro do Notion.' },
+  { icon: Plug, title: 'Integrações da equipe', description: 'Google Analytics, Google Ads, Notion, VTEX e outras, conectadas uma vez para todos os membros. As credenciais ficam num cofre cifrado.' },
+  { icon: Users, title: 'Assentos com nível Pro', description: '6 assentos por padrão, conforme o contrato. Cada membro tem o nível Pro, com 200 mensagens por dia e criação de agentes.' },
+  { icon: Shield, title: 'Administração própria', description: 'A equipe gerencia membros, administradores e acesso por domínio sem depender da BaXiJen no dia a dia.' },
+  { icon: Lock, title: 'Conversas individuais', description: 'Cada pessoa conversa com os agentes na própria conta. Colegas e administradores não leem essas conversas.' },
+  { icon: Server, title: 'Modelo aberto na sua GPU', description: 'Os agentes podem rodar num modelo aberto, como o Qwen3.8-27B, numa GPU da empresa. As conversas ficam no BXat, na AWS em São Paulo, e cada resposta sai da placa. Nada é desviado para outro provedor: se a placa parar, a resposta falha.' },
 ];
 
 const differentials = [
@@ -281,6 +293,62 @@ export function BXatContent() {
             </div>
           </motion.div>
         </div>
+
+        {/* ====== WORKSPACE PRÓPRIO ====== */}
+        <section id="workspace" className="scroll-mt-24 mb-24">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-sm font-medium text-[#97c459] mb-3" style={{ fontFamily: 'var(--font-geist-mono)' }}>WORKSPACE PRÓPRIO</div>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4" style={{ fontFamily: 'var(--font-newsreader, serif)' }}>O BXat da sua empresa</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              A empresa contrata com a BaXiJen e recebe um espaço próprio em <span className="font-mono text-foreground/90">baxi.ia.br/w/sua-empresa</span>, com agentes, integrações e administração do time.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {workspaceItems.map((item, i) => (
+              <motion.div
+                key={item.title}
+                className="rounded-2xl p-6 buriti-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl border border-primary/20 bg-primary/5 flex items-center justify-center">
+                    <item.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold">{item.title}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="rounded-2xl p-6 md:p-8 border border-primary/15 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h3 className="text-lg font-bold mb-1">Como contratar</h3>
+              <p className="text-muted-foreground max-w-2xl">
+                Conte o que a sua equipe faz e onde a IA ajudaria. Os agentes, as integrações e a base de conhecimento são desenhados junto com vocês.
+              </p>
+            </div>
+            <Link
+              href="/contato?assunto=workspace-bxat&origem=bxat-workspace"
+              onClick={() => track('clique_workspace_bxat', { origem: 'bxat-workspace' })}
+              className="shrink-0"
+            >
+              <Button size="lg" className="flex gap-2 h-12 px-6">
+                Quero um workspace próprio <ArrowRight className="h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </section>
 
         {/* ====== CTA ====== */}
         <motion.div
