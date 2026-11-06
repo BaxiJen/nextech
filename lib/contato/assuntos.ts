@@ -9,6 +9,7 @@
 export const ASSUNTOS = [
   { value: 'agente-ia', label: 'Quero um agente de IA para minha empresa' },
   { value: 'bxat', label: 'Quero conhecer o BXat' },
+  { value: 'workspace-bxat', label: 'Quero um workspace próprio no BXat' },
   { value: 'soberania', label: 'Soberania de dados e infraestrutura' },
   { value: 'consultoria', label: 'Consultoria em IA / Diagnóstico' },
   { value: 'parceria', label: 'Parceria ou integração' },

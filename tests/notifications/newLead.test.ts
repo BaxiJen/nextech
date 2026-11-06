@@ -132,6 +132,16 @@ describe('assunto do email', () => {
 })
 
 describe('corpo do email', () => {
+  it('mostra a origem só quando o contato veio de uma chamada do site', async () => {
+    const { publishContactNotification } = await carregar()
+
+    await publishContactNotification({ ...BASE, origin: 'blog-qwen3090' })
+    await publishContactNotification(BASE)
+
+    expect(send.mock.calls[0][0].input.Message).toContain('Origem: blog-qwen3090')
+    expect(send.mock.calls[1][0].input.Message).not.toContain('Origem:')
+  })
+
   it('inclui a mensagem escrita pelo visitante', async () => {
     // É o motivo de a rota publicar: o Lambda do stream não tem esse texto.
     const { publishContactNotification } = await carregar()
