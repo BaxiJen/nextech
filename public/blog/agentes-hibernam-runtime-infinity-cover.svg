@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#0d1f3a"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="sliceBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#0099cc"/>
+    </linearGradient>
+    <linearGradient id="sleepBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#27ae60"/>
+      <stop offset="100%" stop-color="#1e8449"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- grid sutil -->
+  <g stroke="#ffffff" stroke-opacity="0.04">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="472" x2="1200" y2="472"/>
+  </g>
+
+  <!-- kicker -->
+  <text x="80" y="72" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="bold" fill="#00d4ff" letter-spacing="3">ARQUITETURA DE AGENTES · RUNTIME</text>
+
+  <!-- título -->
+  <text x="80" y="130" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="bold" fill="#ffffff">Agentes que hibernam:</text>
+  <text x="80" y="180" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#9fb3c8">o runtime que suspende o agente a cada tool call e corta o custo de esperar</text>
+
+  <!-- número hero -->
+  <g>
+    <rect x="80" y="225" width="500" height="335" rx="14" fill="url(#card)" stroke="#00d4ff" stroke-opacity="0.35"/>
+    <text x="110" y="285" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#9fb3c8">AGENTES OCIOSOS EM 8 GB</text>
+    <text x="110" y="372" font-family="Helvetica, Arial, sans-serif" font-size="96" font-weight="bold" fill="#00d4ff">75 mil</text>
+    <text x="110" y="412" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#9fb3c8">a memória de um Raspberry Pi 5</text>
+    <text x="110" y="470" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#9fb3c8">~100 KB por agente suspenso:</text>
+    <text x="110" y="500" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#9fb3c8">só o histórico da conversa, zero processo</text>
+    <text x="110" y="536" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#5d7290">benchmark AWS · modelo simulado · Apache 2.0</text>
+  </g>
+
+  <!-- diagrama do slice -->
+  <g>
+    <rect x="620" y="225" width="500" height="335" rx="14" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.18"/>
+    <text x="650" y="272" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#9fb3c8">O CICLO DE UM SLICE (nunca espera)</text>
+
+    <!-- passo 1 -->
+    <rect x="650" y="295" width="440" height="52" rx="8" fill="#ffffff" fill-opacity="0.05" stroke="#00d4ff" stroke-opacity="0.5"/>
+    <text x="668" y="318" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="bold" fill="#ffffff">1. Carrega o histórico</text>
+    <text x="668" y="338" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#9fb3c8">do armazenamento plugável (ConversationStore)</text>
+
+    <!-- passo 2 -->
+    <rect x="650" y="357" width="440" height="52" rx="8" fill="#ffffff" fill-opacity="0.05" stroke="#00d4ff" stroke-opacity="0.5"/>
+    <text x="668" y="380" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="bold" fill="#ffffff">2. Roda 1 completion do modelo</text>
+    <text x="668" y="400" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#9fb3c8">persiste a saída em buffer e commita o turno</text>
+
+    <!-- passo 3 -->
+    <rect x="650" y="419" width="440" height="52" rx="8" fill="#ffffff" fill-opacity="0.05" stroke="#00d4ff" stroke-opacity="0.5"/>
+    <text x="668" y="442" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="bold" fill="#ffffff">3. Despacha no máx. 1 ferramenta</text>
+    <text x="668" y="462" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#9fb3c8">o tool call faz o papel do await</text>
+
+    <!-- hibernação -->
+    <rect x="650" y="481" width="440" height="52" rx="8" fill="#27ae60" fill-opacity="0.10" stroke="#27ae60" stroke-opacity="0.6"/>
+    <text x="668" y="504" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="bold" fill="#2ecc71">4. O slice termina: agente hiberna</text>
+    <text x="668" y="524" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#9fb3c8">o resultado volta pela fila e acorda um novo slice</text>
+  </g>
+
+  <!-- rodapé -->
+  <text x="80" y="600" font-family="Helvetica, Arial, sans-serif" font-size="19" fill="#9fb3c8">AWS Infinity · Hydro (AWS + UC Berkeley) · mesmo código em processo local ou Lambda</text>
+  <text x="1120" y="600" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="bold" fill="#00d4ff" text-anchor="end">baxijen.com.br</text>
+</svg>
